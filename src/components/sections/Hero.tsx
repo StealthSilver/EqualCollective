@@ -265,21 +265,24 @@ export default function Hero() {
       </div>
 
       {/* Data Points Section */}
-      <div className="max-w-7xl w-full mx-auto px-4 mt-24 relative z-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+      <div className="max-w-7xl w-full mx-auto px-4 mt-48 relative z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
           {dataPoints.map((point, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 + index * 0.1 }}
-              className="flex flex-col items-center text-center"
+              className="flex flex-col items-start text-left"
             >
-              <div className="font-mono text-white text-4xl lg:text-3xl font-bold mb-2">
-                <NumberTicker value={point.value} className="text-white" />
-                <span className="ml-1">{point.suffix}</span>
+              <div className="font-mono text-gray-900 dark:text-white text-5xl lg:text-4xl font-bold mb-4 flex items-baseline justify-center gap-1">
+                <NumberTicker
+                  value={point.value}
+                  className="text-gray-900 dark:text-white"
+                />
+                <span>{point.suffix}</span>
               </div>
-              <p className="font-mono text-white text-xs lg:text-xs uppercase tracking-wide leading-tight">
+              <p className="font-mono text-left text-gray-600 dark:text-gray-400 text-sm lg:text-sm uppercase tracking-wide leading-tight">
                 {point.label}
               </p>
             </motion.div>
