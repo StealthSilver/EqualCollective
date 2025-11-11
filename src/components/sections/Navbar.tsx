@@ -5,6 +5,7 @@ import { Menu, X, Github } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { ShimmerButton } from "../ui/ShimmerButton";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +88,10 @@ export default function Navbar() {
             onMouseLeave={() => setHovered(null)}
           >
             {navItems.map((item) => (
-              <div key={item.name} className="relative px-2 py-1 select-none">
+              <div
+                key={item.name}
+                className="relative px-2 py-1 select-none font-sans font-bold"
+              >
                 {hovered === item.name && (
                   <motion.span
                     layoutId="hoverBg"
@@ -144,17 +148,17 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-6 font-mono">
           <ThemeToggle />
 
-          <a
-            href="#footer"
-            className="
-              bg-gray-900 text-white border border-gray-900 rounded-full px-6 py-1.5
-              transition duration-300 hover:bg-white hover:text-black
-              dark:bg-gray-100 dark:text-black dark:border-gray-100
-              dark:hover:bg-black dark:hover:text-white 
-            "
+          <ShimmerButton
+            onClick={() => {
+              const footer = document.getElementById("footer");
+              footer?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="font-sans font-bold text-white"
+            background="#ff7a18"
+            shimmerColor="#ffffff"
           >
             CONNECT NOW
-          </a>
+          </ShimmerButton>
         </div>
 
         {/* Mobile Menu Button */}
@@ -200,13 +204,14 @@ export default function Navbar() {
                 </Link>
               )
             )}
-            <a
-              href="#footer"
-              className="rounded-full border px-6 py-1.5 transition-colors bg-gray-900 text-white border-gray-900 hover:bg-white hover:text-black dark:bg-gray-100 dark:text-black dark:border-gray-100 dark:hover:bg-black dark:hover:text-white"
+            <ShimmerButton
               onClick={() => setIsOpen(false)}
+              className="font-sans font-bold text-white"
+              background="#FF7217"
+              shimmerColor="#ffffff"
             >
               Connect
-            </a>
+            </ShimmerButton>
           </div>
         </div>
       )}
