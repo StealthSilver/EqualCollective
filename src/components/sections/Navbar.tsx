@@ -40,17 +40,15 @@ export default function Navbar() {
     { name: "About-Us", href: "#about", external: false },
     { name: "Solvyn", href: "#solvyn", external: false },
     { name: "Services", href: "#services", external: false },
-    { name: "Case-Studies", href: "#case-studies", external: false },
+    { name: "Case-Studies", href: "/case-studies" },
 
     {
       name: "White-Papers",
-      href: "#white-papers",
-      external: false,
+      href: "/white-papers",
     },
     {
       name: "Blogs",
-      href: "#blogs",
-      external: false,
+      href: "/blogs",
     },
   ];
 
@@ -152,7 +150,7 @@ export default function Navbar() {
               bg-gray-900 text-white border border-gray-900 rounded-full px-6 py-1.5
               transition duration-300 hover:bg-white hover:text-black
               dark:bg-gray-100 dark:text-black dark:border-gray-100
-              dark:hover:bg-black dark:hover:text-white
+              dark:hover:bg-black dark:hover:text-white 
             "
           >
             CONNECT NOW
