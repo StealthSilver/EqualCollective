@@ -206,7 +206,7 @@ export default function Hero() {
       "
     >
       {/* Globe positioned on the right */}
-      <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[1200px] h-[1200px] pointer-events-none hidden lg:block -mr-[200px]">
+      <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[1200px] h-[1200px] pointer-events-none hidden lg:block -mr-[200px] z-30">
         <div className="w-full h-full">
           {mounted && (
             <World key={theme} globeConfig={globeConfig} data={sampleArcs} />
@@ -265,7 +265,7 @@ export default function Hero() {
       </div>
 
       {/* Data Points Section */}
-      <div className="max-w-7xl w-full mx-auto px-4 mt-48 relative z-20">
+      <div className="max-w-7xl w-full mx-auto px-4 mt-48 relative z-40">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
           {dataPoints.map((point, index) => (
             <motion.div
