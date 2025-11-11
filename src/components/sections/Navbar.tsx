@@ -57,8 +57,8 @@ export default function Navbar() {
     <nav
       className="
         w-full sticky top-0 z-50 px-4 sm:px-6 py-3
-        border-b border-black/10 dark:border-gray-700
-        bg-white/10 dark:bg-black/10 backdrop-blur-sm
+        border-b border-black/60 dark:border-gray-700
+        bg-white/50 dark:bg-black/50 backdrop-blur-sm
         transition-colors duration-300
       "
     >
