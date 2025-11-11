@@ -18,9 +18,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="
-            text-4xl sm:text-5xl md:text-6xl font-semibold
+            text-6xl font-medium leading-18
             text-gray-900 dark:text-gray-100
-            max-w-2xl
+            max-w-4xl
           "
         >
           <span>The Only Platform You Need For Renewable Intelligence</span>
@@ -31,7 +31,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           className="
-            max-w-xl text-base sm:text-lg md:text-xl font-mono leading-relaxed
+            max-w-2xl text-2xl font-sans leading-relaxed
             text-gray-600 dark:text-gray-400
           "
         >
@@ -53,7 +53,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans font-bold text-white"
+            className="font-sans px-10 py-3 font-bold text-white text-l"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
