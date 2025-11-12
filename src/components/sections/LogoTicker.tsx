@@ -58,7 +58,7 @@ const logos = [
 
 export const LogoTicker = () => {
   return (
-    <div className="-mt-16 py-6 bg-transparent mb-20 relative z-10 pointer-events-none">
+    <div className="py-6 bg-transparent mb-20 relative z-10 pointer-events-none">
       <div className="container">
         <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)]">
           <motion.div

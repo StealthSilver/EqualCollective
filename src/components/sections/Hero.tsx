@@ -277,22 +277,22 @@ const sampleArcs = [
     endLat: -26.2,
     endLng: 28.0,
     arcAlt: 0.3,
-    color: "rgba(255, 122, 24, 0.6)",
+    color: "rgba(255, 132, 44, 0.6)",
   },
 ];
 
 const getGlobeConfig = (isDark: boolean) => ({
   pointSize: 1,
-  globeColor: isDark ? "#0a1e3d" : "#6da7f2", // Beautiful bluish color for light mode
+  globeColor: isDark ? "#0a1e3d" : "#9fddfc", // Beautiful bluish color for light mode
   showAtmosphere: true,
   atmosphereColor: isDark ? "#e0f2fe" : "#b3d9f2",
   atmosphereAltitude: 0.15,
-  emissive: isDark ? "#001a3d" : "#2b7db3", // Bluish emissive for light mode
-  emissiveIntensity: isDark ? 0.15 : 0.1,
+  emissive: isDark ? "#001a3d" : "#ffffff", // Bluish emissive for light mode
+  emissiveIntensity: isDark ? 0.15 : 0.5,
   shininess: 1.0,
   polygonColor: isDark
     ? "rgba(148, 197, 255, 0.5)"
-    : "rgba(30, 30, 30, 0.35)", // Dark grey polygons for light mode
+    : "rgba(0, 0, 0, 0.35)", // Dark grey polygons for light mode
   ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
