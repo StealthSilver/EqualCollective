@@ -105,23 +105,23 @@ export const About = () => {
             About the Team
           </h3>
 
-          <div className="space-y-24 mt-20">
+          <div className="space-y-32 mt-20 py-20">
             {/* Team Member 1 - Kumar M (Image on top right) */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40 min-h-[200px] mt-24"
             >
-              <div className="absolute -top-20 right-8 w-60 h-60 overflow-hidden">
+              <div className="absolute -top-20 right-8 w-48 h-48 overflow-hidden rounded-2xl shadow-lg">
                 <img
                   src="/Kumar.png"
                   alt="Kumar M"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div className="pt-12">
+              <div className="pt-12 pr-56">
                 <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   Kumar M
                 </h4>
@@ -140,23 +140,23 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40 min-h-[200px]"
             >
-              <div className="absolute -top-16 left-8 w-40 h-40 overflow-hidden">
+              <div className="absolute -top-20 left-8 w-48 h-48 overflow-hidden rounded-2xl shadow-lg">
                 <img
                   src="/Venkata.png"
                   alt="Venkata Krishnan"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div className="pt-12">
-                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="pt-12 pl-56">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-right">
                   Venkata Krishnan
                 </h4>
-                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4 text-right">
                   Co-founder & CGO
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans text-right">
                   A growth architect with over two decades of experience in renewable energy and industrial automation, Venkata Krishnan brings a rare blend of strategic insight and executional excellence. As Co-founder and CGO of Smart Grid Analytics, he leads global expansion, partnerships, and customer success—driving Solvyn's adoption across diverse energy markets. His deep understanding of utility-scale operations and ability to translate technical solutions into business value makes him a catalyst for transformation in the clean energy ecosystem.
                 </p>
               </div>
@@ -168,16 +168,16 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40 min-h-[200px]"
             >
-              <div className="absolute -top-16 right-8 w-40 h-40 overflow-hidden">
+              <div className="absolute -top-20 right-8 w-48 h-48 overflow-hidden rounded-2xl shadow-lg">
                 <img
                   src="/Tirumaleshwar.png"
                   alt="Tirumaleswara Reddy K"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div className="pt-12">
+              <div className="pt-12 pr-56">
                 <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   Tirumaleswara Reddy K
                 </h4>
@@ -196,23 +196,23 @@ export const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40 min-h-[200px]"
             >
-              <div className="absolute -top-16 left-8 w-40 h-40 overflow-hidden">
+              <div className="absolute -top-20 left-8 w-48 h-48 overflow-hidden rounded-2xl shadow-lg">
                 <img
                   src="/Pankaj.png"
                   alt="Pankaj Ghai"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div className="pt-12">
-                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="pt-12 pl-56">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-right">
                   Pankaj Ghai
                 </h4>
-                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4 text-right">
                   Senior Advisor
                 </p>
-                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans text-right">
                   A seasoned leader in private equity and climate infrastructure, Pankaj Ghai brings deep financial and strategic insight to Smart Grid Analytics. As Senior Advisor, he plays a key role in guiding Solvyn's North American growth, forging investor alliances, and shaping long-term value creation. With a track record of driving capital efficiency and scaling climate-focused ventures, he bridges financial discipline with purpose-driven innovation in the clean energy sector.
                 </p>
               </div>
