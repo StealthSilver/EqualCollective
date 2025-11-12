@@ -147,7 +147,7 @@ const sampleArcs = [
 
 const getGlobeConfig = (isDark: boolean) => ({
   pointSize: 1,
-  globeColor: isDark ? "#0a1e3d" : "#4a9fd8", // Beautiful bluish color for light mode
+  globeColor: isDark ? "#0a1e3d" : "#6da7f2", // Beautiful bluish color for light mode
   showAtmosphere: true,
   atmosphereColor: isDark ? "#e0f2fe" : "#b3d9f2",
   atmosphereAltitude: 0.15,
@@ -160,8 +160,8 @@ const getGlobeConfig = (isDark: boolean) => ({
   ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
-  pointLight: isDark ? "#60a5fa" : "#87ceeb",
-  pointColor: isDark ? "#ffffff" : "#2a2a2a", // White points for dark mode, dark grey points for light mode
+  pointLight: isDark ? "#87ceeb" : "#87ceeb",
+  pointColor: isDark ? "#b3dbfc" : "#b3dbfc", // White points for dark mode, dark grey points for light mode
   arcTime: 2000,
   arcLength: 0.9,
   rings: 1,
@@ -231,6 +231,11 @@ export default function Hero() {
         bg-white/70 dark:bg-black/70 backdrop-blur-md
         overflow-hidden flex flex-col justify-start  mx-auto pb-32
       "
+      style={{
+        background: isDarkMode 
+          ? 'radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)' 
+          : 'radial-gradient(circle at 100% 100%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)',
+      }}
     >
       {/* Globe positioned on the right */}
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
