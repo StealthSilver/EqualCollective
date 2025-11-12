@@ -1,4 +1,5 @@
 import Navbar from "@/components/sections/Navbar";
+import { Footer } from "@/components/sections/Footer";
 
 export default function WhitePapers() {
   return (
@@ -15,6 +16,7 @@ export default function WhitePapers() {
           </p>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

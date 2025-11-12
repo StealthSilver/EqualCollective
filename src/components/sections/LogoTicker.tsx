@@ -35,13 +35,11 @@ const logos = [
   spring,
   o2,
   inox,
-
   abb,
   adani,
   etap,
   blupine,
   fimer,
- 
   cleantech,
   jsw,
   alfanar,
@@ -71,13 +69,14 @@ export const LogoTicker = () => {
           <motion.div
             className="flex gap-20 flex-none"
             animate={{
-              translateX: isHovered ? undefined : "-50%",
+              translateX: "-50%",
             }}
             transition={{
               duration: 40,
               repeat: Infinity,
               ease: "linear",
               repeatType: "loop",
+              ...(isHovered && { duration: 0 }),
             }}
           >
             {logos.concat(logos).map((logo, index) => (

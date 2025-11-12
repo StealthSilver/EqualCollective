@@ -1,5 +1,5 @@
 import Navbar from "@/components/sections/Navbar";
-
+import { Footer } from "@/components/sections/Footer";
 export default function Blogs() {
   return (
     <main>
@@ -15,6 +15,7 @@ export default function Blogs() {
           </p>
         </div>
       </div>
+      <Footer/>
     </main>
   );
 }
