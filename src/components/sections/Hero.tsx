@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ShimmerButton } from "../ui/ShimmerButton";
-import { World } from "../ui/Globe";
+import { Globe } from "../ui/Globe";
 import { NumberTicker } from "../ui/NumberTicker";
 
 const sampleArcs = [
@@ -202,19 +202,13 @@ export default function Hero() {
       className="
         relative min-h-screen h-full px-4 sm:px-6 pt-28 sm:pt-36 md:pt-48 
         bg-white/70 dark:bg-black/70 backdrop-blur-md
-        overflow-hidden flex flex-col justify-start
+        overflow-hidden flex flex-col justify-start  mx-auto pb-32
       "
     >
       {/* Globe positioned on the right */}
-      <div className="absolute -right-48 top-1/2 -translate-y-1/2 w-[1200px] h-[1200px] pointer-events-none hidden lg:block -mr-[200px] z-30">
-        <div className="w-full h-full">
-          {mounted && (
-            <World key={theme} globeConfig={globeConfig} data={sampleArcs} />
-          )}
-        </div>
-      </div>
+      <Globe className="top-120" />
 
-      <div className="max-w-7xl ml-48 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
+      <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

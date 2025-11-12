@@ -10,10 +10,10 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
-      <LogoTicker />
       <About />
       <Solvyn />
       <Services />
+      <LogoTicker />
     </main>
   );
 }

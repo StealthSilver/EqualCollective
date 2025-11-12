@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import React, { useEffect, useState, useCallback } from "react";
 
 type PixelatedCanvasProps = {
   src: string;
@@ -81,20 +80,39 @@ export const PixelatedCanvas: React.FC<PixelatedCanvasProps> = ({
   fadeSpeed = 0.1,
   autoTheme = true,
 }) => {
-  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const [effectiveBgColor, setEffectiveBgColor] = useState(backgroundColor);
 
+  // Monitor theme changes via DOM mutation
   useEffect(() => {
     setMounted(true);
+
+    // Set initial theme
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+
+    // Listen for class changes on the HTML element
+    const observer = new MutationObserver(() => {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      setIsDark(isDarkMode);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
+  // Update background color based on theme
   useEffect(() => {
     if (autoTheme && mounted) {
-      const bgColor = theme === "dark" ? "#000000" : "#000000";
+      const bgColor = isDark ? "#000000" : "#ffffff";
       setEffectiveBgColor(bgColor);
     }
-  }, [theme, autoTheme, mounted]);
+  }, [isDark, autoTheme, mounted]);
 
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const samplesRef = React.useRef<
@@ -567,6 +585,8 @@ export const PixelatedCanvas: React.FC<PixelatedCanvasProps> = ({
     jitterSpeed,
     fadeOnLeave,
     fadeSpeed,
+    isDark,
+    mounted,
   ]);
 
   return (
