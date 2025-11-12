@@ -84,13 +84,13 @@ export default function Navbar() {
           </Link>
 
           <div
-            className="hidden md:flex items-center px-2 font-mono relative gap-4"
+            className="hidden md:flex items-center px-8 font-mono relative gap-4"
             onMouseLeave={() => setHovered(null)}
           >
             {navItems.map((item) => (
               <div
                 key={item.name}
-                className="relative px-2 py-1 select-none font-sans font-bold"
+                className="relative px-3 py-1 select-none font-sans font-semibold"
               >
                 {hovered === item.name && (
                   <motion.span
