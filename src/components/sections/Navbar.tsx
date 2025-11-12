@@ -163,7 +163,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-3">
-          <div className="scale-90">
+          <div className="scale-90 cursor-pointer">
             <ThemeToggle />
           </div>
 

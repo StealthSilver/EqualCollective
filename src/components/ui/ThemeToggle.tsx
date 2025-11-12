@@ -76,7 +76,7 @@ export const ThemeToggle = ({
       ref={buttonRef}
       onClick={toggleTheme}
       className={cn(
-        "transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white",
+        "cursor-pointer transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white",
         className
       )}
       {...props}

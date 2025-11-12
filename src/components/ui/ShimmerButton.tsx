@@ -44,9 +44,11 @@ export const ShimmerButton = React.forwardRef<
         }
         className={cn(
           "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden [border-radius:var(--radius)] border border-transparent px-4 py-2 whitespace-nowrap text-white [background:var(--bg)]",
-          "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-px",
+          "transform-gpu transition-all duration-300 ease-in-out active:translate-y-px",
           // ensure IBM Plex Sans is used and text is bold
           "font-sans font-bold text-sm",
+          // hover effects: darker background and text shadow
+          "hover:brightness-90 hover:[text-shadow:0_2px_8px_rgba(0,0,0,0.4)]",
           className
         )}
         ref={ref}
