@@ -34,13 +34,13 @@ const logos = [
   spring,
   o2,
   inox,
-  relience,
+
   abb,
   adani,
   etap,
   blupine,
   fimer,
-  jackson,
+ 
   cleantech,
   jsw,
   alfanar,

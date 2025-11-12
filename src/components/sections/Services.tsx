@@ -20,7 +20,7 @@ export const Services = () => {
       ref: bessRef, 
       icon: "/BESS.svg", 
       title: "BESS",
-      description: "Battery Energy Storage"
+      description: "Battery Energy Storage Systems"
     },
     { 
       ref: solarRef, 
@@ -32,18 +32,18 @@ export const Services = () => {
       ref: windRef, 
       icon: "/wind-power.svg", 
       title: "Wind",
-      description: "Wind Energy Systems"
+      description: "Wind Energy Solutions"
     },
     { 
       ref: hydrogenRef, 
       icon: "/GreenHydrogen.svg", 
       title: "Green Hydrogen",
-      description: "Hydrogen Solutions"
+      description: "Green Hydrogen Solutions"
     },
   ];
 
   return (
-    <section className="relative w-full px-4 sm:px-6 py-20 lg:py-32 bg-gradient-to-b from-white/70 via-gray-50/70 to-white/70 dark:from-black/70 dark:via-gray-900/70 dark:to-black/70 backdrop-blur-md overflow-hidden">
+    <section className="relative w-full px-4 sm:px-6 py-20 lg:py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.h2
@@ -51,7 +51,7 @@ export const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-m  font-bold uppercase mb-12 tracking-tight"
+          className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-m font-bold uppercase mb-8 tracking-tight"
         >
           Services
         </motion.h2>
@@ -61,7 +61,7 @@ export const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-center text-gray-600 dark:text-gray-400 text-lg mb-20"
+          className="text-center text-gray-600 dark:text-gray-400 text-lg font-sans leading-relaxed mb-20 max-w-3xl mx-auto"
         >
           Comprehensive energy solutions powered by cutting-edge technology
         </motion.p>
@@ -81,20 +81,20 @@ export const Services = () => {
           {/* Center logo - sgrids */}
           <motion.div
             ref={centerRef}
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6, type: "spring" }}
+            initial={{ scale: 0, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6, type: "spring", bounce: 0.4 }}
             viewport={{ once: true }}
             className="absolute top-20 left-1/2 -translate-x-1/2 z-20"
           >
-            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gradient-to-br from-purple-500 via-purple-600 to-orange-500 p-1 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
-              <div className="w-full h-full rounded-3xl bg-white dark:bg-gray-900 flex items-center justify-center p-6">
+            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 p-[2px] shadow-2xl hover:shadow-orange-500/30 dark:hover:shadow-orange-500/50 transition-all duration-500 hover:scale-110 group">
+              <div className="w-full h-full rounded-3xl bg-white dark:bg-gray-900 flex items-center justify-center p-6 backdrop-blur-sm">
                 <Image
                   src="/sgrids.svg"
                   alt="SGrids Logo"
                   width={120}
                   height={120}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                   style={{ filter: 'brightness(0) saturate(100%)' }}
                 />
               </div>
@@ -113,27 +113,28 @@ export const Services = () => {
                   transition={{ 
                     duration: 0.6, 
                     delay: 0.8 + index * 0.1,
-                    type: "spring" 
+                    type: "spring",
+                    bounce: 0.4
                   }}
                   viewport={{ once: true }}
                   className="flex flex-col items-center group cursor-pointer"
                 >
-                  <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 p-1 shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-110 border border-gray-200 dark:border-gray-700">
-                    <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-950 flex items-center justify-center p-4">
+                  <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-[2px] shadow-lg hover:shadow-xl dark:hover:shadow-orange-500/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+                    <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-950 flex items-center justify-center p-4 backdrop-blur-sm">
                       <Image
                         src={service.icon}
                         alt={service.title}
                         width={80}
                         height={80}
-                        className="w-full h-full object-contain group-hover:drop-shadow-lg transition-all duration-300"
+                        className="w-full h-full object-contain group-hover:scale-110 transition-all duration-500"
                         style={{ filter: 'invert(0) brightness(0) saturate(100%)' }}
                       />
                     </div>
                   </div>
-                  <h3 className="mt-4 text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 text-center">
+                  <h3 className="mt-4 text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 text-center font-sans group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 text-center">
+                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 text-center font-sans leading-relaxed">
                     {service.description}
                   </p>
                 </motion.div>

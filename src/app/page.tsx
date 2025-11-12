@@ -5,6 +5,7 @@ import { About } from "../components/sections/About";
 import { Solvyn } from "../components/sections/Solvyn";
 import { Services } from "../components/sections/Services";
 import { Cta } from "../components/sections/Cta";
+import { Footer } from "../components/sections/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Services />
       <LogoTicker />
       <Cta />
+      <Footer />
     </main>
   );
 }

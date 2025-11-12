@@ -290,9 +290,7 @@ const getGlobeConfig = (isDark: boolean) => ({
   emissive: isDark ? "#001a3d" : "#ffffff", // Bluish emissive for light mode
   emissiveIntensity: isDark ? 0.15 : 0.5,
   shininess: 1.0,
-  polygonColor: isDark
-    ? "rgba(148, 197, 255, 0.5)"
-    : "rgba(0, 0, 0, 0.35)", // Dark grey polygons for light mode
+  polygonColor: isDark ? "rgba(148, 197, 255, 0.5)" : "rgba(0, 0, 0, 0.35)", // Dark grey polygons for light mode
   ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
@@ -323,10 +321,13 @@ export default function Hero() {
     // Watch for class changes on document element
     const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark");
-      console.log("Theme changed via MutationObserver:", isDark ? "dark" : "light");
+      console.log(
+        "Theme changed via MutationObserver:",
+        isDark ? "dark" : "light"
+      );
       setIsDarkMode(isDark);
       setGlobeConfig(getGlobeConfig(isDark));
-      setGlobeKey(prev => prev + 1); // Force re-render
+      setGlobeKey((prev) => prev + 1); // Force re-render
     });
 
     observer.observe(document.documentElement, {
@@ -340,11 +341,14 @@ export default function Hero() {
   useEffect(() => {
     if (mounted) {
       // Additional update based on theme prop changes
-      const isDark = resolvedTheme === "dark" || theme === "dark" || document.documentElement.classList.contains("dark");
+      const isDark =
+        resolvedTheme === "dark" ||
+        theme === "dark" ||
+        document.documentElement.classList.contains("dark");
       console.log("Theme changed via useEffect:", isDark ? "dark" : "light");
       setIsDarkMode(isDark);
       setGlobeConfig(getGlobeConfig(isDark));
-      setGlobeKey(prev => prev + 1); // Force re-render
+      setGlobeKey((prev) => prev + 1); // Force re-render
     }
   }, [theme, resolvedTheme, mounted]);
 
@@ -368,17 +372,17 @@ export default function Hero() {
         overflow-hidden flex flex-col justify-start  mx-auto pb-32
       "
       style={{
-        background: isDarkMode 
-          ? 'radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)' 
-          : 'radial-gradient(circle at 100% 100%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)',
+        background: isDarkMode
+          ? "radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)"
+          : "radial-gradient(circle at 100% 100%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)",
       }}
     >
       {/* Globe positioned on the right */}
-      <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
+      {/* <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
         <div className="absolute -right-80 -top-24 w-[1100px] h-[1100px]">
           <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
-      </div>
+      </div> */}
 
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1
