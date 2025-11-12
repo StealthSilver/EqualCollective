@@ -255,7 +255,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans px-10 py-3 font-bold text-white text-l"
+            className="font-sans px-6 py-3 font-bold text-white"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
