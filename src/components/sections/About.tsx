@@ -3,10 +3,51 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { PixelatedCanvas } from "../ui/PixelatedCanvas";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export const About = () => {
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const isDark = document.documentElement.classList.contains("dark");
+    setIsDarkMode(isDark);
+
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setIsDarkMode(isDark);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      const isDark =
+        resolvedTheme === "dark" ||
+        theme === "dark" ||
+        document.documentElement.classList.contains("dark");
+      setIsDarkMode(isDark);
+    }
+  }, [theme, resolvedTheme, mounted]);
+
   return (
-    <section className="relative max-h-screen w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
+    <section 
+      className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      style={{
+        background: isDarkMode
+          ? "radial-gradient(circle at 132% 0%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)"
+          : "radial-gradient(circle at 40% 0%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)",
+      }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.h2
@@ -53,33 +94,135 @@ export const About = () => {
           </motion.div>
 
           {/* Right Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex justify-center lg:justify-end"
-          >
-            <PixelatedCanvas
-              src="/about-img.png"
-              width={400}
-              height={600}
-              cellSize={2}
-              dotScale={0.85}
-              shape="square"
-              grayscale={false}
-              interactive={true}
-              distortionStrength={2}
-              distortionRadius={40}
-              distortionMode="swirl"
-              jitterStrength={6}
-              jitterSpeed={3}
-              fadeOnLeave={true}
-              fadeSpeed={0.12}
-              autoTheme={true}
-            />
-          </motion.div>
+       
         </div>
+
+        {/* About the Team Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mt-24"
+        >
+          <h3 className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-m font-bold uppercase mb-16 tracking-tight">
+            About the Team
+          </h3>
+
+          <div className="space-y-24 mt-20">
+            {/* Team Member 1 - Kumar M (Image on top right) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+            >
+              <div className="absolute -top-20 right-8 w-60 h-60 overflow-hidden">
+                <img
+                  src="/Kumar.png"
+                  alt="Kumar M"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="pt-12">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Kumar M
+                </h4>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                  Founder & CEO
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                  A visionary in the energy sector with over 20 years of hands-on experience, Kumar M has been at the forefront of renewable innovation, grid automation, and digital transformation. Since founding Armax in 2005 and later Smart Grid Analytics, he has led the development of intelligent energy platforms that now power gigawatts of assets globally. His work bridges deep engineering insight with entrepreneurial foresight—delivering technologies like Solvyn that are redefining how renewable infrastructure is monitored, controlled, and optimized.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Team Member 2 - Venkata Krishnan (Image on top left) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+            >
+              <div className="absolute -top-16 left-8 w-40 h-40 overflow-hidden">
+                <img
+                  src="/Venkata.png"
+                  alt="Venkata Krishnan"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="pt-12">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Venkata Krishnan
+                </h4>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                  Co-founder & CGO
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                  A growth architect with over two decades of experience in renewable energy and industrial automation, Venkata Krishnan brings a rare blend of strategic insight and executional excellence. As Co-founder and CGO of Smart Grid Analytics, he leads global expansion, partnerships, and customer success—driving Solvyn's adoption across diverse energy markets. His deep understanding of utility-scale operations and ability to translate technical solutions into business value makes him a catalyst for transformation in the clean energy ecosystem.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Team Member 3 - Tirumaleswara Reddy K (Image on top right) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+            >
+              <div className="absolute -top-16 right-8 w-40 h-40 overflow-hidden">
+                <img
+                  src="/Tirumaleshwar.png"
+                  alt="Tirumaleswara Reddy K"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="pt-12">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Tirumaleswara Reddy K
+                </h4>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                  CTO
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                  A software innovator with over two decades of experience in architecting scalable enterprise platforms, Tirumaleswara Reddy K leads the technology vision at Smart Grid Analytics. As CTO, he drives the design and development of Solvyn—an integrated, cloud-native platform built for the complexities of modern renewable energy systems. His expertise spans system architecture, data engineering, cybersecurity, and intelligent automation, making him the backbone of Solvyn's transformation from concept to global deployment.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Team Member 4 - Pankaj Ghai (Image on top left) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="relative border-2 border-white dark:border-gray-300 rounded-3xl p-8 backdrop-blur-sm bg-white/40 dark:bg-black/40"
+            >
+              <div className="absolute -top-16 left-8 w-40 h-40 overflow-hidden">
+                <img
+                  src="/Pankaj.png"
+                  alt="Pankaj Ghai"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="pt-12">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Pankaj Ghai
+                </h4>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                  Senior Advisor
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed font-sans">
+                  A seasoned leader in private equity and climate infrastructure, Pankaj Ghai brings deep financial and strategic insight to Smart Grid Analytics. As Senior Advisor, he plays a key role in guiding Solvyn's North American growth, forging investor alliances, and shaping long-term value creation. With a track record of driving capital efficiency and scaling climate-focused ventures, he bridges financial discipline with purpose-driven innovation in the clean energy sector.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

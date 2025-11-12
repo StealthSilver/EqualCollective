@@ -378,11 +378,11 @@ export default function Hero() {
       }}
     >
       {/* Globe positioned on the right */}
-      {/* <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
         <div className="absolute -right-80 -top-24 w-[1100px] h-[1100px]">
           <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
-      </div> */}
+      </div>
 
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1

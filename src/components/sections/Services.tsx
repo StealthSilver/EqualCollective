@@ -95,7 +95,6 @@ export const Services = () => {
                   width={120}
                   height={120}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  style={{ filter: 'brightness(0) saturate(100%)' }}
                 />
               </div>
             </div>
@@ -119,15 +118,14 @@ export const Services = () => {
                   viewport={{ once: true }}
                   className="flex flex-col items-center group cursor-pointer"
                 >
-                  <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-[2px] shadow-lg hover:shadow-xl dark:hover:shadow-orange-500/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-[2px] shadow-lg hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] transition-all duration-500 group-hover:scale-110">
                     <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-950 flex items-center justify-center p-4 backdrop-blur-sm">
                       <Image
                         src={service.icon}
                         alt={service.title}
                         width={80}
                         height={80}
-                        className="w-full h-full object-contain group-hover:scale-110 transition-all duration-500"
-                        style={{ filter: 'invert(0) brightness(0) saturate(100%)' }}
+                        className="w-full h-full object-contain brightness-0 dark:brightness-100 dark:invert transition-all duration-500"
                       />
                     </div>
                   </div>
@@ -142,14 +140,14 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Animated beams connecting center to all service icons */}
+          {/* Animated beams connecting center to all service icons - synchronized timing */}
           <AnimatedBeam
             containerRef={containerRef}
             fromRef={centerRef}
             toRef={bessRef}
             curvature={-50}
             reverse={false}
-            duration={4}
+            duration={3}
             delay={1.2}
             pathColor="rgba(168, 85, 247, 0.2)"
             pathWidth={2}
@@ -162,9 +160,9 @@ export const Services = () => {
             fromRef={centerRef}
             toRef={solarRef}
             curvature={-50}
-            reverse={true}
-            duration={3.5}
-            delay={1.3}
+            reverse={false}
+            duration={3}
+            delay={1.2}
             pathColor="rgba(249, 115, 22, 0.2)"
             pathWidth={2}
             pathOpacity={0.3}
@@ -177,8 +175,8 @@ export const Services = () => {
             toRef={windRef}
             curvature={-50}
             reverse={false}
-            duration={4.5}
-            delay={1.4}
+            duration={3}
+            delay={1.2}
             pathColor="rgba(59, 130, 246, 0.2)"
             pathWidth={2}
             pathOpacity={0.3}
@@ -190,9 +188,9 @@ export const Services = () => {
             fromRef={centerRef}
             toRef={hydrogenRef}
             curvature={-50}
-            reverse={true}
-            duration={3.8}
-            delay={1.5}
+            reverse={false}
+            duration={3}
+            delay={1.2}
             pathColor="rgba(34, 197, 94, 0.2)"
             pathWidth={2}
             pathOpacity={0.3}
