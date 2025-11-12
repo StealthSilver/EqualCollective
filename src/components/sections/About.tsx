@@ -42,11 +42,7 @@ export const About = () => {
   return (
     <section 
       className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
-      style={{
-        background: isDarkMode
-          ? "radial-gradient(circle at 132% 0%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)"
-          : "radial-gradient(circle at 40% 0%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)",
-      }}
+     
     >
       <div className="max-w-7xl mx-auto">
         {/* Title */}

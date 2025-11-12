@@ -371,11 +371,7 @@ export default function Hero() {
         bg-white/70 dark:bg-black/70 backdrop-blur-md
         overflow-hidden flex flex-col justify-start  mx-auto pb-32
       "
-      style={{
-        background: isDarkMode
-          ? "radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%)"
-          : "radial-gradient(circle at 100% 100%, rgba(54, 129, 250, 0.4) 0%, rgba(255, 255, 255, 0.7) 50%)",
-      }}
+     
     >
       {/* Globe positioned on the right */}
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
