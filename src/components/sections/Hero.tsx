@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ShimmerButton } from "../ui/ShimmerButton";
-import { Globe } from "../ui/Globe";
+import { World } from "../ui/Globe";
 import { NumberTicker } from "../ui/NumberTicker";
 
 const sampleArcs = [
@@ -147,20 +147,21 @@ const sampleArcs = [
 
 const getGlobeConfig = (isDark: boolean) => ({
   pointSize: 1,
-  globeColor: isDark ? "#0a1e3d" : "#4a9fd8",
+  globeColor: isDark ? "#0a1e3d" : "#4a9fd8", // Beautiful bluish color for light mode
   showAtmosphere: true,
-  atmosphereColor: isDark ? "#e0f2fe" : "#7ec8e3",
+  atmosphereColor: isDark ? "#e0f2fe" : "#b3d9f2",
   atmosphereAltitude: 0.15,
-  emissive: isDark ? "#001a3d" : "#2d6fa3",
+  emissive: isDark ? "#001a3d" : "#2b7db3", // Bluish emissive for light mode
   emissiveIntensity: isDark ? 0.15 : 0.1,
   shininess: 1.0,
   polygonColor: isDark
     ? "rgba(148, 197, 255, 0.5)"
-    : "rgba(100, 180, 220, 0.45)",
+    : "rgba(30, 30, 30, 0.35)", // Dark grey polygons for light mode
   ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
-  pointLight: isDark ? "#60a5fa" : "#3b82d6",
+  pointLight: isDark ? "#60a5fa" : "#87ceeb",
+  pointColor: isDark ? "#ffffff" : "#2a2a2a", // White points for dark mode, dark grey points for light mode
   arcTime: 2000,
   arcLength: 0.9,
   rings: 1,
@@ -170,20 +171,46 @@ const getGlobeConfig = (isDark: boolean) => ({
 });
 
 export default function Hero() {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [globeConfig, setGlobeConfig] = useState(getGlobeConfig(false));
+  const [globeKey, setGlobeKey] = useState(0);
 
   useEffect(() => {
     setMounted(true);
+    // Set initial theme on mount
+    const isDark = document.documentElement.classList.contains("dark");
+    setIsDarkMode(isDark);
+    setGlobeConfig(getGlobeConfig(isDark));
+
+    // Watch for class changes on document element
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      console.log("Theme changed via MutationObserver:", isDark ? "dark" : "light");
+      setIsDarkMode(isDark);
+      setGlobeConfig(getGlobeConfig(isDark));
+      setGlobeKey(prev => prev + 1); // Force re-render
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     if (mounted) {
-      const isDark = theme === "dark";
+      // Additional update based on theme prop changes
+      const isDark = resolvedTheme === "dark" || theme === "dark" || document.documentElement.classList.contains("dark");
+      console.log("Theme changed via useEffect:", isDark ? "dark" : "light");
+      setIsDarkMode(isDark);
       setGlobeConfig(getGlobeConfig(isDark));
+      setGlobeKey(prev => prev + 1); // Force re-render
     }
-  }, [theme, mounted]);
+  }, [theme, resolvedTheme, mounted]);
 
   const dataPoints = [
     { value: 400, suffix: "+", label: "PROJECTS SUCCESSFULLY COMPLETED" },
@@ -206,7 +233,11 @@ export default function Hero() {
       "
     >
       {/* Globe positioned on the right */}
-      <Globe className="top-120" />
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
+        <div className="absolute -right-80 -top-24 w-[1100px] h-[1100px]">
+          <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
+        </div>
+      </div>
 
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1

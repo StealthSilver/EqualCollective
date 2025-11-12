@@ -4,6 +4,7 @@ import { LogoTicker } from "../components/sections/LogoTicker";
 import { About } from "../components/sections/About";
 import { Solvyn } from "../components/sections/Solvyn";
 import { Services } from "../components/sections/Services";
+import { Cta } from "../components/sections/Cta";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Solvyn />
       <Services />
       <LogoTicker />
+      <Cta />
     </main>
   );
 }
