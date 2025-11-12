@@ -26,7 +26,8 @@ import vena from "@/assets/logo/vena_logo.png";
 import waree from "@/assets/logo/waree_logo.png";
 import kalpatru from "@/assets/logo/kalpatru_logo.webp";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useAnimationControls } from "framer-motion";
+import { useState } from "react";
 
 const logos = [
   ampex,
@@ -57,14 +58,20 @@ const logos = [
 ];
 
 export const LogoTicker = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="py-6 bg-transparent mb-20 relative z-10 pointer-events-none">
-      <div className="container">
-        <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)]">
+    <div className="py-6 bg-transparent mb-20 relative z-10">
+      <div className="container mx-auto px-4">
+        <div 
+          className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)] justify-center pointer-events-auto"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <motion.div
             className="flex gap-20 flex-none"
             animate={{
-              translateX: "-50%",
+              translateX: isHovered ? undefined : "-50%",
             }}
             transition={{
               duration: 40,
@@ -78,7 +85,7 @@ export const LogoTicker = () => {
                 key={index}
                 src={logo}
                 alt={`Logo ${index + 1}`}
-                className="logo-ticker-image h-16 "
+                className="logo-ticker-image h-16 cursor-pointer"
                 width={180}
                 height={40}
                 style={{ objectFit: "contain" }}

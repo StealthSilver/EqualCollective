@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShimmerButton } from "../ui/ShimmerButton";
 
@@ -16,6 +16,23 @@ export const Cta = () => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -140,14 +157,31 @@ export const Cta = () => {
                     />
                   </svg>
                 </div>
-                <div>
+                <div className="flex-1">
                   <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 font-sans">
                     Visit Us
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-400 font-sans">
-                  Smart Grid Analytics Private Limited
-Msm Plaza, 2nd floor, service rd, opp. Kallumantapa, Banaswadi, Bangalore, Karnataka – 560043
+                  <p className="text-gray-600 dark:text-gray-400 font-sans mb-4">
+                  Smart Grid Analytics Pvt Ltd<br />
+                  2nd Floor, MSM Plaza, Service Road, Outer Ring Rd, Banaswadi, Bengaluru, Karnataka 560113
                   </p>
+                  {/* Google Maps Embed */}
+                  <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 mt-8">
+                    <iframe
+                      src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=Smart+Grid+Analytics+Pvt+Ltd,2nd+Floor+MSM+Plaza+Service+Road+Outer+Ring+Rd+Banaswadi+Bengaluru+Karnataka+560113&zoom=15&maptype=roadmap`}
+                      width="100%"
+                      height="250"
+                      style={{ 
+                        border: 0,
+                        filter: isDark ? 'invert(90%) hue-rotate(180deg)' : 'none',
+                        transition: 'filter 0.3s ease'
+                      }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
