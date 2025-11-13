@@ -376,7 +376,7 @@ export default function Hero() {
       {/* Globe positioned on the right */}
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
         <div className="absolute -right-80 -top-24 w-[1100px] h-[1100px]">
-          {/* <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} /> */}
+          <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
       </div>
 

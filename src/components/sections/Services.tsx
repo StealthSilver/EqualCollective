@@ -247,16 +247,32 @@ export const Services = () => {
         className="overflow-x-hidden mt-8 py-10 md:py-16 px-4 flex flex-col items-center justify-center transition-colors duration-700"
       >
         {/* Title - matching the Services title style */}
-        <div className="max-w-7xl mx-auto mb-12">
+        <div className="max-w-7xl mx-auto mb-8">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="font-ibm-plex-sans text-gray-900 dark:text-gray-400 text-center text-m font-bold uppercase mb-4 tracking-tight"
+            className="font-ibm-plex-sans text-gray-900 dark:text-gray-400 text-center text-m font-bold uppercase mb-6 tracking-tight"
           >
             Why Smart Grid Analytics?
           </motion.h2>
+
+          {/* Concise Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mb-8"
+          >
+            <p className="text-center text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-4">
+              Founded by control engineers and energy futurists, we built <span className="font-semibold text-orange-600 dark:text-orange-400">Solvyn</span> — the only platform unifying SCADA, EMS, PPC, EPM, Intelligent Bidding, Digital Twin, and AI analytics into one seamless system.
+            </p>
+            <p className="text-center text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed">
+              With <span className="font-semibold text-gray-800 dark:text-gray-200">85+ GW of assets under management across 20 countries</span>, we transform megawatts into decisions and data into foresight — enabling real-time visibility, AI-driven fault prevention, automated dispatch, and built-in compliance with CEA, IEC 62443, AEMO, and global grid codes.
+            </p>
+          </motion.div>
         </div>
 
         {/* Cards - 3x2 Grid */}
