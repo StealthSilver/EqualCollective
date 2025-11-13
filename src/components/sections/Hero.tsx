@@ -374,8 +374,8 @@ export default function Hero() {
      
     >
       {/* Globe positioned on the right */}
-      <div className="absolute top-0 right-0 w-full h-full pointer-events-none">
-        <div className="absolute -right-80 -top-24 w-[1100px] h-[1100px]">
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute -right-200 -top-24 w-[1100px] h-[1100px] min-w-[1100px] min-h-[1100px] relative">
           <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
       </div>
@@ -383,7 +383,7 @@ export default function Hero() {
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}y nbtr
           transition={{ duration: 0.8 }}
           className="
             text-6xl font-medium leading-18

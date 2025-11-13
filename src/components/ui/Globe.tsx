@@ -242,13 +242,19 @@ export function Globe({ globeConfig, data }: WorldProps) {
 }
 
 export function WebGLRendererConfig() {
-  const { gl, size } = useThree();
+  const { gl, size, camera } = useThree();
 
   useEffect(() => {
     gl.setPixelRatio(window.devicePixelRatio);
     gl.setSize(size.width, size.height);
     gl.setClearColor(0xffaaff, 0);
-  }, []);
+    
+    // Update camera aspect ratio on resize to prevent oblong distortion
+    if (camera instanceof PerspectiveCamera) {
+      camera.aspect = size.width / size.height;
+      camera.updateProjectionMatrix();
+    }
+  }, [gl, size, camera]);
 
   return null;
 }
@@ -257,8 +263,21 @@ export function World(props: WorldProps) {
   const { globeConfig } = props;
   const scene = new Scene();
   scene.fog = new Fog(0xffffff, 400, 2000);
+  
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas 
+      scene={scene} 
+      camera={{ 
+        fov: 50, 
+        aspect: aspect, 
+        near: 180, 
+        far: 1800,
+        position: [0, 0, cameraZ]
+      }}
+      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
+      resize={{ scroll: false, debounce: { scroll: 50, resize: 50 } }}
+      dpr={[1, 2]}
+    >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight

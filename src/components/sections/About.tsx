@@ -39,7 +39,7 @@ export const About = () => {
   }, [theme, resolvedTheme, mounted]);
 
   return (
-    <section 
+    <section id="about"
       className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
      
     >
