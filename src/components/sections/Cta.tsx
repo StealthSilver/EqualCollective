@@ -63,7 +63,7 @@ export const Cta = () => {
         setSubmitStatus("success");
         setFormData({ name: "", email: "", company: "", message: "" });
         setPrivacyAccepted(false);
-        
+
         // Reset success message after 5 seconds
         setTimeout(() => {
           setSubmitStatus("idle");
@@ -71,7 +71,7 @@ export const Cta = () => {
       } else {
         setSubmitStatus("error");
         console.error("Error sending email:", data.error);
-        
+
         // Reset error message after 5 seconds
         setTimeout(() => {
           setSubmitStatus("idle");
@@ -80,7 +80,7 @@ export const Cta = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitStatus("error");
-      
+
       // Reset error message after 5 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
@@ -104,10 +104,10 @@ export const Cta = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <p className="text-center text-gray-500 dark:text-gray-500 text-sm font-semibold uppercase tracking-wider mb-8 font-sans">
+          <p className="text-center text-gray-500 dark:text-gray-500 mb-12 text-sm font-semibold uppercase tracking-wider mb-8 font-sans">
             Trusted by Industry Leaders
           </p>
-          <LogoTicker />
+          {/* <LogoTicker /> */}
         </motion.div>
 
         {/* CTA Heading */}
@@ -116,7 +116,7 @@ export const Cta = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-center mb-16 relative"
+          className="text-center mb-24 relative"
         >
           {/* Animated Glow Background */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -135,14 +135,14 @@ export const Cta = () => {
           </div>
 
           <div className="relative z-10 py-8">
-          <h2 className="font-ibm-plex-sans text-4xl md:text-5xl font-semibold mb-6 tracking-tight">
-  <span
-    className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 dark:from-orange-400 dark:via-orange-300 dark:to-orange-400 bg-clip-text text-transparent inline-block animate-gradient pb-1"
-    style={{ backgroundSize: "200% 200%" }}
-  >
-    Amp it up with Solvyn
-  </span>
-</h2>
+            <h2 className="font-ibm-plex-sans text-4xl md:text-5xl font-semibold mb-6 tracking-tight">
+              <span
+                className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 dark:from-orange-400 dark:via-orange-300 dark:to-orange-400 bg-clip-text text-transparent inline-block animate-gradient pb-1"
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                Amp it up with Solvyn
+              </span>
+            </h2>
 
             <p className="text-center text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto font-sans leading-relaxed">
               Ready to transform your renewable energy operations? Connect with our team and discover how Solvyn can power your success.

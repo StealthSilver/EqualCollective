@@ -8,7 +8,7 @@ import Image from "next/image";
 export const Services = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
-  
+
   // Create refs for the 4 energy icons
   const bessRef = useRef<HTMLDivElement>(null);
   const solarRef = useRef<HTMLDivElement>(null);
@@ -16,34 +16,34 @@ export const Services = () => {
   const hydrogenRef = useRef<HTMLDivElement>(null);
 
   const energyServices = [
-    { 
-      ref: bessRef, 
-      icon: "/BESS.svg", 
+    {
+      ref: bessRef,
+      icon: "/BESS.svg",
       title: "BESS",
       description: "Battery Energy Storage Systems"
     },
-    { 
-      ref: solarRef, 
-      icon: "/Solar.svg", 
+    {
+      ref: solarRef,
+      icon: "/Solar.svg",
       title: "Solar",
       description: "Solar Power Solutions"
     },
-    { 
-      ref: windRef, 
-      icon: "/wind-power.svg", 
+    {
+      ref: windRef,
+      icon: "/wind-power.svg",
       title: "Wind",
       description: "Wind Energy Solutions"
     },
-    { 
-      ref: hydrogenRef, 
-      icon: "/GreenHydrogen.svg", 
+    {
+      ref: hydrogenRef,
+      icon: "/GreenHydrogen.svg",
       title: "Green Hydrogen",
       description: "Green Hydrogen Solutions"
     },
   ];
 
   return (
-    <section className="relative w-full px-4 sm:px-6 py-20 lg:py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
+    <section id="services" className="relative w-full px-4 sm:px-6 py-20 lg:py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.h2
@@ -55,13 +55,13 @@ export const Services = () => {
         >
           Services
         </motion.h2>
-        
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-center text-gray-600 dark:text-gray-400 text-lg font-sans leading-relaxed mb-20 max-w-3xl mx-auto"
+          className="text-center text-gray-600 dark:text-gray-400 text-lg font-sans leading-relaxed max-w-3xl mx-auto"
         >
           Comprehensive energy solutions powered by cutting-edge technology
         </motion.p>
@@ -92,8 +92,8 @@ export const Services = () => {
                 <Image
                   src="/sgrids.svg"
                   alt="SGrids Logo"
-                  width={120}
-                  height={120}
+                  width={100}
+                  height={100}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
@@ -109,8 +109,8 @@ export const Services = () => {
                   ref={service.ref}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.6, 
+                  transition={{
+                    duration: 0.6,
                     delay: 0.8 + index * 0.1,
                     type: "spring",
                     bounce: 0.4
@@ -119,13 +119,13 @@ export const Services = () => {
                   className="flex flex-col items-center group cursor-pointer"
                 >
                   <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-[2px] shadow-lg hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] transition-all duration-500 group-hover:scale-110">
-                    <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-950 flex items-center justify-center p-4 backdrop-blur-sm">
+                    <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-950  flex items-center justify-center p-4 backdrop-blur-sm">
                       <Image
                         src={service.icon}
                         alt={service.title}
                         width={80}
                         height={80}
-                        className="w-full h-full object-contain brightness-0 dark:brightness-100 dark:invert transition-all duration-500"
+                        className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert transition-all duration-500"
                       />
                     </div>
                   </div>
@@ -145,58 +145,29 @@ export const Services = () => {
             containerRef={containerRef}
             fromRef={centerRef}
             toRef={bessRef}
-            curvature={-50}
-            reverse={false}
-            duration={3}
-            delay={1.2}
-            pathColor="rgba(168, 85, 247, 0.2)"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#a855f7"
-            gradientStopColor="#ec4899"
+            curvature={-20}
+            reverse
           />
           <AnimatedBeam
             containerRef={containerRef}
             fromRef={centerRef}
             toRef={solarRef}
-            curvature={-50}
-            reverse={false}
-            duration={3}
-            delay={1.2}
-            pathColor="rgba(249, 115, 22, 0.2)"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#f97316"
-            gradientStopColor="#eab308"
+            curvature={-40}
+            reverse
           />
           <AnimatedBeam
             containerRef={containerRef}
             fromRef={centerRef}
             toRef={windRef}
-            curvature={-50}
-            reverse={false}
-            duration={3}
-            delay={1.2}
-            pathColor="rgba(59, 130, 246, 0.2)"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#3b82f6"
-            gradientStopColor="#06b6d4"
+            curvature={-40}
           />
           <AnimatedBeam
             containerRef={containerRef}
             fromRef={centerRef}
             toRef={hydrogenRef}
-            curvature={-50}
-            reverse={false}
-            duration={3}
-            delay={1.2}
-            pathColor="rgba(34, 197, 94, 0.2)"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#10b981"
+            curvature={-20}
           />
+
         </div>
       </motion.div>
     </section>
