@@ -107,7 +107,7 @@ export const Cta = () => {
           <p className="text-center text-gray-500 dark:text-gray-500 mb-12 text-sm font-semibold uppercase tracking-wider mb-8 font-sans">
             Trusted by Industry Leaders
           </p>
-          {/* <LogoTicker /> */}
+          <LogoTicker />
         </motion.div>
 
         {/* CTA Heading */}

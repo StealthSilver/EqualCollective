@@ -74,10 +74,38 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
       }
     };
 
-    const resizeObserver = new ResizeObserver(() => updatePath());
-    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    // Initial update
     updatePath();
-    return () => resizeObserver.disconnect();
+    
+    // Update on window resize
+    window.addEventListener("resize", updatePath);
+    
+    // Update after a short delay to ensure layout is settled
+    const timeoutId = setTimeout(updatePath, 100);
+    
+    // ResizeObserver for container changes
+    const resizeObserver = new ResizeObserver(() => {
+      updatePath();
+    });
+    
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+    
+    // Observe all refs for changes
+    if (fromRef.current) {
+      resizeObserver.observe(fromRef.current);
+    }
+    
+    if (toRef.current) {
+      resizeObserver.observe(toRef.current);
+    }
+    
+    return () => {
+      window.removeEventListener("resize", updatePath);
+      resizeObserver.disconnect();
+      clearTimeout(timeoutId);
+    };
   }, [containerRef, fromRef, toRef, curvature, startXOffset, startYOffset, endXOffset, endYOffset]);
 
   return (
