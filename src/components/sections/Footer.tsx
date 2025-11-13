@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Link from "next/link";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -47,15 +47,15 @@ export const Footer = () => {
       { name: "Grid Integration", href: "#" },
     ],
     company: [
-      { name: "About Us", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Blogs", href: "#" },
-      { name: "Contact", href: "#" },
+      { name: "About Us", href: "#about" },
+      { name: "Careers", href: "/careers" },
+      { name: "Blogs", href: "/blogs" },
+      { name: "Contact", href: "#contact" },
     ],
     legal: [
-      { name: "Privacy Policy", href: "#" },
-      { name: "Terms of Service", href: "#" },
-      { name: "Cookie Policy", href: "#" },
+      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Terms of Service", href: "/terms-of-service" },
+      { name: "Cookie Policy", href: "/cookie-policy" },
     ],
   };
 
@@ -64,6 +64,7 @@ export const Footer = () => {
       name: "LinkedIn",
       href: "https://in.linkedin.com/company/smart-grid-analytics",
       target: "_blank",
+      rel: "noopener noreferrer",
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -127,6 +128,8 @@ export const Footer = () => {
                   href={social.href}
                   className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300"
                   aria-label={social.name}
+                  target={social.target}
+                  rel={social.rel}
                 >
                   {social.icon}
                 </a>
@@ -149,12 +152,9 @@ export const Footer = () => {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors text-sm font-sans"
-                    >
+                    <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors text-sm font-sans">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

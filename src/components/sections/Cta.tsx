@@ -130,7 +130,7 @@ export const Cta = () => {
                     Email Us
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400 font-sans">
-                    info@sgrids.com
+                    info@sgrids.io
                   </p>
                 </div>
               </div>
