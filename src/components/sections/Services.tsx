@@ -30,14 +30,21 @@ export const Services = () => {
 
   // Force beams to recalculate after animations complete
   const [beamKey, setBeamKey] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Recalculate beams after animations settle
-    const timer = setTimeout(() => {
-      setBeamKey((prev) => prev + 1);
-    }, 1500);
+    // Mark as mounted
+    setMounted(true);
+    
+    // Multiple recalculations to ensure beams are positioned correctly
+    const timers = [
+      setTimeout(() => setBeamKey((prev) => prev + 1), 100),
+      setTimeout(() => setBeamKey((prev) => prev + 1), 500),
+      setTimeout(() => setBeamKey((prev) => prev + 1), 1000),
+      setTimeout(() => setBeamKey((prev) => prev + 1), 1800),
+    ];
 
-    return () => clearTimeout(timer);
+    return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
 
   const energyServices = [
@@ -207,37 +214,41 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Animated beams */}
-          <AnimatedBeam
-            key={`bess-${beamKey}`}
-            containerRef={containerRef}
-            fromRef={centerRef}
-            toRef={bessRef}
-            curvature={-20}
-            reverse
-          />
-          <AnimatedBeam
-            key={`solar-${beamKey}`}
-            containerRef={containerRef}
-            fromRef={centerRef}
-            toRef={solarRef}
-            curvature={-40}
-            reverse
-          />
-          <AnimatedBeam
-            key={`wind-${beamKey}`}
-            containerRef={containerRef}
-            fromRef={centerRef}
-            toRef={windRef}
-            curvature={-40}
-          />
-          <AnimatedBeam
-            key={`hydrogen-${beamKey}`}
-            containerRef={containerRef}
-            fromRef={centerRef}
-            toRef={hydrogenRef}
-            curvature={-20}
-          />
+          {/* Animated beams - only render after mount to ensure correct positioning */}
+          {mounted && (
+            <>
+              <AnimatedBeam
+                key={`bess-${beamKey}`}
+                containerRef={containerRef}
+                fromRef={centerRef}
+                toRef={bessRef}
+                curvature={-20}
+                reverse
+              />
+              <AnimatedBeam
+                key={`solar-${beamKey}`}
+                containerRef={containerRef}
+                fromRef={centerRef}
+                toRef={solarRef}
+                curvature={-40}
+                reverse
+              />
+              <AnimatedBeam
+                key={`wind-${beamKey}`}
+                containerRef={containerRef}
+                fromRef={centerRef}
+                toRef={windRef}
+                curvature={-40}
+              />
+              <AnimatedBeam
+                key={`hydrogen-${beamKey}`}
+                containerRef={containerRef}
+                fromRef={centerRef}
+                toRef={hydrogenRef}
+                curvature={-20}
+              />
+            </>
+          )}
         </div>
       </motion.div>
 
