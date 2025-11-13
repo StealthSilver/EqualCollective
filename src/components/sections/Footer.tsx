@@ -13,11 +13,9 @@ export const Footer = () => {
   useEffect(() => {
     setMounted(true);
 
-    // Detect initial theme
+
     const isDark = document.documentElement.classList.contains("dark");
     setCurrentTheme(isDark ? "dark" : "light");
-
-    // Watch for theme changes
     const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark");
       setCurrentTheme(isDark ? "dark" : "light");
@@ -137,7 +135,7 @@ export const Footer = () => {
             </div>
           </motion.div>
 
-          {/* Footer Columns */}
+        
           {Object.entries(footerLinks).map(([section, links], idx) => (
             <motion.div
               key={section}
