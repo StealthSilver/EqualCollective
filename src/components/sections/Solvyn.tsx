@@ -8,7 +8,6 @@ export const Solvyn = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
 
-  // Create 10 beam endpoints arranged in a circle
   const beamRefs = Array.from({ length: 10 }).map(() =>
     useRef<HTMLDivElement>(null)
   );

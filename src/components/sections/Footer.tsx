@@ -105,8 +105,8 @@ export const Footer = () => {
                   !mounted
                     ? "/logo_light.svg"
                     : currentTheme === "dark"
-                    ? "/logo_dark.svg"
-                    : "/logo_light.svg"
+                      ? "/logo_dark.svg"
+                      : "/logo_light.svg"
                 }
                 alt="Smart Grid Analytics"
                 className="h-10 w-auto"
@@ -176,11 +176,11 @@ export const Footer = () => {
               © {currentYear} Smart Grid Analytics. All rights reserved.
             </p>
             <p className="text-gray-600 dark:text-gray-400 text-sm font-sans text-center md:text-right">
-  Powered by{" "}
-  <a href="#solvyn" className="font-semibold text-orange-500">
-    Solvyn
-  </a>
-</p>
+              Powered by{" "}
+              <a href="#solvyn" className="font-semibold text-orange-500">
+                Solvyn
+              </a>
+            </p>
           </div>
         </div>
       </motion.div>
