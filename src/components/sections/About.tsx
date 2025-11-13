@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { PixelatedCanvas } from "../ui/PixelatedCanvas";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 

@@ -14,7 +14,7 @@ export const Solvyn = () => {
   );
 
   return (
-    <section className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
+    <section id="solvyn" className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title - Solvyn */}
         <motion.h2

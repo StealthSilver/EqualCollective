@@ -163,7 +163,6 @@ export const Footer = () => {
         </div>
       </div>
 
-      {/* Full-width Divider (no overflow) */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -177,9 +176,11 @@ export const Footer = () => {
               © {currentYear} Smart Grid Analytics. All rights reserved.
             </p>
             <p className="text-gray-600 dark:text-gray-400 text-sm font-sans text-center md:text-right">
-              Powered by{" "}
-              <span className="font-semibold text-orange-500">Solvyn</span>
-            </p>
+  Powered by{" "}
+  <a href="#solvyn" className="font-semibold text-orange-500">
+    Solvyn
+  </a>
+</p>
           </div>
         </div>
       </motion.div>
