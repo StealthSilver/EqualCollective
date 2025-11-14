@@ -134,7 +134,7 @@ export const Footer = () => {
                         ...(React.isValidElement(social.icon) ? (social.icon.props as object) : {}),
                         className: [
                           (React.isValidElement(social.icon) ? (social.icon.props as any).className : undefined),
-                          "w-4 h-4 sm:w-6 sm:h-6"
+                          "w-2 h-2 sm:w-6 sm:h-6"
                         ]
                           .filter(Boolean)
                           .join(" ")

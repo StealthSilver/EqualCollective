@@ -243,20 +243,20 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
     <main>
       <Navbar />
       <div className="min-h-screen bg-white/70 dark:bg-black/70 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-20">
           {/* Back Button */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="mb-6 sm:mb-8"
           >
             <Link 
               href="/case-studies"
-              className="inline-flex items-center gap-2 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-medium transition-colors group"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm sm:text-base font-medium transition-colors group"
             >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              Back to Case Studies
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform" />
+              <span>Back to Case Studies</span>
             </Link>
           </motion.div>
 
@@ -265,19 +265,19 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-10"
+            className="mb-8 sm:mb-10"
           >
-            <div className="inline-block px-4 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-sm font-semibold mb-6 tracking-wider">
+            <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs sm:text-sm font-semibold mb-4 sm:mb-6 tracking-wider">
               Case Study: {caseStudy.id}
             </div>
-            <h1 className="font-ibm-plex-sans text-black dark:text-white text-5xl md:text-6xl lg:text-6xl font-medium mb-3 tracking-tight leading-tight">
+            <h1 className="font-ibm-plex-sans text-black dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium mb-2 sm:mb-3 tracking-tight leading-tight">
               {caseStudy.title}
             </h1>
-            <h2 className="font-ibm-plex-sans text-black dark:text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-8 tracking-tight leading-tight">
+            <h2 className="font-ibm-plex-sans text-black dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium mb-6 sm:mb-8 tracking-tight leading-tight">
               {caseStudy.subtitle}
             </h2>
-            <div className="w-20 h-1.5 rounded-full bg-gradient-to-r from-orange-500 to-purple-600 mb-6" />
-            <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed max-w-4xl">
+            <div className="w-12 sm:w-20 h-1 sm:h-1.5 rounded-full bg-gradient-to-r from-orange-500 to-purple-600 mb-4 sm:mb-6" />
+            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-4xl">
               {caseStudy.description}
             </p>
           </motion.div>
@@ -287,7 +287,7 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative w-full h-[300px] md:h-[500px] lg:h-[600px] rounded-2xl overflow-hidden mb-16 border-2 border-gray-200 dark:border-gray-800 shadow-2xl"
+            className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] rounded-xl sm:rounded-2xl overflow-hidden mb-8 sm:mb-12 md:mb-16 border-2 border-gray-200 dark:border-gray-800 shadow-2xl"
           >
             <Image
               src={caseStudy.image}
@@ -298,26 +298,26 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           </motion.div>
 
           {/* Content Sections */}
-          <div className="space-y-16">
+          <div className="space-y-8 sm:space-y-12 md:space-y-16">
             {caseStudy.sections.map((section, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                className="bg-white dark:bg-gray-950 rounded-2xl p-8 md:p-10 border-2 border-gray-200 dark:border-gray-800 shadow-lg"
+                className="bg-white dark:bg-gray-950 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 border-2 border-gray-200 dark:border-gray-800 shadow-lg"
               >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-2 h-10 rounded-full bg-gradient-to-b from-orange-500 to-purple-600" />
-                  <h3 className="font-ibm-plex-sans text-black dark:text-white text-3xl md:text-4xl font-bold tracking-tight">
+                <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+                  <div className="w-1.5 sm:w-2 h-6 sm:h-8 md:h-10 rounded-full bg-gradient-to-b from-orange-500 to-purple-600 flex-shrink-0" />
+                  <h3 className="font-ibm-plex-sans text-black dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
                     {section.title}
                   </h3>
                 </div>
-                <div className="space-y-5 pl-0 md:pl-6">
+                <div className="space-y-3 sm:space-y-4 md:space-y-5 pl-0 md:pl-6">
                   {section.content.map((paragraph, pIndex) => (
                     <p 
                       key={pIndex} 
-                      className="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed"
+                      className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed"
                     >
                       {paragraph}
                     </p>
@@ -332,14 +332,14 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-16 pt-10 border-t-2 border-gray-200 dark:border-gray-800"
+            className="mt-8 sm:mt-12 md:mt-16 pt-6 sm:pt-8 md:pt-10 border-t-2 border-gray-200 dark:border-gray-800"
           >
             <Link 
               href="/case-studies"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-600 hover:to-orange-700 text-white text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transform hover:-translate-y-0.5"
             >
-              <ArrowLeft className="w-5 h-5" />
-              View All Case Studies
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>View All Case Studies</span>
             </Link>
           </motion.div>
         </div>

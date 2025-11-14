@@ -37,33 +37,33 @@ export default function WhitePapers() {
   return (
     <main>
       <Navbar />
-      <div className="min-h-screen bg-white/70 dark:bg-black/70 backdrop-blur-md pt-20 pb-16 px-4">
+      <div className="min-h-screen bg-white/70 dark:bg-black/70 backdrop-blur-md pt-16 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header Section - Left Aligned */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           >
-            <h1 className="font-ibm-plex-sans text-black dark:text-white text-4xl font-medium  mb-4 tracking-tight">
+            <h1 className="font-ibm-plex-sans text-black dark:text-white text-2xl sm:text-3xl md:text-4xl font-medium mb-3 sm:mb-4 tracking-tight">
               White Papers
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg font-light leading-relaxed max-w-3xl">
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-3xl">
               Read our in-depth white papers on industry insights and technical
               expertise in renewable energy and smart grid solutions.
             </p>
           </motion.div>
 
           {/* White Papers Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {whitePapers.map((paper, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] md:hover:scale-[1.02]"
               >
                 {/* Hover background gradient */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-0 bg-gradient-to-br from-orange-50 via-purple-50 to-white dark:from-orange-950/20 dark:via-purple-950/20 dark:to-gray-950" />
@@ -81,14 +81,14 @@ export default function WhitePapers() {
                   </div>
 
                   {/* Content Container */}
-                  <div className="p-6 md:p-8">
+                  <div className="p-4 sm:p-6 md:p-8">
                     {/* Decorative element */}
-                    <div className="w-12 h-1 rounded-full bg-gradient-to-r from-orange-500 to-purple-600 mb-4" />
+                    <div className="w-8 sm:w-12 h-0.5 sm:h-1 rounded-full bg-gradient-to-r from-orange-500 to-purple-600 mb-3 sm:mb-4" />
 
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-500">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-500">
                       {paper.title}
                     </h3>
-                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-6">
+                    <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-4 sm:mb-6">
                       {paper.description}
                     </p>
 
@@ -97,10 +97,10 @@ export default function WhitePapers() {
                       href={paper.pdf}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transform hover:-translate-y-0.5"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-600 hover:to-orange-700 text-white text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transform hover:-translate-y-0.5"
                     >
-                      <Download className="w-5 h-5" />
-                      Download PDF
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span>Download PDF</span>
                     </a>
                   </div>
                 </div>
