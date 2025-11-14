@@ -42,7 +42,7 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
   const iconSize = isMobile ? "w-6 h-6" : isTablet ? "w-7 h-7" : "w-12 h-12";
   // Smaller label sizes
   const labelSize = isMobile ? "text-[10px]" : isTablet ? "text-[10px] sm:text-[11px]" : "text-[11px]";
-  const labelMaxWidth = isMobile ? "max-w-[100px]" : isTablet ? "max-w-[120px]" : "max-w-[100px]";
+  const labelMaxWidth = isMobile ? "max-w-[120px]" : isTablet ? "max-w-[120px]" : "max-w-[100px]";
   const gapSize = isMobile ? "gap-1.5" : isTablet ? "gap-2" : "gap-2.5";
 
   return (
