@@ -103,6 +103,20 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Performance optimizations for framer-motion animations */
+  [data-framer-component] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* GPU acceleration for motion divs */
+  [data-framer-name] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
   /* Custom scrollbar styling. Thanks @shadcn-ui */
   ::-webkit-scrollbar {
     width: 5px;

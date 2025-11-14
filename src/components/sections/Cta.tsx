@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShimmerButton } from "../ui/ShimmerButton";
-import { LogoTicker } from "./LogoTicker";
+import { LazyLogoTicker } from "../ui/LazyLogoTicker";
 import { BorderBeam } from "../ui/BorderBeam"; // animated border
 
 export const Cta = () => {
@@ -107,7 +107,7 @@ export const Cta = () => {
           <p className="text-center text-gray-500 dark:text-gray-500 mb-6 sm:mb-8 text-xs sm:text-sm font-semibold uppercase tracking-wider font-sans">
             Trusted by Industry Leaders
           </p>
-          <LogoTicker />
+          <LazyLogoTicker />
         </motion.div>
 
         {/* CTA Heading */}

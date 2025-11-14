@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ShimmerButton } from "../ui/ShimmerButton";
-import { World } from "../ui/Globe";
+import { LazyGlobe } from "../ui/LazyGlobe";
 import { NumberTicker } from "../ui/NumberTicker";
 
 const sampleArcs = [
@@ -376,7 +376,7 @@ export default function Hero() {
       {/* Globe positioned on the right */}
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute -right-[200px] sm:-right-[150px] md:-right-[100px] lg:-right-[800px] -top-12 sm:-top-16 md:-top-20 lg:-top-24 w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] md:w-[850px] md:h-[850px] lg:w-[950px] lg:h-[950px] xl:w-[1100px] xl:h-[1100px] min-w-[600px] min-h-[600px] sm:min-w-[700px] sm:min-h-[700px] md:min-w-[850px] md:min-h-[850px] lg:min-w-[950px] lg:min-h-[950px] xl:min-w-[1100px] xl:min-h-[1100px] relative">
-          <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
+          <LazyGlobe key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
       </div>
 
