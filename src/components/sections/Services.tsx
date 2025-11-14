@@ -36,6 +36,7 @@ export const Services = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [points, setPoints] = useState<Points | null>(null);
+  const [pathsReady, setPathsReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -106,18 +107,37 @@ export const Services = () => {
       if (isNaN(x) || isNaN(y) || !isFinite(x) || !isFinite(y)) continue;
       
       // We need the top border center of the icon container: so target x=center, y=top
-      targets.push({ x, y });
+      // Validate coordinates before adding
+      if (isFinite(x) && isFinite(y) && !isNaN(x) && !isNaN(y)) {
+        targets.push({ x, y });
+      }
     }
 
     // Update points only if we have all 4 targets (required for beams to render)
-    if (targets.length === 4) {
+    // Also ensure origin is valid
+    if (targets.length === 4 && 
+        isFinite(origin.x) && isFinite(origin.y) && 
+        !isNaN(origin.x) && !isNaN(origin.y)) {
       setPoints((prevPoints) => {
-        // Only update if points actually changed
-        const prevStr = JSON.stringify(prevPoints);
-        const newPoints = { origin, targets };
-        const newStr = JSON.stringify(newPoints);
-        if (prevStr === newStr) return prevPoints;
-        return newPoints;
+        // Only update if points actually changed (with small tolerance for floating point)
+        const tolerance = 1; // 1px tolerance
+        if (prevPoints) {
+          const originChanged = Math.abs(prevPoints.origin.x - origin.x) > tolerance ||
+                                Math.abs(prevPoints.origin.y - origin.y) > tolerance;
+          const targetsChanged = prevPoints.targets.some((target, i) => {
+            if (!targets[i]) return true;
+            return Math.abs(target.x - targets[i].x) > tolerance ||
+                   Math.abs(target.y - targets[i].y) > tolerance;
+          });
+          
+          if (!originChanged && !targetsChanged) {
+            return prevPoints;
+          }
+        }
+        
+        // Reset pathsReady when points change
+        setPathsReady(false);
+        return { origin, targets };
       });
     }
   }, []);
@@ -186,13 +206,14 @@ export const Services = () => {
     };
   }, [measure, isMobile, isTablet, mounted]);
 
-  // Animation hook
+  // Animation hook - only start when paths are ready
   useServicesAnimation({
     points,
     pathRefs,
     beamRefs,
     progressRefs,
     setIconActive: handleIconActive,
+    pathsReady,
   });
 
   const energyServices = [
@@ -396,9 +417,9 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Animated beams - only render after mount to ensure correct positioning */}
+          {/* Animated beams - render immediately when points are available */}
           {/* All beams start from center (sgrids) and go to the four icons */}
-          {mounted && (
+          {points && (
             <ServicesBeams
               points={points}
               containerRef={containerRef}
@@ -406,6 +427,14 @@ export const Services = () => {
               beamRefs={beamRefs}
               isMobile={isMobile}
               isTablet={isTablet}
+              onPathsReady={() => {
+                // Set pathsReady after a small delay to ensure DOM is fully updated
+                requestAnimationFrame(() => {
+                  setTimeout(() => {
+                    setPathsReady(true);
+                  }, 100);
+                });
+              }}
             />
           )}
         </div>
@@ -414,7 +443,7 @@ export const Services = () => {
       {/* ====== NEW FEATURES SECTION BELOW ====== */}
       <section
         id="features"
-        className="w-full overflow-x-hidden -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-12 md:py-16 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-center transition-colors duration-700"
+        className="w-full overflow-x-hidden -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-8 md:py-12 lg:py-16 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-center transition-colors duration-700"
       >
         {/* Title - matching the Services title style */}
         <div className="max-w-7xl mx-auto mb-2 sm:mb-6 md:mb-8 w-full px-2 sm:px-4">
@@ -425,7 +454,7 @@ export const Services = () => {
           viewport={{ once: true }}
           className="mb-0 sm:mb-6 md:mb-8 lg:mb-16"
         >
-          <p className="text-center py-8 text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-4 md:mb-6 lg:mb-8 font-sans">
+          <p className="text-center py-2 sm:py-4 md:py-6 lg:py-8 text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-4 md:mb-6 lg:mb-8 font-sans">
             Why Smart Grid Analytics?
           </p>
         </motion.div>
@@ -457,7 +486,7 @@ export const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative min-h-[240px] sm:h-[260px] md:h-[280px] p-3 sm:p-4 md:p-6 lg:p-8 overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
+                className="group relative min-h-[240px] sm:min-h-[260px] md:min-h-[280px] p-3 sm:p-4 md:p-6 lg:p-8 overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
               >
                 {/* Hover background gradient */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-0 bg-gradient-to-br from-orange-50 via-purple-50 to-white dark:from-orange-950/20 dark:via-purple-950/20 dark:to-gray-950" />

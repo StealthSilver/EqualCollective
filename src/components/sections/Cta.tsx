@@ -93,7 +93,7 @@ export const Cta = () => {
   return (
     <section
       id="footer"
-      className="relative w-full px-4 sm:px-6 py-12 sm:py-16 lg:py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-4 sm:px-6 py-20 sm:py-24 lg:py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {/* Trusted By Section */}
@@ -134,7 +134,7 @@ export const Cta = () => {
             />
           </div>
 
-          <div className="relative z-10 py-4 sm:py-6 lg:py-8">
+          <div className="relative z-10 py-12 sm:py-6 lg:py-8">
             <h2 className="font-ibm-plex-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-3 sm:mb-4 lg:mb-6 tracking-tight">
               <span
                 className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 dark:from-orange-400 dark:via-orange-300 dark:to-orange-400 bg-clip-text text-transparent inline-block animate-gradient pb-1"
