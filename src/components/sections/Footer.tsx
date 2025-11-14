@@ -45,10 +45,10 @@ export const Footer = () => {
       { name: "Grid Integration", href: "#" },
     ],
     company: [
-      { name: "About Us", href: "#about" },
+      { name: "About Us", href: "/#about" },
       { name: "Careers", href: "/careers" },
       { name: "Blogs", href: "/blogs" },
-      { name: "Contact", href: "#contact" },
+      { name: "Contact", href: "/#contact" },
     ],
     legal: [
       { name: "Privacy Policy", href: "/privacy-policy" },
@@ -175,7 +175,7 @@ export const Footer = () => {
             </p>
             <p className="text-gray-600 dark:text-gray-400 text-sm font-sans text-center md:text-right">
               Powered by{" "}
-              <a href="#solvyn" className="font-semibold text-orange-500">
+              <a href="/#solvyn" className="font-semibold text-orange-500">
                 Solvyn
               </a>
             </p>

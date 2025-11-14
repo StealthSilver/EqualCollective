@@ -38,9 +38,9 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen((v) => !v);
 
   const navItems = [
-    { name: "About-Us", href: "#about", external: false },
-    { name: "Solvyn", href: "#solvyn", external: false },
-    { name: "Services", href: "#services", external: false },
+    { name: "About-Us", href: "/#about", external: false },
+    { name: "Solvyn", href: "/#solvyn", external: false },
+    { name: "Services", href: "/#services", external: false },
     { name: "Case-Studies", href: "/case-studies" },
 
     {
