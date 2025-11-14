@@ -413,7 +413,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="
             flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-8 mt-4 sm:mt-6
-            w-full sm:w-auto
+            w-auto
           "
         >
           <ShimmerButton
@@ -421,7 +421,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 font-bold text-white text-xs sm:text-sm md:text-base w-auto"
+            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 font-bold text-white text-[10px] sm:text-xs md:text-sm w-auto"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
