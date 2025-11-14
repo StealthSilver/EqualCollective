@@ -209,7 +209,7 @@ export const Services = () => {
   return (
     <section
       id="services"
-      className="relative w-full px-4 sm:px-6 pt-8 sm:pt-12 md:pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-4 sm:px-6  sm:pt-12 md:pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       {/* ====== TITLE ====== */}
       <div className="max-w-7xl mx-auto mb-6 sm:mb-8 md:mb-12">
@@ -246,7 +246,7 @@ export const Services = () => {
       >
         <div
           ref={containerRef}
-          className="relative w-full min-h-[500px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[500px] flex items-center justify-center px-2 sm:px-4 py-8 sm:py-12"
+          className="relative w-full min-h-[440px] sm:min-h-[450px] md:min-h-[600px] lg:min-h-[500px] flex items-center justify-center px-2 sm:px-4 py-8 sm:py-12"
         >
           {/* Center logo - reduced size for mobile */}
           <motion.div
@@ -361,7 +361,7 @@ export const Services = () => {
       {/* ====== NEW FEATURES SECTION BELOW ====== */}
       <section
         id="features"
-        className="overflow-x-hidden mt-8 sm:mt-12 md:mt-16 py-8 sm:py-12 md:py-16 px-4 sm:px-6 flex flex-col items-center justify-center transition-colors duration-700"
+        className="overflow-x-hidden sm:mt-12 md:mt-16 py-2 sm:py-12 md:py-16 px-4 sm:px-6 flex flex-col items-center justify-center transition-colors duration-700"
       >
         {/* Title - matching the Services title style */}
         <div className="max-w-7xl mx-auto mb-4 sm:mb-6 md:mb-8">
