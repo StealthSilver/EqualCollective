@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Points } from "../../types/solvynTypes";
-import { createLinearPath } from "../../lib/solvynUtils";
+import { createSmoothCurvedPath } from "../../lib/solvynUtils";
 
 type ServicesBeamsProps = {
   points: Points | null;
@@ -25,10 +25,10 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
   const [dimensions, setDimensions] = useState({ width: 1000, height: 600 });
   const [forceRender, setForceRender] = useState(0);
   
-  // Responsive stroke widths
-  const baseStrokeWidth = isMobile ? 1.2 : isTablet ? 1.8 : 2.2;
-  const beamStrokeWidth = isMobile ? "2" : isTablet ? "3" : "4";
-  const coreStrokeWidth = isMobile ? "1" : isTablet ? "1.4" : "1.8";
+  // Responsive stroke widths - reduced thickness
+  const baseStrokeWidth = isMobile ? 0.8 : isTablet ? 1.0 : 1.2;
+  const beamStrokeWidth = isMobile ? "1" : isTablet ? "1.2" : "1.5";
+  const coreStrokeWidth = isMobile ? "0.6" : isTablet ? "0.8" : "1";
 
   // Measure dimensions - simplified like SolvynBeams
   useEffect(() => {
@@ -175,21 +175,30 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
         </filter>
       </defs>
 
-      {/* Connection lines */}
+      {/* Connection lines - smooth curved paths */}
       {points &&
         points.targets.map((target, i) => {
-          const pathD = createLinearPath(points.origin.x, points.origin.y, target.x, target.y);
+          // Create smooth curved path with responsive curvature
+          // More curvature on larger screens, less on mobile
+          const curvature = isMobile ? 0.2 : isTablet ? 0.25 : 0.3;
+          const pathD = createSmoothCurvedPath(
+            points.origin.x, 
+            points.origin.y, 
+            target.x, 
+            target.y,
+            curvature
+          );
           return (
             <g key={`line-${i}`}>
-              {/* Base faint line (background) - make more visible for debugging */}
+              {/* Base faint light gray path (background) */}
               <path
                 d={pathD}
                 stroke="currentColor"
                 strokeWidth={baseStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-gray-400 dark:text-gray-600"
-                opacity={0.6}
+                className="text-gray-200 dark:text-gray-700"
+                opacity={0.5}
                 fill="none"
               />
 
@@ -208,7 +217,7 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                 opacity={0}
               />
 
-              {/* Outer glow stroke (gray) - always visible */}
+              {/* Outer glow stroke (light gray) - always visible */}
               <path
                 ref={(el) => {
                   if (!el) return;
@@ -219,8 +228,8 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                   }
                 }}
                 d={pathD}
-                // Gray outer stroke - make more visible
-                stroke="rgba(156, 163, 175, 0.5)"
+                // Light gray outer stroke
+                stroke="rgba(229, 231, 235, 0.6)"
                 strokeWidth={beamStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -228,9 +237,10 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                 filter="url(#servicesSoftGlow)"
                 opacity="1"
                 style={{ transition: "opacity 220ms linear" }}
+                className="dark:stroke-gray-600"
               />
 
-              {/* Inner core stroke (gray) - always visible */}
+              {/* Inner core stroke (light gray) - always visible */}
               <path
                 ref={(el) => {
                   if (!el) return;
@@ -241,13 +251,14 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                   }
                 }}
                 d={pathD}
-                stroke="rgba(156, 163, 175, 0.8)"
+                stroke="rgba(229, 231, 235, 0.7)"
                 strokeWidth={coreStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
                 opacity="1"
                 style={{ transition: "opacity 220ms linear" }}
+                className="dark:stroke-gray-500"
               />
 
               {/* Small pulse circle that travels along the path */}

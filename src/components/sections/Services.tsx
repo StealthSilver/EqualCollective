@@ -370,10 +370,10 @@ export const Services = () => {
                   }`}
                   style={iconActive[index] ? {
                     boxShadow: `
-                      0 0 8px rgba(249, 115, 22, 0.3),
-                      0 0 15px rgba(249, 115, 22, 0.2),
-                      0 0 25px rgba(168, 85, 247, 0.25),
-                      0 0 35px rgba(168, 85, 247, 0.15)
+                      0 0 8px rgba(249, 115, 22, 0.15),
+                      0 0 15px rgba(249, 115, 22, 0.1),
+                      0 0 25px rgba(168, 85, 247, 0.12),
+                      0 0 35px rgba(168, 85, 247, 0.08)
                     `
                   } : {}}
                   >

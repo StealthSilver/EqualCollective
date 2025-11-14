@@ -31,6 +31,54 @@ export const createCurvedPath = (x1: number, y1: number, x2: number, y2: number)
   }
 };
 
+// Helper function to create smooth curved paths using quadratic bezier curves
+// Creates an elegant arc from origin to target
+// Left side targets curve left, right side targets curve right
+export const createSmoothCurvedPath = (
+  x1: number, 
+  y1: number, 
+  x2: number, 
+  y2: number,
+  curvature: number = 0.3 // Controls the curve amount (0 = straight, higher = more curved)
+): string => {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  
+  // If distance is too small, use straight line
+  if (distance < 10) {
+    return `M ${x1} ${y1} L ${x2} ${y2}`;
+  }
+  
+  // Calculate control point for quadratic bezier curve
+  const midX = (x1 + x2) / 2;
+  const midY = (y1 + y2) / 2;
+  
+  // Calculate perpendicular direction (rotate 90 degrees counterclockwise)
+  // This gives us a direction perpendicular to the line from origin to target
+  let perpX = -dy / distance;
+  let perpY = dx / distance;
+  
+  // Determine curve direction based on horizontal position
+  // If target is to the left (dx < 0), we want to curve left
+  // If target is to the right (dx > 0), we want to curve right
+  // We achieve this by flipping the perpendicular vector's sign for left targets
+  if (dx < 0) {
+    // Target is on the left - flip perpendicular to curve left
+    perpX = -perpX;
+    perpY = -perpY;
+  }
+  // For right targets, keep the original perpendicular direction (curves right)
+  
+  // Control point offset from midpoint, creating a smooth arc
+  const curveAmount = distance * curvature;
+  const controlX = midX + perpX * curveAmount;
+  const controlY = midY + perpY * curveAmount;
+  
+  // Create smooth quadratic bezier curve path
+  return `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`;
+};
+
 // Helper function to create linear paths with rounded corners (L-shaped)
 export const createLinearPath = (x1: number, y1: number, x2: number, y2: number): string => {
   const dx = x2 - x1;
