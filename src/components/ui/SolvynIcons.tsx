@@ -1,25 +1,28 @@
 import React from "react";
-import { ICON_SIZE } from "../../types/solvynTypes";
 
-const IconWrapper: React.FC<{ active: boolean; children: React.ReactNode }> = ({ active, children }) => {
+const IconWrapper: React.FC<{ active: boolean; size: number; children: React.ReactNode }> = ({ active, size, children }) => {
   return (
     <div
-      className={`w-12 h-12 flex items-center justify-center transition-all duration-500 ${
+      className={`flex items-center justify-center transition-all duration-500 ${
         active ? "opacity-100 scale-110" : "opacity-60 scale-100"
       }`}
-      style={!active ? { filter: "grayscale(100%) brightness(0.4)" } : {}}
+      style={{
+        width: size,
+        height: size,
+        filter: !active ? "grayscale(100%) brightness(0.4)" : undefined
+      }}
     >
       {children}
     </div>
   );
 };
 
-export const TaxIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const TaxIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -68,12 +71,12 @@ export const TaxIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const ClimateIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const ClimateIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -134,12 +137,12 @@ export const ClimateIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const TreasuryIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const TreasuryIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -186,10 +189,10 @@ export const TreasuryIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const AtlasIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const AtlasIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
-      <svg width={ICON_SIZE} height={ICON_SIZE} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <IconWrapper active={active} size={size}>
+      <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#product-icon-atlas-a)">
           <path d="M20.51.3c1 0 1.92.57 2.36 1.47l8.22 16.42 8.65 17.31a2.64 2.64 0 0 1-1.65 3.73l-.17.04c-.12.03-.24.04-.36.05h-.18L20.5 35.99 9.94 18.19l8.2-16.42A2.64 2.64 0 0 1 20.52.3z" fill="#FB0"/>
           <path d="M20.51.3c1 0 1.92.57 2.36 1.47l8.22 16.42L20.5 35.98 3.65 39.33a2.64 2.64 0 0 1-2.37-3.83l8.66-17.3 8.2-16.43A2.64 2.64 0 0 1 20.52.3z" fill="url(#product-icon-atlas-b)"/>
@@ -214,10 +217,10 @@ export const AtlasIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const ElementsIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const ElementsIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
-      <svg width={ICON_SIZE} height={ICON_SIZE} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <IconWrapper active={active} size={size}>
+      <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M2 10.02c0-.95.5-1.83 1.33-2.3L16.08.36a2.66 2.66 0 0 1 2.66 0l12.75 7.36a2.66 2.66 0 0 1 1.33 2.3v6l-5-2.89a2.66 2.66 0 0 0-2.66 0l-9.51 5.48a2.66 2.66 0 0 0-1.34 2.3v10.95c0 .9.45 1.72 1.19 2.21L3.33 27.05A2.66 2.66 0 0 1 2 24.75V10.02z" fill="url(#product-icon-elements-a)"/>
         <path fillRule="evenodd" clipRule="evenodd" d="M15.5 34.07l.58.34c.82.48 1.84.48 2.66 0l12.75-7.36a2.66 2.66 0 0 0 1.33-2.3v-8.72l4.47 2.58a2.66 2.66 0 0 1 1.33 2.3v10.95c0 .95-.5 1.83-1.33 2.3l-9.48 5.48c-.82.48-1.83.48-2.65 0l-9.51-5.47-.15-.1z" fill="#96F"/>
         <path fillRule="evenodd" clipRule="evenodd" d="M32.82 16.03l-5-2.9a2.66 2.66 0 0 0-2.66 0l-9.51 5.48a2.66 2.66 0 0 0-1.34 2.3v10.95c0 .9.45 1.72 1.19 2.21l.58.34c.82.48 1.84.48 2.66 0l12.75-7.36a2.66 2.66 0 0 0 1.33-2.3v-8.72z" fill="url(#product-icon-elements-b)"/>
@@ -239,10 +242,10 @@ export const ElementsIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const PaymentsIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const PaymentsIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
-      <svg width={ICON_SIZE} height={ICON_SIZE} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <IconWrapper active={active} size={size}>
+      <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M34.61 11.28a2.56 2.56 0 0 0-1.22-1.04L8.54.2A2.57 2.57 0 0 0 5 2.6V15c0 1.05.64 2 1.61 2.4l6.44 2.6 21.56 8.72c.26-.4.4-.88.39-1.36V12.64c0-.48-.13-.96-.39-1.37z" fill="url(#product-icon-payments-a)"/>
         <path d="M34.63 11.28L13.06 20l-6.45 2.6A2.58 2.58 0 0 0 5 25v12.42a2.58 2.58 0 0 0 3.54 2.39L33.4 29.76c.5-.21.93-.57 1.21-1.04.26-.41.4-.88.39-1.36V12.64c0-.48-.12-.95-.37-1.36z" fill="#96F"/>
         <path d="M34.62 11.28l.1.17c.18.37.28.77.28 1.19v-.03 14.75c0 .48-.13.95-.39 1.36L13.06 20l21.56-8.72z" fill="url(#product-icon-payments-b)"/>
@@ -261,12 +264,12 @@ export const PaymentsIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const WindmillIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const WindmillIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -295,12 +298,12 @@ export const WindmillIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const SolarPanelIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const SolarPanelIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -343,12 +346,12 @@ export const SolarPanelIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const BatteryIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const BatteryIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -404,12 +407,12 @@ export const BatteryIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const ForecastingSchedulingIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const ForecastingSchedulingIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -448,12 +451,12 @@ export const ForecastingSchedulingIcon: React.FC<{ active: boolean }> = ({ activ
   );
 };
 
-export const TradingDeckIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const TradingDeckIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -511,12 +514,12 @@ export const TradingDeckIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const ReportingIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const ReportingIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -557,12 +560,12 @@ export const ReportingIcon: React.FC<{ active: boolean }> = ({ active }) => {
   );
 };
 
-export const BidOptimizationIcon: React.FC<{ active: boolean }> = ({ active }) => {
+export const BidOptimizationIcon: React.FC<{ active: boolean; size?: number }> = ({ active, size = 48 }) => {
   return (
-    <IconWrapper active={active}>
+    <IconWrapper active={active} size={size}>
       <svg
-        width={ICON_SIZE}
-        height={ICON_SIZE}
+        width={size}
+        height={size}
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

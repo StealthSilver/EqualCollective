@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { AnimatedBeam } from "../ui/AnimatedBeam";
+import { ServicesBeams } from "../ui/ServicesBeams";
+import { useServicesAnimation } from "../../hooks/useServicesAnimation";
+import { Points } from "../../types/solvynTypes";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
@@ -29,47 +31,90 @@ export const Services = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Force beams to recalculate after animations complete
-  const [beamKey, setBeamKey] = useState(0);
+  // Screen size detection for responsive layout
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const prevScreenSizeRef = useRef<boolean | null>(null);
+  const [points, setPoints] = useState<Points | null>(null);
 
   useEffect(() => {
-    // Mark as mounted
     setMounted(true);
     
-    // Check screen size for beam direction
     const checkScreenSize = () => {
-      const nowSmallScreen = window.innerWidth < 768; // md breakpoint
-      const wasSmallScreen = prevScreenSizeRef.current;
-      
-      setIsSmallScreen(nowSmallScreen);
-      
-      // Recalculate beams if screen size changed
-      if (prevScreenSizeRef.current !== null && wasSmallScreen !== nowSmallScreen) {
-        setBeamKey((prev) => prev + 1);
-      }
-      
-      prevScreenSizeRef.current = nowSmallScreen;
+      const width = window.innerWidth;
+      setIsMobile(width < 640); // sm breakpoint
+      setIsTablet(width >= 640 && width < 1024); // md-lg breakpoint
     };
     
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    // Multiple recalculations to ensure beams are positioned correctly
-    const timers = [
-      setTimeout(() => setBeamKey((prev) => prev + 1), 100),
-      setTimeout(() => setBeamKey((prev) => prev + 1), 500),
-      setTimeout(() => setBeamKey((prev) => prev + 1), 1000),
-      setTimeout(() => setBeamKey((prev) => prev + 1), 1800),
-    ];
-
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-      timers.forEach(timer => clearTimeout(timer));
-    };
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
+  // Refs for beam animation
+  const pathRefs = useRef<SVGPathElement[]>([]);
+  const beamRefs = useRef<{ circle: SVGPathElement | null; core: SVGPathElement | null }[]>(
+    Array.from({ length: 4 }, () => ({ circle: null, core: null }))
+  );
+  const progressRefs = useRef<number[]>([0, 0.25, 0.5, 0.75]); // Staggered starts for 4 beams
+
+  // Measure positions - use useCallback to prevent recreation
+  const measure = useCallback(() => {
+    const container = containerRef.current;
+    const centerEl = centerRef.current;
+    if (!container || !centerEl) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const centerRect = centerEl.getBoundingClientRect();
+
+    const origin = {
+      x: centerRect.left + centerRect.width / 2 - containerRect.left,
+      y: centerRect.top + centerRect.height / 2 - containerRect.top,
+    };
+
+    const targets: { x: number; y: number }[] = [];
+    const refs = [bessRef, solarRef, windRef, hydrogenRef];
+
+    for (const ref of refs) {
+      const el = ref.current;
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      // Target the center of the top border of each icon
+      targets.push({
+        x: r.left + r.width / 2 - containerRect.left,
+        y: r.top - containerRect.top,
+      });
+    }
+
+    if (targets.length === 4) {
+      setPoints((prevPoints) => {
+        // Only update if points actually changed
+        const prevStr = JSON.stringify(prevPoints);
+        const newPoints = { origin, targets };
+        const newStr = JSON.stringify(newPoints);
+        if (prevStr === newStr) return prevPoints;
+        return newPoints;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    const id = setTimeout(measure, 300);
+    return () => {
+      window.removeEventListener("resize", measure);
+      clearTimeout(id);
+    };
+  }, [measure, isMobile, isTablet]);
+
+  // Animation hook
+  useServicesAnimation({
+    points,
+    pathRefs,
+    beamRefs,
+    progressRefs,
+  });
 
   const energyServices = [
     {
@@ -138,15 +183,17 @@ export const Services = () => {
     >
       {/* ====== TITLE ====== */}
       <div className="max-w-7xl mx-auto mb-8 sm:mb-12">
-        <motion.h2
+      <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-base sm:text-m font-bold uppercase mb-4 sm:mb-8 tracking-tight px-2"
+          className="mb-8 sm:mb-12 lg:mb-16"
         >
-          Services
-        </motion.h2>
+          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 lg:mb-8 font-sans">
+            Services
+          </p>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -241,40 +288,14 @@ export const Services = () => {
           {/* Animated beams - only render after mount to ensure correct positioning */}
           {/* All beams start from center (sgrids) and go to the four icons */}
           {mounted && (
-            <>
-              <AnimatedBeam
-                key={`bess-${beamKey}`}
-                containerRef={containerRef}
-                fromRef={centerRef}
-                toRef={bessRef}
-                curvature={-20}
-                reverse={false}
-              />
-              <AnimatedBeam
-                key={`solar-${beamKey}`}
-                containerRef={containerRef}
-                fromRef={centerRef}
-                toRef={solarRef}
-                curvature={-40}
-                reverse={false}
-              />
-              <AnimatedBeam
-                key={`wind-${beamKey}`}
-                containerRef={containerRef}
-                fromRef={centerRef}
-                toRef={windRef}
-                curvature={-40}
-                reverse={false}
-              />
-              <AnimatedBeam
-                key={`hydrogen-${beamKey}`}
-                containerRef={containerRef}
-                fromRef={centerRef}
-                toRef={hydrogenRef}
-                curvature={-20}
-                reverse={false}
-              />
-            </>
+            <ServicesBeams
+              points={points}
+              containerRef={containerRef}
+              pathRefs={pathRefs}
+              beamRefs={beamRefs}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
           )}
         </div>
       </motion.div>
@@ -286,15 +307,17 @@ export const Services = () => {
       >
         {/* Title - matching the Services title style */}
         <div className="max-w-7xl mx-auto mb-6 sm:mb-8">
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="font-ibm-plex-sans text-gray-900 dark:text-gray-400 text-center text-base sm:text-m font-bold uppercase mb-4 sm:mb-6 tracking-tight px-2"
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mb-8 sm:mb-12 lg:mb-16"
+        >
+          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 lg:mb-8 font-sans">
             Why Smart Grid Analytics?
-          </motion.h2>
+          </p>
+        </motion.div>
 
           {/* Concise Description */}
           <motion.div
