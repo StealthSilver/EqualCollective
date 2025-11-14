@@ -51,11 +51,11 @@ const ICON_POSITIONS_DESKTOP = [
   // LEFT SIDE - Row 3
   { top: "37%", left: "3%", delay: 1.1, borderColor: "orange" as const },
   // RIGHT SIDE - Row 3
-  { top: "37%", right: "4%", delay: 1.2, borderColor: "purple" as const },
+  { top: "37%", right: "5%", delay: 1.2, borderColor: "purple" as const },
   // LEFT SIDE - Row 4
-  { top: "53%", left: "4%", delay: 1.3, borderColor: "orange" as const },
+  { top: "53%", left: "5%", delay: 1.3, borderColor: "orange" as const },
   // RIGHT SIDE - Row 4
-  { top: "53%", right: "4%", delay: 1.4, borderColor: "purple" as const },
+  { top: "53%", right: "5%", delay: 1.4, borderColor: "purple" as const },
   // LEFT SIDE - Row 5
   { top: "69%", left: "3%", delay: 1.5, borderColor: "orange" as const },
   // RIGHT SIDE - Row 5
@@ -204,7 +204,7 @@ export const Solvyn: React.FC = () => {
   return (
     <section id="solvyn"
       ref={sectionRef}
-      className="relative w-full min-h-screen py-4 sm:py-8 md:py-12 lg:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
+      className="relative w-full lg:min-h-screen py-4 sm:py-8 md:py-12 lg:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
@@ -303,8 +303,8 @@ export const Solvyn: React.FC = () => {
               viewport={{ once: true }}
               className="relative flex items-center justify-center w-full"
               style={{ 
-                height: isMobile ? "120vh" : isTablet ? "100vh" : "90vh", 
-                maxHeight: isMobile ? "800px" : isTablet ? "850px" : "900px",
+                height: isMobile ? "100vh" : isTablet ? "100vh" : "90vh", 
+                maxHeight: isMobile ? "700px" : isTablet ? "850px" : "900px",
                 minHeight: isMobile ? "600px" : isTablet ? "700px" : "700px"
               }}
           >
