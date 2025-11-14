@@ -367,7 +367,7 @@ export default function Hero() {
   return (
     <section
       className="
-        relative min-h-screen h-full px-4 sm:px-6 pt-20 sm:pt-28 md:pt-36 lg:pt-48 
+        relative lg:min-h-screen h-full px-4 sm:px-6 pt-20 sm:pt-28 md:pt-36 lg:pt-48 
         bg-white/70 dark:bg-black/70 backdrop-blur-md
         overflow-hidden flex flex-col justify-start mx-auto pb-16 sm:pb-24 md:pb-32
       "
@@ -421,7 +421,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-6 lg:py-3 font-bold text-white text-[10px] sm:text-xs md:text-sm lg:text-base w-auto"
+            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-8 lg:py-3 font-bold text-white text-[10px] sm:text-xs md:text-sm lg:text-base w-auto"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
