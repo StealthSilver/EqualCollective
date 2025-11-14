@@ -14,6 +14,8 @@ type SolvynIconNodeProps = {
   };
   animationDelay: number;
   borderColor?: "orange" | "purple";
+  isMobile?: boolean;
+  isTablet?: boolean;
 };
 
 export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
@@ -22,6 +24,8 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
   position,
   animationDelay,
   borderColor = "orange",
+  isMobile = false,
+  isTablet = false,
 }) => {
   const isActive = icon.active;
   const activeBorderClass =
@@ -33,6 +37,13 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
       ? "group-hover:border-orange-400 dark:group-hover:border-orange-600"
       : "group-hover:border-purple-500 dark:group-hover:border-purple-600";
 
+  // Responsive sizing
+  const iconPadding = isMobile ? "p-1.5" : isTablet ? "p-2" : "p-3";
+  const iconSize = isMobile ? "w-8 h-8" : isTablet ? "w-10 h-10" : "w-12 h-12";
+  const labelSize = isMobile ? "text-xs" : isTablet ? "text-xs sm:text-sm" : "text-sm";
+  const labelMaxWidth = isMobile ? "max-w-[80px]" : isTablet ? "max-w-[100px]" : "max-w-[120px]";
+  const gapSize = isMobile ? "gap-1" : isTablet ? "gap-1.5" : "gap-2";
+
   return (
     <motion.div
       ref={icon.ref as React.Ref<HTMLDivElement>}
@@ -40,19 +51,21 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       transition={{ duration: 0.6, delay: animationDelay }}
       viewport={{ once: true }}
-      className="absolute flex flex-col items-center gap-2 cursor-pointer group z-10"
+      className={`absolute flex flex-col items-center ${gapSize} cursor-pointer group z-10`}
       style={position}
     >
       <div
-        className={`relative p-3 rounded-xl border-2 transition-all duration-500 ${
+        className={`relative ${iconPadding} rounded-xl border-2 transition-all duration-500 flex items-center justify-center ${
           isActive
             ? activeBorderClass
             : `border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 ${hoverBorderClass}`
         }`}
       >
-        {iconComponent}
+        <div className={`${iconSize} flex items-center justify-center`}>
+          {iconComponent}
+        </div>
       </div>
-      <span className="text-sm font-semibold text-center text-gray-900 dark:text-gray-100 max-w-[120px] leading-tight px-2 py-0.5 whitespace-normal break-words bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-md shadow-sm">
+      <span className={`${labelSize} font-semibold text-center text-gray-900 dark:text-gray-100 ${labelMaxWidth} leading-tight px-1.5 sm:px-2 py-0.5 whitespace-normal break-words bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-md shadow-sm`}>
         {icon.label}
       </span>
     </motion.div>

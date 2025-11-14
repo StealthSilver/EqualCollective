@@ -7,6 +7,8 @@ type SolvynBeamsProps = {
   containerRef: React.RefObject<HTMLDivElement | null>;
   pathRefs: React.MutableRefObject<SVGPathElement[]>;
   beamRefs: React.MutableRefObject<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>;
+  isMobile?: boolean;
+  isTablet?: boolean;
 };
 
 export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
@@ -14,8 +16,15 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
   containerRef,
   pathRefs,
   beamRefs,
+  isMobile = false,
+  isTablet = false,
 }) => {
   const [dimensions, setDimensions] = useState({ width: 700, height: 700 });
+  
+  // Responsive stroke widths
+  const baseStrokeWidth = isMobile ? 1.5 : isTablet ? 2 : 2.5;
+  const beamStrokeWidth = isMobile ? "2" : isTablet ? "3" : "4";
+  const coreStrokeWidth = isMobile ? "1" : isTablet ? "1.5" : "2";
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -67,7 +76,7 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
               <path
                 d={pathD}
                 stroke="currentColor"
-                strokeWidth={2.5}
+                strokeWidth={baseStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="text-gray-300 dark:text-gray-700"
@@ -83,7 +92,7 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
                 }}
                 d={pathD}
                 stroke="transparent"
-                strokeWidth={2.5}
+                strokeWidth={baseStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
@@ -107,7 +116,7 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
               x2={-20}
               y2={-20}
               stroke="rgba(251, 146, 60, 0.6)"
-              strokeWidth="4"
+              strokeWidth={beamStrokeWidth}
               strokeLinecap="round"
               filter="url(#softGlow)"
               className="transition-all duration-75"
@@ -122,7 +131,7 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
               x2={-20}
               y2={-20}
               stroke="#fb923c"
-              strokeWidth="2"
+              strokeWidth={coreStrokeWidth}
               strokeLinecap="round"
               className="transition-all duration-75"
             />

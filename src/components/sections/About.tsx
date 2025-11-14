@@ -70,7 +70,7 @@ export const About = () => {
             <img
               src="/about-img.png"
               alt="About Smart Grid Analytics"
-              className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/2 max-w-xs sm:max-w-sm rounded-xl sm:rounded-2xl object-cover"
+              className="w-1/2 sm:w-2/5 md:w-2/5 lg:w-1/2 max-w-[180px] sm:max-w-[220px] md:max-w-xs lg:max-w-sm rounded-xl sm:rounded-2xl object-cover"
             />
           </motion.div>
 

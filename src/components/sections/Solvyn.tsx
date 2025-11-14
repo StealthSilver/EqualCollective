@@ -19,7 +19,7 @@ import {
 } from "../ui/SolvynIcons";
 import { SolvynIconNode } from "../ui/SolvynIconNode";
 import { SolvynBeams } from "../ui/SolvynBeams";
-import { useSolvynAnimation } from "../ui/useSolvynAnimation";
+import { useSolvynAnimation } from "../../hooks/useSolvynAnimation";
 
 const ICON_CONFIG = [
   { id: "tax" as const, label: "Merchant Services", component: TaxIcon },
@@ -36,10 +36,9 @@ const ICON_CONFIG = [
   { id: "bidopt" as const, label: "Bid Optimization", component: BidOptimizationIcon },
 ];
 
-// Better spaced positions: Left side groups, Right side equally spaced
+// Desktop positions: Left side groups, Right side equally spaced
 // Order: tax, climate, treasury, elements, payments, windmill, solar, battery, forecasting, trading, reporting, bidopt
-// Maximum vertical spacing between icons to prevent overlap and ensure labels are clearly visible
-const ICON_POSITIONS = [
+const ICON_POSITIONS_DESKTOP = [
   // LEFT SIDE UPPER GROUP - Merchant Services (tax)
   { top: "70%", left: "2%", delay: 0.6, borderColor: "orange" as const },
   // RIGHT SIDE - Energy Portfolio Management (climate) - equally spaced #1
@@ -66,10 +65,54 @@ const ICON_POSITIONS = [
   { top: "18%", right: "2%", delay: 1.8, borderColor: "purple" as const },
 ];
 
+// Mobile/Tablet positions: More compact, better spaced for smaller screens
+const ICON_POSITIONS_MOBILE = [
+  // Top row - left side
+  { top: "5%", left: "2%", delay: 0.6, borderColor: "orange" as const },
+  // Top row - right side
+  { top: "5%", right: "2%", delay: 0.7, borderColor: "orange" as const },
+  // Second row - left side
+  { top: "18%", left: "2%", delay: 0.8, borderColor: "purple" as const },
+  // Second row - right side
+  { top: "18%", right: "2%", delay: 1.0, borderColor: "purple" as const },
+  // Third row - left side
+  { top: "31%", left: "2%", delay: 1.1, borderColor: "orange" as const },
+  // Third row - right side
+  { top: "31%", right: "2%", delay: 1.2, borderColor: "purple" as const },
+  // Fourth row - left side
+  { top: "44%", left: "2%", delay: 1.3, borderColor: "orange" as const },
+  // Fourth row - right side
+  { top: "44%", right: "2%", delay: 1.4, borderColor: "purple" as const },
+  // Fifth row - left side
+  { top: "57%", right: "2%", delay: 1.5, borderColor: "orange" as const },
+  // Fifth row - right side
+  { top: "57%", left: "2%", delay: 1.6, borderColor: "purple" as const },
+  // Sixth row - left side
+  { top: "70%", right: "2%", delay: 1.7, borderColor: "orange" as const },
+  // Sixth row - right side
+  { top: "70%", left: "2%", delay: 1.8, borderColor: "purple" as const },
+];
+
 export const Solvyn: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const sgridsRef = useRef<HTMLDivElement | null>(null);
+
+  // Screen size detection for responsive layout
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 640); // sm breakpoint
+      setIsTablet(width >= 640 && width < 1024); // md-lg breakpoint
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   // Create refs for all icons - must be at top level, not in useMemo
   const iconRefsRef = useRef<React.RefObject<HTMLDivElement | null>[]>(
@@ -87,6 +130,9 @@ export const Solvyn: React.FC = () => {
   );
 
   const [points, setPoints] = useState<Points | null>(null);
+
+  // Select positions based on screen size
+  const ICON_POSITIONS = isMobile || isTablet ? ICON_POSITIONS_MOBILE : ICON_POSITIONS_DESKTOP;
 
   const pathRefs = useRef<SVGPathElement[]>([]);
   const beamRefs = useRef<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>(
@@ -142,7 +188,7 @@ export const Solvyn: React.FC = () => {
       window.removeEventListener("resize", measure);
       clearTimeout(id);
     };
-  }, [measure]);
+  }, [measure, isMobile, isTablet]);
 
   // Animation hook
   useSolvynAnimation({
@@ -156,10 +202,23 @@ export const Solvyn: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full min-h-screen py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
+      className="relative w-full min-h-screen py-8 sm:py-12 md:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-10">
+        <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-10">
+          {/* SOLVYN Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-4 sm:mb-6 md:mb-8"
+          >
+            <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 md:mb-8 font-sans">
+              Solvyn
+            </p>
+          </motion.div>
+
           {/* Centered Text Content */}
           <motion.div 
             initial={{ opacity: 0, y: -30 }}
@@ -241,7 +300,11 @@ export const Solvyn: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
               className="relative flex items-center justify-center w-full"
-              style={{ height: "90vh", maxHeight: "900px" }}
+              style={{ 
+                height: isMobile ? "120vh" : isTablet ? "100vh" : "90vh", 
+                maxHeight: isMobile ? "800px" : isTablet ? "850px" : "900px",
+                minHeight: isMobile ? "600px" : isTablet ? "700px" : "700px"
+              }}
           >
             {/* Center SGrids Logo */}
               <motion.div 
@@ -252,25 +315,31 @@ export const Solvyn: React.FC = () => {
                   delay: 0.4,
                 }}
                 viewport={{ once: true }}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-3"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-2 sm:gap-3"
               >
               <div
                 ref={sgridsRef}
-                  className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 p-[2px] shadow-2xl hover:shadow-orange-500/50 dark:hover:shadow-orange-500/70 transition-all duration-500 group"
+                  className={`relative rounded-2xl bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 p-[2px] shadow-2xl hover:shadow-orange-500/50 dark:hover:shadow-orange-500/70 transition-all duration-500 group ${
+                    isMobile ? "w-12 h-12 sm:w-16 sm:h-16" : isTablet ? "w-16 h-16 md:w-20 md:h-20" : "w-20 h-20 md:w-24 md:h-24"
+                  }`}
               >
-                  <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-900 flex items-center justify-center p-3 backdrop-blur-sm">
+                  <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-900 flex items-center justify-center backdrop-blur-sm p-2 sm:p-3">
                     <Image
                   alt="SGrids Logo"
-                      width={80}
-                      height={80}
+                      width={isMobile ? 40 : isTablet ? 60 : 80}
+                      height={isMobile ? 40 : isTablet ? 60 : 80}
                   src="/sgrids.svg"
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
             </div>
                 {/* Solvyn text box */}
-                <div className="px-4 py-2 rounded-lg bg-gradient-to-br from-orange-50 to-purple-50 dark:from-orange-950/30 dark:to-purple-950/30 border-2 border-orange-500/30 dark:border-orange-500/50 shadow-lg">
-                  <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-purple-600 dark:from-orange-400 dark:to-purple-400">
+                <div className={`rounded-lg bg-gradient-to-br from-orange-50 to-purple-50 dark:from-orange-950/30 dark:to-purple-950/30 border-2 border-orange-500/30 dark:border-orange-500/50 shadow-lg ${
+                  isMobile ? "px-2 py-1" : "px-4 py-2"
+                }`}>
+                  <span className={`font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-purple-600 dark:from-orange-400 dark:to-purple-400 ${
+                    isMobile ? "text-sm" : "text-lg"
+                  }`}>
                     Solvyn
                 </span>
             </div>
@@ -279,8 +348,11 @@ export const Solvyn: React.FC = () => {
               {/* Icon Nodes */}
               {icons.map((icon, idx) => {
                 const config = ICON_CONFIG[idx];
-                const position = ICON_POSITIONS[idx];
+                const positionData = ICON_POSITIONS[idx];
                 const IconComponent = config.component;
+                
+                // Extract only positioning properties for the position prop
+                const { delay, borderColor, ...position } = positionData;
 
                 return (
                   <SolvynIconNode
@@ -288,8 +360,10 @@ export const Solvyn: React.FC = () => {
                     icon={icon}
                     iconComponent={<IconComponent active={icon.active} />}
                     position={position}
-                    animationDelay={position.delay}
-                    borderColor={position.borderColor}
+                    animationDelay={delay}
+                    borderColor={borderColor}
+                    isMobile={isMobile}
+                    isTablet={isTablet}
                   />
                 );
               })}
@@ -300,6 +374,8 @@ export const Solvyn: React.FC = () => {
                 containerRef={containerRef}
                 pathRefs={pathRefs}
                 beamRefs={beamRefs}
+                isMobile={isMobile}
+                isTablet={isTablet}
               />
             </motion.div>
           </div>
