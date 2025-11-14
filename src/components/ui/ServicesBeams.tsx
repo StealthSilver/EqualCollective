@@ -6,7 +6,7 @@ type ServicesBeamsProps = {
   points: Points | null;
   containerRef: React.RefObject<HTMLDivElement | null>;
   pathRefs: React.MutableRefObject<SVGPathElement[]>;
-  beamRefs: React.MutableRefObject<{ circle: SVGPathElement | null; core: SVGPathElement | null }[]>;
+  beamRefs: React.MutableRefObject<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>;
   isMobile?: boolean;
   isTablet?: boolean;
 };
@@ -99,40 +99,46 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                 opacity={0}
               />
 
-              {/* Continuous animated beam - outer glow */}
+              {/* Continuous animated beam - outer glow (always fully lit) */}
               <path
                 ref={(el) => {
                   if (!el) return;
                   beamRefs.current[i].circle = el;
                 }}
                 d={pathD}
-                stroke="rgba(251, 146, 60, 0.6)"
+                stroke="rgba(251, 146, 60, 0.35)"
                 strokeWidth={beamStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
                 filter="url(#servicesSoftGlow)"
-                style={{
-                  strokeDasharray: "1000",
-                  strokeDashoffset: "1000",
-                }}
               />
 
-              {/* Continuous animated beam - inner core */}
+              {/* Continuous animated beam - inner core (always fully lit) */}
               <path
                 ref={(el) => {
                   if (!el) return;
                   beamRefs.current[i].core = el;
                 }}
                 d={pathD}
-                stroke="#fb923c"
+                stroke="rgba(251, 146, 60, 0.65)"
                 strokeWidth={coreStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
+              />
+
+              {/* Purple pulse circle that travels along the path */}
+              <circle
+                ref={(el) => {
+                  if (!el) return;
+                  beamRefs.current[i].pulse = el;
+                }}
+                r={isMobile ? 4 : isTablet ? 5 : 6}
+                fill="#a855f7"
+                opacity={0}
                 style={{
-                  strokeDasharray: "1000",
-                  strokeDashoffset: "1000",
+                  filter: "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))",
                 }}
               />
             </g>

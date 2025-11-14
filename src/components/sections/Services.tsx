@@ -51,12 +51,24 @@ export const Services = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Icon active states
+  const [iconActive, setIconActive] = useState<boolean[]>([false, false, false, false]);
+
   // Refs for beam animation
   const pathRefs = useRef<SVGPathElement[]>([]);
-  const beamRefs = useRef<{ circle: SVGPathElement | null; core: SVGPathElement | null }[]>(
-    Array.from({ length: 4 }, () => ({ circle: null, core: null }))
+  const beamRefs = useRef<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>(
+    Array.from({ length: 4 }, () => ({ circle: null, core: null, pulse: null }))
   );
   const progressRefs = useRef<number[]>([0, 0.25, 0.5, 0.75]); // Staggered starts for 4 beams
+
+  // Handler to set icon active state
+  const handleIconActive = useCallback((index: number, active: boolean) => {
+    setIconActive((prev) => {
+      const newState = [...prev];
+      newState[index] = active;
+      return newState;
+    });
+  }, []);
 
   // Measure positions - use useCallback to prevent recreation
   const measure = useCallback(() => {
@@ -79,11 +91,22 @@ export const Services = () => {
       const el = ref.current;
       if (!el) continue;
       const r = el.getBoundingClientRect();
-      // Target the center of the top border of each icon
-      targets.push({
-        x: r.left + r.width / 2 - containerRect.left,
-        y: r.top - containerRect.top,
-      });
+      // Find the icon container div inside the motion.div
+      const iconContainer = el.querySelector('div[class*="rounded-xl"]') as HTMLElement;
+      if (iconContainer) {
+        const iconRect = iconContainer.getBoundingClientRect();
+        // Target the center of the top border of the icon container
+        targets.push({
+          x: iconRect.left + iconRect.width / 2 - containerRect.left,
+          y: iconRect.top - containerRect.top,
+        });
+      } else {
+        // Fallback to motion.div top if icon container not found
+        targets.push({
+          x: r.left + r.width / 2 - containerRect.left,
+          y: r.top - containerRect.top,
+        });
+      }
     }
 
     if (targets.length === 4) {
@@ -114,6 +137,7 @@ export const Services = () => {
     pathRefs,
     beamRefs,
     progressRefs,
+    setIconActive: handleIconActive,
   });
 
   const energyServices = [
@@ -263,8 +287,16 @@ export const Services = () => {
                   viewport={{ once: true }}
                   className="flex flex-col items-center group cursor-pointer"
                 >
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 p-[2px] shadow-md hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] dark:hover:shadow-[0_0_25px_rgba(249,115,22,0.5)] transition-all duration-500 group-hover:scale-110">
-                    <div className="w-full h-full rounded-xl sm:rounded-2xl bg-white dark:bg-gray-950 flex items-center justify-center p-2 sm:p-2.5 md:p-3 backdrop-blur-sm">
+                  <div className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl p-[2px] shadow-md transition-all duration-500 group-hover:scale-110 ${
+                    iconActive[index]
+                      ? "bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.4),0_0_20px_rgba(168,85,247,0.4)] dark:shadow-[0_0_30px_rgba(249,115,22,0.6),0_0_20px_rgba(168,85,247,0.6)] scale-110"
+                      : "bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] dark:hover:shadow-[0_0_25px_rgba(249,115,22,0.5)]"
+                  }`}>
+                    <div className={`w-full h-full rounded-xl sm:rounded-2xl flex items-center justify-center p-2 sm:p-2.5 md:p-3 backdrop-blur-sm transition-all duration-500 ${
+                      iconActive[index]
+                        ? "bg-gradient-to-br from-orange-50 via-purple-50 to-orange-50 dark:from-orange-950/30 dark:via-purple-950/30 dark:to-orange-950/30"
+                        : "bg-white dark:bg-gray-950"
+                    }`}>
                       <Image
                         src={service.icon}
                         alt={service.title}

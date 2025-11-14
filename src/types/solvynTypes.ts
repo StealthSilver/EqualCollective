@@ -18,6 +18,6 @@ export type Points = {
 };
 
 export const ICON_SIZE = 48;
-export const BEAM_SPEED = 0.15; // Increased for faster beams
+export const BEAM_SPEED = 0.2; // Speed of pulse animation
 export const TOUCH_THRESHOLD = 25;
 
