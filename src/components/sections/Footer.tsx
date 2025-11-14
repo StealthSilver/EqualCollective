@@ -86,18 +86,18 @@ export const Footer = () => {
       id="footer"
       className="relative w-full overflow-hidden bg-white/90 dark:bg-black/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 lg:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12">
           {/* Logo and Description */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="lg:col-span-2"
+            className="lg:col-span-2 mb-6 sm:mb-0"
           >
-            <div className="mb-4">
+            <div className="mb-3 sm:mb-4">
               <motion.img
                 key={mounted ? currentTheme : "default"}
                 src={
@@ -108,28 +108,38 @@ export const Footer = () => {
                       : "/logo_light.svg"
                 }
                 alt="Smart Grid Analytics"
-                className="h-10 w-auto"
+                className="h-8 sm:h-10 w-auto"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               />
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 font-sans">
+            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 font-sans">
               Engineering the operating system for the renewable century with
               AI-powered solutions for clean energy optimization.
             </p>
             {/* Social Links */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300"
                   aria-label={social.name}
                   target={social.target}
                   rel={social.rel}
                 >
-                  {social.icon}
+                  {React.isValidElement(social.icon)
+                    ? React.cloneElement(social.icon as React.ReactElement<any>, {
+                        ...(React.isValidElement(social.icon) ? (social.icon.props as object) : {}),
+                        className: [
+                          (React.isValidElement(social.icon) ? (social.icon.props as any).className : undefined),
+                          "w-4 h-4 sm:w-6 sm:h-6"
+                        ]
+                          .filter(Boolean)
+                          .join(" ")
+                      })
+                    : social.icon}
                 </a>
               ))}
             </div>
@@ -143,14 +153,15 @@ export const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * (idx + 1) }}
               viewport={{ once: true }}
+              className="mb-4 sm:mb-0"
             >
-              <h3 className="text-gray-900 dark:text-gray-100 font-bold text-sm uppercase tracking-wider mb-4 font-sans">
+              <h3 className="text-gray-900 dark:text-gray-100 font-bold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 font-sans">
                 {section.charAt(0).toUpperCase() + section.slice(1)}
               </h3>
-              <ul className="space-y-3">
+              <ul className="flex flex-wrap gap-x-3 gap-y-2 lg:flex-col lg:space-y-3 lg:space-x-0 lg:gap-0">
                 {links.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors text-sm font-sans">
+                  <li key={link.name} className="inline-block lg:block">
+                    <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors text-xs sm:text-sm font-sans whitespace-nowrap">
                       {link.name}
                     </Link>
                   </li>
@@ -168,14 +179,14 @@ export const Footer = () => {
         viewport={{ once: true }}
         className="relative left-1/2 right-1/2 -mx-[50vw] w-[100vw] border-t border-gray-200 dark:border-gray-800"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-600 dark:text-gray-400 text-sm font-sans text-center md:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 sm:space-y-3 md:space-y-0 gap-2 sm:gap-0">
+            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm font-sans text-center md:text-left">
               © {currentYear} Smart Grid Analytics. All rights reserved.
             </p>
-            <p className="text-gray-600 dark:text-gray-400 text-sm font-sans text-center md:text-right">
+            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm font-sans text-center md:text-right">
               Powered by{" "}
-              <a href="/#solvyn" className="font-semibold text-orange-500">
+              <a href="/#solvyn" className="font-semibold text-orange-500 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
                 Solvyn
               </a>
             </p>

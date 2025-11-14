@@ -59,7 +59,7 @@ export const LogoTicker = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="py-6 mt-12 mb-12 bg-transparent relative z-10">
+    <div className="py-4 sm:py-5 lg:py-6 mt-6 sm:mt-8 lg:mt-12 mb-6 sm:mb-8 lg:mb-12 bg-transparent relative z-10">
       <div className="container mx-auto px-4">
         <div 
           className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)] justify-center pointer-events-auto"
@@ -67,7 +67,7 @@ export const LogoTicker = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           <motion.div
-            className="flex gap-20 flex-none"
+            className="flex gap-8 sm:gap-12 lg:gap-20 flex-none"
             animate={{
               translateX: "-50%",
             }}
@@ -84,7 +84,7 @@ export const LogoTicker = () => {
                 key={index}
                 src={logo}
                 alt={`Logo ${index + 1}`}
-                className="logo-ticker-image h-16 cursor-pointer"
+                className="logo-ticker-image h-10 sm:h-12 lg:h-16 cursor-pointer"
                 width={180}
                 height={40}
                 style={{ objectFit: "contain" }}
