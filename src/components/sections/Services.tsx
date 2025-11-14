@@ -200,7 +200,7 @@ export const Services = () => {
 
           {/* Energy service icons - reduced size for mobile */}
           <div className="absolute top-48 sm:top-56 md:top-64 lg:top-72 left-1/2 -translate-x-1/2 w-full max-w-4xl px-2 sm:px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
               {energyServices.map((service, index) => (
                 <motion.div
                   key={service.title}
@@ -239,7 +239,7 @@ export const Services = () => {
           </div>
 
           {/* Animated beams - only render after mount to ensure correct positioning */}
-          {/* On smaller screens, all beams originate from center (no reverse) */}
+          {/* All beams start from center (sgrids) and go to the four icons */}
           {mounted && (
             <>
               <AnimatedBeam
@@ -248,7 +248,7 @@ export const Services = () => {
                 fromRef={centerRef}
                 toRef={bessRef}
                 curvature={-20}
-                reverse={!isSmallScreen}
+                reverse={false}
               />
               <AnimatedBeam
                 key={`solar-${beamKey}`}
@@ -256,7 +256,7 @@ export const Services = () => {
                 fromRef={centerRef}
                 toRef={solarRef}
                 curvature={-40}
-                reverse={!isSmallScreen}
+                reverse={false}
               />
               <AnimatedBeam
                 key={`wind-${beamKey}`}

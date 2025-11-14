@@ -132,12 +132,9 @@ export const Footer = () => {
                   {React.isValidElement(social.icon)
                     ? React.cloneElement(social.icon as React.ReactElement<any>, {
                         ...(React.isValidElement(social.icon) ? (social.icon.props as object) : {}),
-                        className: [
-                          (React.isValidElement(social.icon) ? (social.icon.props as any).className : undefined),
-                          "w-4 h-4 sm:w-6 sm:h-6"
-                        ]
-                          .filter(Boolean)
-                          .join(" ")
+                        className: social.name === "LinkedIn" 
+                          ? "w-3 h-3 sm:w-6 sm:h-6" 
+                          : "w-4 h-4 sm:w-6 sm:h-6"
                       })
                     : social.icon}
                 </a>

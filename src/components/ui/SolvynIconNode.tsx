@@ -38,11 +38,11 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
       : "group-hover:border-purple-500 dark:group-hover:border-purple-600";
 
   // Responsive sizing
-  const iconPadding = isMobile ? "p-1.5" : isTablet ? "p-2" : "p-3";
-  const iconSize = isMobile ? "w-8 h-8" : isTablet ? "w-10 h-10" : "w-12 h-12";
+  const iconPadding = isMobile ? "p-2" : isTablet ? "p-2" : "p-3";
+  const iconSize = isMobile ? "w-6 h-6" : isTablet ? "w-7 h-7" : "w-12 h-12";
   // Smaller label sizes
   const labelSize = isMobile ? "text-[10px]" : isTablet ? "text-[10px] sm:text-[11px]" : "text-[11px]";
-  const labelMaxWidth = isMobile ? "max-w-[70px]" : isTablet ? "max-w-[85px]" : "max-w-[100px]";
+  const labelMaxWidth = isMobile ? "max-w-[100px]" : isTablet ? "max-w-[120px]" : "max-w-[100px]";
   const gapSize = isMobile ? "gap-1.5" : isTablet ? "gap-2" : "gap-2.5";
 
   return (
