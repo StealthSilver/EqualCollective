@@ -8,7 +8,6 @@ import { Points } from "../../types/solvynTypes";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-
 // Import icons for features
 import stackIcon from "@/app/Icons/stack.svg";
 import technologyIcon from "@/app/Icons/technology.svg";
@@ -94,33 +93,24 @@ export const Services = () => {
     for (const ref of refs) {
       const el = ref.current;
       if (!el) continue;
-      // We added a stable target element inside each icon container with data-beam-target.
       const targetEl = el.querySelector("[data-beam-target]") as HTMLElement | null;
       const sourceRect = (targetEl || el).getBoundingClientRect();
       
-      // Use the element's position even if dimensions are small/zero initially
-      // The position is what matters for the beam path
       const x = sourceRect.left + sourceRect.width / 2 - containerRect.left;
       const y = sourceRect.top - containerRect.top;
       
-      // Only skip if position is invalid (NaN or Infinity)
       if (isNaN(x) || isNaN(y) || !isFinite(x) || !isFinite(y)) continue;
       
-      // We need the top border center of the icon container: so target x=center, y=top
-      // Validate coordinates before adding
       if (isFinite(x) && isFinite(y) && !isNaN(x) && !isNaN(y)) {
         targets.push({ x, y });
       }
     }
 
-    // Update points only if we have all 4 targets (required for beams to render)
-    // Also ensure origin is valid
     if (targets.length === 4 && 
         isFinite(origin.x) && isFinite(origin.y) && 
         !isNaN(origin.x) && !isNaN(origin.y)) {
       setPoints((prevPoints) => {
-        // Only update if points actually changed (with small tolerance for floating point)
-        const tolerance = 1; // 1px tolerance
+        const tolerance = 1;
         if (prevPoints) {
           const originChanged = Math.abs(prevPoints.origin.x - origin.x) > tolerance ||
                                 Math.abs(prevPoints.origin.y - origin.y) > tolerance;
@@ -135,7 +125,6 @@ export const Services = () => {
           }
         }
         
-        // Reset pathsReady when points change
         setPathsReady(false);
         return { origin, targets };
       });
@@ -145,13 +134,10 @@ export const Services = () => {
   useEffect(() => {
     if (!mounted) return;
 
-    // Use ResizeObserver to detect when elements actually resize
     const resizeObserver = new ResizeObserver(() => {
-      // Use requestAnimationFrame for ResizeObserver callbacks to batch updates
       requestAnimationFrame(measure);
     });
 
-    // Function to observe all elements
     const observeElements = () => {
       if (containerRef.current) {
         resizeObserver.observe(containerRef.current);
@@ -166,17 +152,14 @@ export const Services = () => {
       });
     };
 
-    // Initial observation
     observeElements();
 
-    // Also try observing after delays in case elements aren't ready yet
     const observeTimers = [
       setTimeout(() => observeElements(), 100),
       setTimeout(() => observeElements(), 300),
       setTimeout(() => observeElements(), 600),
     ];
 
-    // Initial measurements with requestAnimationFrame to ensure layout is ready
     requestAnimationFrame(measure);
 
     const handleResize = () => {
@@ -184,7 +167,6 @@ export const Services = () => {
     };
     window.addEventListener("resize", handleResize);
     
-    // Staggered measurements to catch elements at different render stages
     const timers = [
       setTimeout(() => requestAnimationFrame(measure), 50),
       setTimeout(() => requestAnimationFrame(measure), 150),
@@ -194,7 +176,6 @@ export const Services = () => {
       setTimeout(() => requestAnimationFrame(measure), 1200),
     ];
     
-    // Also measure after animations complete (framer-motion animations)
     const animationTimer = setTimeout(() => requestAnimationFrame(measure), 2000);
     
     return () => {
@@ -318,7 +299,7 @@ export const Services = () => {
           ref={containerRef}
           className="relative w-full min-h-[400px] sm:min-h-[550px] md:min-h-[600px] lg:min-h-[500px] flex items-center justify-center px-2 sm:px-4 py-4 sm:py-12"
         >
-          {/* Center logo - reduced size for mobile */}
+          {/* Center logo */}
           <motion.div
             ref={centerRef}
             initial={{ scale: 0, opacity: 0 }}
@@ -345,7 +326,7 @@ export const Services = () => {
             </div>
           </motion.div>
 
-          {/* Energy service icons - reduced size for mobile */}
+          {/* Energy service icons */}
           <div className="absolute top-48 sm:top-56 md:top-64 lg:top-72 left-1/2 -translate-x-1/2 w-full max-w-4xl px-2 sm:px-4">
             <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
               {energyServices.map((service, index) => (
@@ -377,9 +358,6 @@ export const Services = () => {
                     `
                   } : {}}
                   >
-                    {/* NOTICE: this inner div is the explicit target for beams.
-                        We add data-beam-target so measure() can find the top border center.
-                        We also call measure() when the Image completes loading to avoid race conditions. */}
                     <div
                       data-beam-target
                       className={`w-full h-full rounded-xl sm:rounded-2xl flex items-center justify-center p-2 sm:p-2.5 md:p-3 backdrop-blur-sm transition-all duration-500 ${
@@ -394,8 +372,6 @@ export const Services = () => {
                         width={60}
                         height={60}
                         onLoadingComplete={() => {
-                          // When the icon image loads, re-measure positions (avoids need to refresh)
-                          // Use multiple delays to ensure layout has settled
                           requestAnimationFrame(() => {
                             setTimeout(() => measure(), 50);
                             setTimeout(() => measure(), 200);
@@ -417,8 +393,7 @@ export const Services = () => {
             </div>
           </div>
 
-          {/* Animated beams - render immediately when points are available */}
-          {/* All beams start from center (sgrids) and go to the four icons */}
+          {/* Animated beams */}
           {points && (
             <ServicesBeams
               points={points}
@@ -428,7 +403,6 @@ export const Services = () => {
               isMobile={isMobile}
               isTablet={isTablet}
               onPathsReady={() => {
-                // Set pathsReady after a small delay to ensure DOM is fully updated
                 requestAnimationFrame(() => {
                   setTimeout(() => {
                     setPathsReady(true);
@@ -443,9 +417,9 @@ export const Services = () => {
       {/* ====== NEW FEATURES SECTION BELOW ====== */}
       <section
         id="features"
-        className="w-full overflow-x-hidden -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-8 md:py-12 lg:py-16 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-center transition-colors duration-700"
+        className="w-full overflow-x-hidden overflow-visible -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-8 md:py-12 lg:py-16 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-center transition-colors duration-700"
       >
-        {/* Title - matching the Services title style */}
+        {/* Title */}
         <div className="max-w-7xl mx-auto mb-2 sm:mb-6 md:mb-8 w-full px-2 sm:px-4">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -459,7 +433,7 @@ export const Services = () => {
           </p>
         </motion.div>
 
-          {/* Concise Description */}
+          {/* Description */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -476,7 +450,7 @@ export const Services = () => {
           </motion.div>
         </div>
 
-        {/* Cards - 2x3 Grid on mobile/tablet, 3x2 on desktop */}
+        {/* Feature cards */}
         <div className="max-w-7xl mx-auto w-full px-2 sm:px-4">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
             {featureData.map((card, index) => (
@@ -488,12 +462,9 @@ export const Services = () => {
                 viewport={{ once: true }}
                 className="group relative min-h-[240px] sm:min-h-[260px] md:min-h-[280px] p-3 sm:p-4 md:p-6 lg:p-8 overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
               >
-                {/* Hover background gradient */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-0 bg-gradient-to-br from-orange-50 via-purple-50 to-white dark:from-orange-950/20 dark:via-purple-950/20 dark:to-gray-950" />
                 
-                {/* Content wrapper */}
                 <div className="relative z-10 h-full flex flex-col">
-                  {/* Icon with decorative element */}
                   <div className="flex items-start justify-between mb-4 sm:mb-6">
                     <div className="relative p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br from-orange-100 to-purple-100 dark:from-orange-900/30 dark:to-purple-900/30 group-hover:scale-110 transition-all duration-500">
                       <Image
@@ -504,16 +475,13 @@ export const Services = () => {
                         className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 brightness-0 dark:brightness-0 dark:invert opacity-80 dark:opacity-90"
                       />
                     </div>
-                    {/* Small rounded rectangle on right */}
                     <div className="w-1 h-6 sm:h-8 rounded-full bg-gradient-to-b from-orange-500 to-purple-600 transition-all duration-500" />
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-2 sm:mb-3 md:mb-4 text-gray-900 dark:text-gray-100 tracking-tight group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-500 leading-tight">
                     {card.title}
                   </h3>
 
-                  {/* Description */}
                   <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
                     {card.description}
                   </p>
@@ -524,7 +492,6 @@ export const Services = () => {
         </div>
       </section>
 
- 
     </section>
   );
 };
