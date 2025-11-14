@@ -421,7 +421,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 font-bold text-white text-[10px] sm:text-xs md:text-sm w-auto"
+            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-6 lg:py-3 font-bold text-white text-[10px] sm:text-xs md:text-sm lg:text-base w-auto"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
@@ -432,7 +432,7 @@ export default function Hero() {
 
       {/* Data Points Section */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 mt-24 sm:mt-32 md:mt-40 lg:mt-48 relative z-40">
-        <div className="grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-12">
+        <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 lg:gap-6 xl:gap-12">
           {dataPoints.map((point, index) => (
             <motion.div
               key={index}
