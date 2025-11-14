@@ -383,7 +383,7 @@ export default function Hero() {
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}y nbtr
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="
             text-6xl font-medium leading-18

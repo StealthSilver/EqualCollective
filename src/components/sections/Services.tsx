@@ -6,6 +6,7 @@ import { AnimatedBeam } from "../ui/AnimatedBeam";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
+
 // Import icons for features
 import stackIcon from "@/app/Icons/stack.svg";
 import technologyIcon from "@/app/Icons/technology.svg";
@@ -333,6 +334,8 @@ export const Services = () => {
           </div>
         </div>
       </section>
+
+ 
     </section>
   );
 };
