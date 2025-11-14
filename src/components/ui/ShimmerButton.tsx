@@ -43,10 +43,10 @@ export const ShimmerButton = React.forwardRef<
           } as CSSProperties
         }
         className={cn(
-          "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden [border-radius:var(--radius)] border border-transparent px-4 py-2 whitespace-nowrap text-white [background:var(--bg)]",
+          "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden [border-radius:var(--radius)] border border-transparent px-3 py-1.5 sm:px-4 sm:py-2 whitespace-nowrap text-white [background:var(--bg)]",
           "transform-gpu transition-all duration-300 ease-in-out active:translate-y-px",
           // ensure IBM Plex Sans is used and text is bold
-          "font-sans font-bold text-sm",
+          "font-sans font-bold text-xs sm:text-sm",
           // hover effects: darker background and text shadow
           "hover:brightness-90 hover:[text-shadow:0_2px_8px_rgba(0,0,0,0.4)]",
           className
@@ -80,22 +80,22 @@ export const ShimmerButton = React.forwardRef<
         {children}
 
         {/* Highlight */}
-        <div
-          className={cn(
-            "absolute inset-0 size-full",
+          <div
+            className={cn(
+              "absolute inset-0 size-full",
 
-            "rounded-2xl px-4 py-1.5 text-sm font-medium shadow-[inset_0_-8px_10px_#ffffff1f]",
+              "rounded-2xl px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm font-medium shadow-[inset_0_-8px_10px_#ffffff1f]",
 
-            // transition
-            "transform-gpu transition-all duration-300 ease-in-out",
+              // transition
+              "transform-gpu transition-all duration-300 ease-in-out",
 
-            // on hover
-            "group-hover:shadow-[inset_0_-6px_10px_#ffffff3f]",
+              // on hover
+              "group-hover:shadow-[inset_0_-6px_10px_#ffffff3f]",
 
-            // on click
-            "group-active:shadow-[inset_0_-10px_10px_#ffffff3f]"
-          )}
-        />
+              // on click
+              "group-active:shadow-[inset_0_-10px_10px_#ffffff3f]"
+            )}
+          />
 
         {/* backdrop */}
         <div

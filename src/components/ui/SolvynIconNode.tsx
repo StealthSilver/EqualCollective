@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { IconState } from "./solvynTypes";
+import { IconState } from "../../types/solvynTypes";
 
 type SolvynIconNodeProps = {
   icon: IconState;

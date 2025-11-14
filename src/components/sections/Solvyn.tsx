@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { IconState, Points } from "../ui/solvynTypes";
+import { IconState, Points } from "../../types/solvynTypes";
 import {
   TaxIcon,
   ClimateIcon,

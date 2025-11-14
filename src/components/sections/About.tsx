@@ -40,20 +40,23 @@ export const About = () => {
 
   return (
     <section id="about"
-      className="relative w-full px-4 sm:px-6 py-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-4 sm:px-6 pt-10 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
      
     >
       <div className="max-w-7xl mx-auto">
         {/* Title */}
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-m  font-bold uppercase mb-12 tracking-tight"
+          className="mb-16"
         >
-          About Us
-        </motion.h2>
+          <p className="text-center text-gray-500 dark:text-gray-500  text-sm font-semibold uppercase tracking-wider mb-8 font-sans">
+            About Us
+          </p>
+         
+        </motion.div>
 
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -114,9 +117,9 @@ export const About = () => {
           viewport={{ once: true }}
           className="mt-32"
         >
-          <h3 className="font-ibm-plex-sans text-gray-900 text-center dark:text-gray-400 text-m font-bold uppercase mb-24 tracking-tight">
-            About the Team
-          </h3>
+          <p className="text-center text-gray-500 dark:text-gray-500  text-sm font-semibold uppercase tracking-wider mb-8 font-sans">
+           About our team
+          </p>
 
           <div className="space-y-48 mt-28 py-8">
             {/* Team Member 1 - Kumar M (Image on top right) */}

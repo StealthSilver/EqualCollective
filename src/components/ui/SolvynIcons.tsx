@@ -1,5 +1,5 @@
 import React from "react";
-import { ICON_SIZE } from "./solvynTypes";
+import { ICON_SIZE } from "../../types/solvynTypes";
 
 const IconWrapper: React.FC<{ active: boolean; children: React.ReactNode }> = ({ active, children }) => {
   return (

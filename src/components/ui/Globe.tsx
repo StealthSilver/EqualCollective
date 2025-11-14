@@ -276,7 +276,7 @@ export function World(props: WorldProps) {
       }}
       style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
       resize={{ scroll: false, debounce: { scroll: 50, resize: 50 } }}
-      dpr={[1, 2]}
+      dpr={typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio, 2)] : [1, 2]}
     >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />

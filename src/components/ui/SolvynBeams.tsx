@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Points } from "./solvynTypes";
-import { createCurvedPath } from "./solvynUtils";
+import { Points } from "../../types/solvynTypes";
+import { createCurvedPath } from "../../lib/solvynUtils";
 
 type SolvynBeamsProps = {
   points: Points | null;

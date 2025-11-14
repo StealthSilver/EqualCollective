@@ -367,28 +367,28 @@ export default function Hero() {
   return (
     <section
       className="
-        relative min-h-screen h-full px-4 sm:px-6 pt-28 sm:pt-36 md:pt-48 
+        relative min-h-screen h-full px-4 sm:px-6 pt-20 sm:pt-28 md:pt-36 lg:pt-48 
         bg-white/70 dark:bg-black/70 backdrop-blur-md
-        overflow-hidden flex flex-col justify-start  mx-auto pb-32
+        overflow-hidden flex flex-col justify-start mx-auto pb-16 sm:pb-24 md:pb-32
       "
      
     >
       {/* Globe positioned on the right */}
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute -right-200 -top-24 w-[1100px] h-[1100px] min-w-[1100px] min-h-[1100px] relative">
+        <div className="absolute -right-[200px] sm:-right-[150px] md:-right-[100px] lg:-right-[800px] -top-12 sm:-top-16 md:-top-20 lg:-top-24 w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] md:w-[850px] md:h-[850px] lg:w-[950px] lg:h-[950px] xl:w-[1100px] xl:h-[1100px] min-w-[600px] min-h-[600px] sm:min-w-[700px] sm:min-h-[700px] md:min-w-[850px] md:min-h-[850px] lg:min-w-[950px] lg:min-h-[950px] xl:min-w-[1100px] xl:min-h-[1100px] relative">
           <World key={globeKey} globeConfig={globeConfig} data={sampleArcs} />
         </div>
       </div>
 
-      <div className="max-w-7xl w-full mx-auto px-4 flex flex-col items-start text-left space-y-6 sm:space-y-8 relative z-10">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 flex flex-col items-start text-left space-y-4 sm:space-y-6 md:space-y-8 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="
-            text-6xl font-medium leading-18
+            text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-tight sm:leading-snug md:leading-normal lg:leading-18
             text-gray-900 dark:text-gray-100
-            max-w-4xl
+            max-w-full sm:max-w-3xl md:max-w-4xl
           "
         >
           <span>The Only Platform You Need For Renewable Intelligence</span>
@@ -399,7 +399,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           className="
-            max-w-2xl text-2xl font-sans leading-relaxed
+            max-w-full sm:max-w-xl md:max-w-2xl text-base sm:text-lg md:text-xl lg:text-2xl font-sans leading-relaxed
             text-gray-600 dark:text-gray-400
           "
         >
@@ -412,7 +412,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           className="
-            flex flex-col sm:flex-row gap-4 sm:gap-8 mt-6
+            flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-8 mt-4 sm:mt-6
             w-full sm:w-auto
           "
         >
@@ -421,7 +421,7 @@ export default function Hero() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans px-6 py-3 font-bold text-white"
+            className="font-sans px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 font-bold text-white text-xs sm:text-sm md:text-base w-auto"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
@@ -431,8 +431,8 @@ export default function Hero() {
       </div>
 
       {/* Data Points Section */}
-      <div className="max-w-7xl w-full mx-auto px-4 mt-48 relative z-40">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 mt-24 sm:mt-32 md:mt-40 lg:mt-48 relative z-40">
+        <div className="grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-12">
           {dataPoints.map((point, index) => (
             <motion.div
               key={index}
@@ -441,14 +441,14 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.8 + index * 0.1 }}
               className="flex flex-col items-start text-left"
             >
-              <div className="font-mono text-gray-900 dark:text-white text-5xl lg:text-4xl font-bold mb-4 flex items-baseline justify-center gap-1">
+              <div className="font-mono text-gray-900 dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 md:mb-3 lg:mb-4 flex items-baseline gap-0.5 sm:gap-1">
                 <NumberTicker
                   value={point.value}
                   className="text-gray-900 dark:text-white"
                 />
-                <span>{point.suffix}</span>
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">{point.suffix}</span>
               </div>
-              <p className="font-mono text-left text-gray-600 dark:text-gray-400 text-sm lg:text-sm uppercase tracking-wide leading-tight">
+              <p className="font-mono text-left text-gray-600 dark:text-gray-400 text-[8px] sm:text-[9px] md:text-[10px] lg:text-xs uppercase tracking-wide leading-tight">
                 {point.label}
               </p>
             </motion.div>

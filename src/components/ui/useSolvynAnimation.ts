@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
-import { Points, IconState, BEAM_SPEED, TOUCH_THRESHOLD } from "./solvynTypes";
+import { Points, IconState, BEAM_SPEED, TOUCH_THRESHOLD } from "../../types/solvynTypes";
 
 type UseSolvynAnimationProps = {
   points: Points | null;

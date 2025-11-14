@@ -56,7 +56,7 @@ export default function Navbar() {
   return (
     <nav
       className="
-        w-full sticky top-0 z-50 px-4 sm:px-6 py-3
+        relative w-full sticky top-0 z-50 px-4 sm:px-6 py-3
         border-b border-gray-200 dark:border-gray-800
         bg-white/50 dark:bg-black/50 backdrop-blur-sm
         transition-colors duration-300
@@ -64,7 +64,7 @@ export default function Navbar() {
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
         {/* Left: logo + nav items grouped */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
           <Link href="/" className="flex items-center cursor-pointer">
             <motion.img
               key={mounted ? currentTheme : "default"}
@@ -76,7 +76,7 @@ export default function Navbar() {
                   : "/logo_light.svg"
               }
               alt="Silver logo"
-              className="w-28 h-auto sm:w-32 md:w-36"
+              className="w-24 h-auto sm:w-28 md:w-32 lg:w-36"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -84,7 +84,7 @@ export default function Navbar() {
           </Link>
 
           <div
-            className="hidden md:flex items-center px-8 font-mono relative gap-4"
+            className="hidden lg:flex items-center px-4 xl:px-8 font-mono relative gap-2 xl:gap-4"
             onMouseLeave={() => setHovered(null)}
           >
             {navItems.map((item) => (
@@ -145,7 +145,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Right Section */}
-        <div className="hidden md:flex items-center gap-6 font-mono">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 font-mono">
           <ThemeToggle />
 
           <ShimmerButton
@@ -153,7 +153,7 @@ export default function Navbar() {
               const footer = document.getElementById("footer");
               footer?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="font-sans font-bold text-white"
+            className="font-sans font-bold text-white text-xs xl:text-sm px-4 xl:px-6"
             background="#ff7a18"
             shimmerColor="#ffffff"
           >
@@ -161,8 +161,8 @@ export default function Navbar() {
           </ShimmerButton>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-3">
+        {/* Tablet/Mobile Menu Button */}
+        <div className="lg:hidden flex items-center gap-2 sm:gap-3">
           <div className="scale-90 cursor-pointer">
             <ThemeToggle />
           </div>
@@ -177,10 +177,10 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile/Tablet Nav */}
       {isOpen && (
-        <div className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <div className="flex flex-col items-center space-y-3 py-8">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300 z-50">
+          <div className="flex flex-col items-center space-y-3 sm:space-y-4 py-6 sm:py-8">
             {navItems.map((item) =>
               item.external ? (
                 <a
@@ -205,12 +205,16 @@ export default function Navbar() {
               )
             )}
             <ShimmerButton
-              onClick={() => setIsOpen(false)}
-              className="font-sans font-bold text-white"
+              onClick={() => {
+                setIsOpen(false);
+                const footer = document.getElementById("footer");
+                footer?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="font-sans font-bold text-white text-sm px-6 py-2.5 mt-2"
               background="#FF7217"
               shimmerColor="#ffffff"
             >
-              Connect
+              CONNECT NOW
             </ShimmerButton>
           </div>
         </div>
