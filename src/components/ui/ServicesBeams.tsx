@@ -162,7 +162,7 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
     return () => {
       timers.forEach(timer => clearTimeout(timer));
     };
-  }, [points, dimensions, dimensionsReady, pathRefs, onPathsReady]);
+  }, [points, pathRefs, onPathsReady]);
 
   // Always render SVG if points exist - don't wait for dimensions
   if (!points || !points.targets || points.targets.length !== 4) {
@@ -170,6 +170,43 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
   }
 
   const svgRef = useRef<SVGSVGElement>(null);
+
+  // Immediate effect when points are available to ensure SVG and paths are visible
+  useEffect(() => {
+    if (!points) return;
+    
+    const forceVisibility = () => {
+      if (svgRef.current) {
+        const svg = svgRef.current;
+        // Ensure SVG is visible
+        svg.style.opacity = '1';
+        svg.style.visibility = 'visible';
+        
+        // Force all paths to be visible immediately
+        const paths = svg.querySelectorAll('path');
+        paths.forEach(path => {
+          // Skip the invisible measuring path
+          if (path.getAttribute('stroke') === 'transparent') return;
+          
+          path.setAttributeNS(null, 'opacity', '1');
+          path.setAttributeNS(null, 'visibility', 'visible');
+          (path as unknown as HTMLElement).style.opacity = '1';
+          (path as unknown as HTMLElement).style.visibility = 'visible';
+        });
+        
+        // Force browser to recalculate
+        void svg.getBoundingClientRect();
+      }
+    };
+
+    // Run immediately and multiple times - wait a bit for SVG to render
+    setTimeout(forceVisibility, 0);
+    requestAnimationFrame(forceVisibility);
+    requestAnimationFrame(() => requestAnimationFrame(forceVisibility));
+    setTimeout(forceVisibility, 50);
+    setTimeout(forceVisibility, 100);
+    setTimeout(forceVisibility, 200);
+  }, [points]); // Run when points are available
 
   // Force repaint when SVG mounts or updates - ensures browser paints the SVG
   useEffect(() => {
@@ -196,10 +233,13 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
               // Force all paths to be visible
               const paths = svg.querySelectorAll('path');
               paths.forEach(path => {
+                // Skip the invisible measuring path
+                if (path.getAttribute('stroke') === 'transparent') return;
+                
                 path.setAttributeNS(null, 'opacity', '1');
                 path.setAttributeNS(null, 'visibility', 'visible');
-                (path as HTMLElement).style.opacity = '1';
-                (path as HTMLElement).style.visibility = 'visible';
+                (path as unknown as HTMLElement).style.opacity = '1';
+                (path as unknown as HTMLElement).style.visibility = 'visible';
               });
             }
           });
@@ -214,7 +254,11 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
       className="absolute inset-0 w-full h-full pointer-events-none z-0"
       viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
       preserveAspectRatio="none"
+      opacity="1"
+      visibility="visible"
       style={{ 
+        opacity: 1,
+        visibility: 'visible',
         willChange: 'auto',
         backfaceVisibility: 'hidden',
         transform: 'translateZ(0)', // Force hardware acceleration
