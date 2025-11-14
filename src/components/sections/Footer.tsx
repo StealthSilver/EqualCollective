@@ -88,14 +88,14 @@ export const Footer = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 lg:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-12 mb-8 sm:mb-12">
           {/* Logo and Description */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 mb-6 sm:mb-0"
+            className="col-span-2 lg:col-span-2 mb-4 sm:mb-0"
           >
             <div className="mb-3 sm:mb-4">
               <motion.img
@@ -124,7 +124,7 @@ export const Footer = () => {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300"
+                  className="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-300"
                   aria-label={social.name}
                   target={social.target}
                   rel={social.rel}
@@ -134,7 +134,7 @@ export const Footer = () => {
                         ...(React.isValidElement(social.icon) ? (social.icon.props as object) : {}),
                         className: [
                           (React.isValidElement(social.icon) ? (social.icon.props as any).className : undefined),
-                          "w-2 h-2 sm:w-6 sm:h-6"
+                          "w-4 h-4 sm:w-6 sm:h-6"
                         ]
                           .filter(Boolean)
                           .join(" ")
@@ -153,14 +153,14 @@ export const Footer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * (idx + 1) }}
               viewport={{ once: true }}
-              className="mb-4 sm:mb-0"
+              className="mb-0 lg:mb-0"
             >
-              <h3 className="text-gray-900 dark:text-gray-100 font-bold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 font-sans">
+              <h3 className="text-gray-900 dark:text-gray-100 font-bold text-xs sm:text-sm uppercase tracking-wider mb-1.5 sm:mb-4 font-sans">
                 {section.charAt(0).toUpperCase() + section.slice(1)}
               </h3>
-              <ul className="flex flex-wrap gap-x-3 gap-y-2 lg:flex-col lg:space-y-3 lg:space-x-0 lg:gap-0">
+              <ul className="flex flex-col space-y-1.5 lg:space-y-3">
                 {links.map((link) => (
-                  <li key={link.name} className="inline-block lg:block">
+                  <li key={link.name}>
                     <Link href={link.href} className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors text-xs sm:text-sm font-sans whitespace-nowrap">
                       {link.name}
                     </Link>
