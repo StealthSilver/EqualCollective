@@ -202,7 +202,7 @@ export const Solvyn: React.FC = () => {
   });
 
   return (
-    <section 
+    <section id="solvyn"
       ref={sectionRef}
       className="relative w-full min-h-screen py-8 sm:py-12 md:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
     >
