@@ -36,61 +36,63 @@ const ICON_CONFIG = [
   { id: "bidopt" as const, label: "Bid Optimization", component: BidOptimizationIcon },
 ];
 
-// Desktop positions: Left side groups, Right side equally spaced
+// Desktop positions: Uniformly spaced grid - 6 icons on left, 6 on right
 // Order: tax, climate, treasury, elements, payments, windmill, solar, battery, forecasting, trading, reporting, bidopt
+// Uniform vertical spacing: ~8%, ~22%, ~36%, ~50%, ~64%, ~78%, ~92%
 const ICON_POSITIONS_DESKTOP = [
-  // LEFT SIDE UPPER GROUP - Merchant Services (tax)
-  { top: "70%", left: "2%", delay: 0.6, borderColor: "orange" as const },
-  // RIGHT SIDE - Energy Portfolio Management (climate) - equally spaced #1
-  { top: "86%", right: "2%", delay: 0.7, borderColor: "orange" as const },
-  // LEFT SIDE UPPER GROUP - Ancillary Services (treasury)
-  { top: "86%", left: "2%", delay: 0.8, borderColor: "purple" as const },
-  // RIGHT SIDE - Work Order Management (elements) - equally spaced #2
-  { top: "54%", right: "2%", delay: 1.0, borderColor: "purple" as const },
-  // LEFT SIDE UPPER GROUP - Grid Code Adherence (payments)
-  { top: "54%", left: "2%", delay: 1.1, borderColor: "orange" as const },
-  // LEFT SIDE LOWER GROUP - Wind (windmill)
-  { top: "16%", left: "4%", delay: 1.2, borderColor: "purple" as const },
-  // LEFT SIDE LOWER GROUP - Solar
-  { top: "2%", left: "4%", delay: 1.3, borderColor: "orange" as const },
-  // LEFT SIDE LOWER GROUP - BESS (battery)
-  { top:"30%", left: "4%", delay: 1.4, borderColor: "purple" as const },
-  // RIGHT SIDE - Forecasting and Scheduling - equally spaced #3
-  { top: "2%", right: "2%", delay: 1.5, borderColor: "orange" as const },
-  // RIGHT SIDE - Trading Desk - equally spaced #4
-  { top: "34%", right: "3%", delay: 1.6, borderColor: "purple" as const },
-  // RIGHT SIDE - Smart Analytics & Reporting - equally spaced #5
-  { top: "70%", right: "2%", delay: 1.7, borderColor: "orange" as const },
-  // RIGHT SIDE - Bid Optimization - equally spaced #6
-  { top: "18%", right: "2%", delay: 1.8, borderColor: "purple" as const },
+  // LEFT SIDE - Row 1 (top)
+  { top: "8%", left: "3%", delay: 0.6, borderColor: "orange" as const },
+  // RIGHT SIDE - Row 1 (top)
+  { top: "8%", right: "3%", delay: 0.7, borderColor: "orange" as const },
+  // LEFT SIDE - Row 2
+  { top: "22%", left: "3%", delay: 0.8, borderColor: "purple" as const },
+  // RIGHT SIDE - Row 2
+  { top: "22%", right: "3%", delay: 1.0, borderColor: "purple" as const },
+  // LEFT SIDE - Row 3
+  { top: "36%", left: "3%", delay: 1.1, borderColor: "orange" as const },
+  // RIGHT SIDE - Row 3
+  { top: "36%", right: "4%", delay: 1.2, borderColor: "purple" as const },
+  // LEFT SIDE - Row 4
+  { top: "50%", left: "4%", delay: 1.3, borderColor: "orange" as const },
+  // RIGHT SIDE - Row 4
+  { top: "50%", right: "4%", delay: 1.4, borderColor: "purple" as const },
+  // LEFT SIDE - Row 5
+  { top: "64%", left: "3%", delay: 1.5, borderColor: "orange" as const },
+  // RIGHT SIDE - Row 5
+  { top: "64%", right: "4%", delay: 1.6, borderColor: "purple" as const },
+  // LEFT SIDE - Row 6 (bottom)
+  { top: "78%", left: "3%", delay: 1.7, borderColor: "orange" as const },
+  // RIGHT SIDE - Row 6 (bottom)
+  { top: "78%", right: "3%", delay: 1.8, borderColor: "purple" as const },
 ];
 
-// Mobile/Tablet positions: More compact, better spaced for smaller screens
+// Mobile/Tablet positions: Uniformly spaced grid for smaller screens
+// 6 rows evenly spaced: ~6%, ~20%, ~34%, ~48%, ~62%, ~76%, ~90%
 const ICON_POSITIONS_MOBILE = [
-  // Top row - left side
-  { top: "5%", left: "2%", delay: 0.6, borderColor: "orange" as const },
-  // Top row - right side
-  { top: "5%", right: "2%", delay: 0.7, borderColor: "orange" as const },
-  // Second row - left side
-  { top: "18%", left: "2%", delay: 0.8, borderColor: "purple" as const },
-  // Second row - right side
-  { top: "18%", right: "2%", delay: 1.0, borderColor: "purple" as const },
-  // Third row - left side
-  { top: "31%", left: "2%", delay: 1.1, borderColor: "orange" as const },
-  // Third row - right side
-  { top: "31%", right: "2%", delay: 1.2, borderColor: "purple" as const },
-  // Fourth row - left side
-  { top: "44%", left: "2%", delay: 1.3, borderColor: "orange" as const },
-  // Fourth row - right side
-  { top: "44%", right: "2%", delay: 1.4, borderColor: "purple" as const },
-  // Fifth row - left side
-  { top: "57%", right: "2%", delay: 1.5, borderColor: "orange" as const },
-  // Fifth row - right side
-  { top: "57%", left: "2%", delay: 1.6, borderColor: "purple" as const },
-  // Sixth row - left side
-  { top: "70%", right: "2%", delay: 1.7, borderColor: "orange" as const },
-  // Sixth row - right side
-  { top: "70%", left: "2%", delay: 1.8, borderColor: "purple" as const },
+  // Row 1 - left side
+  { top: "6%", left: "2%", delay: 0.6, borderColor: "orange" as const },
+  // Row 1 - right side
+  { top: "6%", right: "2%", delay: 0.7, borderColor: "orange" as const },
+  // Row 2 - left side
+  { top: "20%", left: "2%", delay: 0.8, borderColor: "purple" as const },
+  // Row 2 - right side
+  { top: "20%", right: "2%", delay: 1.0, borderColor: "purple" as const },
+  // Row 3 - left side
+  { top: "34%", left: "2%", delay: 1.1, borderColor: "orange" as const },
+  // Row 3 - right side
+  { top: "34%", right: "2%", delay: 1.2, borderColor: "purple" as const },
+  // Row 4 - left side
+  { top: "48%", left: "2%", delay: 1.3, borderColor: "orange" as const },
+  // Row 4 - right side
+  { top: "48%", right: "2%", delay: 1.4, borderColor: "purple" as const },
+  // Row 5 - left side
+  { top: "62%", left: "2%", delay: 1.5, borderColor: "orange" as const },
+  // Row 5 - right side
+  { top: "62%", right: "2%", delay: 1.6, borderColor: "purple" as const },
+  // Row 6 - left side
+  { top: "76%", left: "2%", delay: 1.7, borderColor: "orange" as const },
+  // Row 6 - right side
+  { top: "76%", right: "2%", delay: 1.8, borderColor: "purple" as const },
 ];
 
 export const Solvyn: React.FC = () => {

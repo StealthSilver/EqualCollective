@@ -40,9 +40,10 @@ export const SolvynIconNode: React.FC<SolvynIconNodeProps> = ({
   // Responsive sizing
   const iconPadding = isMobile ? "p-1.5" : isTablet ? "p-2" : "p-3";
   const iconSize = isMobile ? "w-8 h-8" : isTablet ? "w-10 h-10" : "w-12 h-12";
-  const labelSize = isMobile ? "text-xs" : isTablet ? "text-xs sm:text-sm" : "text-sm";
-  const labelMaxWidth = isMobile ? "max-w-[80px]" : isTablet ? "max-w-[100px]" : "max-w-[120px]";
-  const gapSize = isMobile ? "gap-1" : isTablet ? "gap-1.5" : "gap-2";
+  // Smaller label sizes
+  const labelSize = isMobile ? "text-[10px]" : isTablet ? "text-[10px] sm:text-[11px]" : "text-[11px]";
+  const labelMaxWidth = isMobile ? "max-w-[70px]" : isTablet ? "max-w-[85px]" : "max-w-[100px]";
+  const gapSize = isMobile ? "gap-1.5" : isTablet ? "gap-2" : "gap-2.5";
 
   return (
     <motion.div
