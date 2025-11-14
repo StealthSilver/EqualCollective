@@ -98,21 +98,23 @@ export const Footer = () => {
             className="col-span-2 lg:col-span-2 mb-4 sm:mb-0"
           >
             <div className="mb-3 sm:mb-4">
-              <motion.img
-                key={mounted ? currentTheme : "default"}
-                src={
-                  !mounted
-                    ? "/logo_light.svg"
-                    : currentTheme === "dark"
-                      ? "/logo_dark.svg"
-                      : "/logo_light.svg"
-                }
-                alt="Smart Grid Analytics"
-                className="h-8 sm:h-10 w-auto"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
+              <Link href="/" className="cursor-pointer">
+                <motion.img
+                  key={mounted ? currentTheme : "default"}
+                  src={
+                    !mounted
+                      ? "/logo_light.svg"
+                      : currentTheme === "dark"
+                        ? "/logo_dark.svg"
+                        : "/logo_light.svg"
+                  }
+                  alt="Smart Grid Analytics"
+                  className="h-8 sm:h-10 w-auto"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </Link>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 font-sans">
               Engineering the operating system for the renewable century with

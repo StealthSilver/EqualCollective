@@ -4,9 +4,16 @@ import { Points, IconState, BEAM_SPEED, TOUCH_THRESHOLD } from "../types/solvynT
 type UseSolvynAnimationProps = {
   points: Points | null;
   pathRefs: React.MutableRefObject<SVGPathElement[]>;
-  beamRefs: React.MutableRefObject<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>;
+  beamRefs: React.MutableRefObject<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>;
   progressRefs: React.MutableRefObject<number[]>;
   setIcons: React.Dispatch<React.SetStateAction<IconState[]>>;
+};
+
+// Staggered delays: top row (0,1) together, then 2-11 one by one
+// Delay between each icon after top row: 0.15 seconds
+const getInitialDelay = (index: number): number => {
+  if (index === 0 || index === 1) return 0; // Top row starts together
+  return 0.15 * (index - 1); // Each subsequent icon starts 0.15s after the previous
 };
 
 export const useSolvynAnimation = ({
@@ -19,7 +26,9 @@ export const useSolvynAnimation = ({
   const lastTimestampRef = useRef<number | null>(null);
   const pointsRef = useRef<Points | null>(points);
   const iconActivationTimeRef = useRef<Map<number, number>>(new Map());
-  const ACTIVE_DURATION = 800; // Keep icons active for 800ms after beam passes
+  const ACTIVE_DURATION = 800; // Keep icons active for 800ms after pulse passes
+  const pathLengthsRef = useRef<number[]>([]);
+  const startTimeRef = useRef<number | null>(null);
   
   // Update points ref when points change
   useEffect(() => {
@@ -74,6 +83,32 @@ export const useSolvynAnimation = ({
   useEffect(() => {
     if (!points || points.targets.length < 12) return;
 
+    // Reset start time when points change
+    startTimeRef.current = Date.now();
+
+    // Measure path lengths when points change
+    const measurePathLengths = () => {
+      pathLengthsRef.current = pathRefs.current.map((path) => {
+        if (!path) return 0;
+        try {
+          return path.getTotalLength();
+        } catch {
+          return 0;
+        }
+      });
+    };
+
+    // Initial measurement
+    measurePathLengths();
+    
+    // Re-measure multiple times to ensure paths are rendered and positioned correctly
+    const timeoutIds = [
+      setTimeout(measurePathLengths, 100),
+      setTimeout(measurePathLengths, 300),
+      setTimeout(measurePathLengths, 600),
+      setTimeout(measurePathLengths, 1000),
+    ];
+
     let rafId = 0;
 
     const step = (timestamp: number) => {
@@ -87,41 +122,44 @@ export const useSolvynAnimation = ({
         return;
       }
 
+      const currentTime = (Date.now() - (startTimeRef.current || 0)) / 1000;
       const beamPositions: { x: number; y: number }[] = [];
 
       activePaths.forEach((path, pathIndex) => {
         try {
-          const pathLength = path.getTotalLength();
+          const pathLength = pathLengthsRef.current[pathIndex] || path.getTotalLength();
           if (pathLength === 0) return;
 
+          // Calculate initial delay offset
+          const initialDelay = getInitialDelay(pathIndex);
+          const adjustedTime = Math.max(0, currentTime - initialDelay);
+
+          // Update progress for pulse animation - continuous loop using modulo
           const distancePerSec = BEAM_SPEED * pathLength;
-          const headDistance = (progressRefs.current[pathIndex] * pathLength + distancePerSec * dt) % pathLength;
+          const headDistance = adjustedTime > 0 ? (adjustedTime * distancePerSec) % pathLength : 0;
           progressRefs.current[pathIndex] = headDistance / pathLength;
 
-          // Get two points for the line beam (create a short line segment)
-          const lineLength = 25; // Increased length for longer beam
-          const point1Distance = Math.max(0, headDistance - lineLength / 2);
-          const point2Distance = Math.min(pathLength, headDistance + lineLength / 2);
-
-          const point1 = path.getPointAtLength(point1Distance);
-          const point2 = path.getPointAtLength(point2Distance);
-          const centerPoint = path.getPointAtLength(headDistance);
-
-          beamPositions.push(centerPoint);
-
-          // Update line positions instead of circle positions
+          // Keep the continuous beam fully lit (fill entire path)
           const beamRef = beamRefs.current[pathIndex];
           if (beamRef.circle) {
-            beamRef.circle.setAttributeNS(null, "x1", String(point1.x));
-            beamRef.circle.setAttributeNS(null, "y1", String(point1.y));
-            beamRef.circle.setAttributeNS(null, "x2", String(point2.x));
-            beamRef.circle.setAttributeNS(null, "y2", String(point2.y));
+            beamRef.circle.setAttributeNS(null, "stroke-dasharray", String(pathLength));
+            beamRef.circle.setAttributeNS(null, "stroke-dashoffset", "0");
           }
           if (beamRef.core) {
-            beamRef.core.setAttributeNS(null, "x1", String(point1.x));
-            beamRef.core.setAttributeNS(null, "y1", String(point1.y));
-            beamRef.core.setAttributeNS(null, "x2", String(point2.x));
-            beamRef.core.setAttributeNS(null, "y2", String(point2.y));
+            beamRef.core.setAttributeNS(null, "stroke-dasharray", String(pathLength));
+            beamRef.core.setAttributeNS(null, "stroke-dashoffset", "0");
+          }
+
+          // Update pulse position (only show after initial delay)
+          if (beamRef.pulse && points && adjustedTime > 0) {
+            const pulsePoint = path.getPointAtLength(headDistance);
+            beamRef.pulse.setAttributeNS(null, "cx", String(pulsePoint.x));
+            beamRef.pulse.setAttributeNS(null, "cy", String(pulsePoint.y));
+            beamRef.pulse.setAttributeNS(null, "opacity", "1");
+            beamPositions.push(pulsePoint);
+          } else if (beamRef.pulse) {
+            // Hide pulse before initial delay
+            beamRef.pulse.setAttributeNS(null, "opacity", "0");
           }
         } catch (e) {
           console.error("Error animating beam:", e);
@@ -136,8 +174,8 @@ export const useSolvynAnimation = ({
     rafId = requestAnimationFrame(step);
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
+      timeoutIds.forEach(id => clearTimeout(id));
       lastTimestampRef.current = null;
     };
   }, [points, pathRefs, beamRefs, progressRefs, checkProximityAndSetActive]);
 };
-

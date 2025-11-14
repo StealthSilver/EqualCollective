@@ -6,7 +6,7 @@ type SolvynBeamsProps = {
   points: Points | null;
   containerRef: React.RefObject<HTMLDivElement | null>;
   pathRefs: React.MutableRefObject<SVGPathElement[]>;
-  beamRefs: React.MutableRefObject<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>;
+  beamRefs: React.MutableRefObject<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>;
   isMobile?: boolean;
   isTablet?: boolean;
 };
@@ -21,10 +21,8 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
 }) => {
   const [dimensions, setDimensions] = useState({ width: 700, height: 700 });
   
-  // Responsive stroke widths
-  const baseStrokeWidth = isMobile ? 1.5 : isTablet ? 2 : 2.5;
-  const beamStrokeWidth = isMobile ? "2" : isTablet ? "3" : "4";
-  const coreStrokeWidth = isMobile ? "1" : isTablet ? "1.5" : "2";
+  // Responsive stroke widths for base lines
+  const baseStrokeWidth = isMobile ? 1 : isTablet ? 1.5 : 2;
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -84,7 +82,7 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
                 fill="none"
               />
 
-              {/* Animated beam traveling on line - hidden path for animation */}
+              {/* Path for measuring length */}
               <path
                 ref={(el) => {
                   if (!el) return;
@@ -98,45 +96,52 @@ export const SolvynBeams: React.FC<SolvynBeamsProps> = ({
                 fill="none"
                 opacity={0}
               />
+
+              {/* Continuous animated beam - outer glow (always fully lit) */}
+              <path
+                ref={(el) => {
+                  if (!el) return;
+                  beamRefs.current[i].circle = el;
+                }}
+                d={pathD}
+                stroke="rgba(156, 163, 175, 0.35)"
+                strokeWidth={isMobile ? "1.5" : isTablet ? "2" : "2.5"}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+                filter="url(#softGlow)"
+              />
+
+              {/* Continuous animated beam - inner core (always fully lit) */}
+              <path
+                ref={(el) => {
+                  if (!el) return;
+                  beamRefs.current[i].core = el;
+                }}
+                d={pathD}
+                stroke="rgba(156, 163, 175, 0.65)"
+                strokeWidth={isMobile ? "0.75" : isTablet ? "1" : "1.5"}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+
+              {/* Gray pulse circle that travels along the path */}
+              <circle
+                ref={(el) => {
+                  if (!el) return;
+                  beamRefs.current[i].pulse = el;
+                }}
+                r={isMobile ? 4 : isTablet ? 5 : 6}
+                fill="rgb(251, 146, 60)"
+                opacity={0}
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(251, 146, 60, 0.8))",
+                }}
+              />
             </g>
           );
         })}
-
-      {/* Animated beam lines */}
-      {points &&
-        points.targets.map((_, i) => (
-          <g key={`beam-line-${i}`}>
-            {/* Outer glow line */}
-            <line
-              ref={(el) => {
-                beamRefs.current[i].circle = el as unknown as SVGCircleElement;
-              }}
-              x1={-20}
-              y1={-20}
-              x2={-20}
-              y2={-20}
-              stroke="rgba(251, 146, 60, 0.6)"
-              strokeWidth={beamStrokeWidth}
-              strokeLinecap="round"
-              filter="url(#softGlow)"
-              className="transition-all duration-75"
-            />
-            {/* Inner core line - light orange */}
-            <line
-              ref={(el) => {
-                beamRefs.current[i].core = el as unknown as SVGCircleElement;
-              }}
-              x1={-20}
-              y1={-20}
-              x2={-20}
-              y2={-20}
-              stroke="#fb923c"
-              strokeWidth={coreStrokeWidth}
-              strokeLinecap="round"
-              className="transition-all duration-75"
-            />
-          </g>
-        ))}
     </svg>
   );
 };

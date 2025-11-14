@@ -9,6 +9,11 @@ type UseServicesAnimationProps = {
   setIconActive?: (index: number, active: boolean) => void;
 };
 
+// Staggered delays for 4 beams: start at 0, 0.2s, 0.4s, 0.6s
+const getInitialDelay = (index: number): number => {
+  return index * 0.2; // Each beam starts 0.2s after the previous
+};
+
 export const useServicesAnimation = ({
   points,
   pathRefs,
@@ -20,9 +25,17 @@ export const useServicesAnimation = ({
   const pathLengthsRef = useRef<number[]>([]);
   const iconActivationTimeRef = useRef<Map<number, number>>(new Map());
   const ACTIVE_DURATION = 600; // Keep icons active for 600ms after pulse passes
+  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!points || points.targets.length < 4) return;
+
+    // Reset start time when points change
+    startTimeRef.current = Date.now();
+    // Reset all progress to 0 (start from origin)
+    for (let i = 0; i < 4; i++) {
+      progressRefs.current[i] = 0;
+    }
 
     // Measure path lengths when points change
     const measurePathLengths = () => {
@@ -39,8 +52,13 @@ export const useServicesAnimation = ({
     // Initial measurement
     measurePathLengths();
     
-    // Re-measure after a short delay to ensure paths are rendered
-    const timeoutId = setTimeout(measurePathLengths, 100);
+    // Re-measure multiple times to ensure paths are rendered and positioned correctly
+    const timeoutIds = [
+      setTimeout(measurePathLengths, 100),
+      setTimeout(measurePathLengths, 300),
+      setTimeout(measurePathLengths, 600),
+      setTimeout(measurePathLengths, 1000),
+    ];
 
     let rafId = 0;
 
@@ -55,18 +73,33 @@ export const useServicesAnimation = ({
         return;
       }
 
+      const currentTime = (Date.now() - (startTimeRef.current || 0)) / 1000;
+
       activePaths.forEach((path, pathIndex) => {
         try {
           const pathLength = pathLengthsRef.current[pathIndex] || path.getTotalLength();
           if (pathLength === 0) return;
 
-          // Update progress for pulse animation
-          const distancePerSec = BEAM_SPEED * pathLength;
-          const headDistance = (progressRefs.current[pathIndex] * pathLength + distancePerSec * dt) % pathLength;
-          progressRefs.current[pathIndex] = headDistance / pathLength;
+          // Calculate initial delay offset
+          const initialDelay = getInitialDelay(pathIndex);
+          const adjustedTime = Math.max(0, currentTime - initialDelay);
 
-          // Keep the continuous beam fully lit (fill entire path)
-          // Set dasharray to pathLength and dashoffset to 0 to show full path
+          // Update progress for pulse animation - start from 0 (origin), travel to pathLength (target), then restart
+          const distancePerSec = BEAM_SPEED * pathLength;
+          let headDistance: number;
+          
+          if (adjustedTime > 0) {
+            // Calculate distance traveled, then use modulo to wrap back to 0 when reaching the end
+            const totalDistance = adjustedTime * distancePerSec;
+            headDistance = totalDistance % pathLength;
+            progressRefs.current[pathIndex] = headDistance / pathLength;
+          } else {
+            // Before initial delay, stay at origin (0)
+            headDistance = 0;
+            progressRefs.current[pathIndex] = 0;
+          }
+
+          // Keep the continuous beam fully lit (show entire path)
           const beamRef = beamRefs.current[pathIndex];
           if (beamRef.circle) {
             beamRef.circle.setAttributeNS(null, "stroke-dasharray", String(pathLength));
@@ -77,36 +110,57 @@ export const useServicesAnimation = ({
             beamRef.core.setAttributeNS(null, "stroke-dashoffset", "0");
           }
 
-          // Update white pulse position
+          // Update pulse position (only show after initial delay)
           if (beamRef.pulse && points) {
-            const pulsePoint = path.getPointAtLength(headDistance);
-            beamRef.pulse.setAttributeNS(null, "cx", String(pulsePoint.x));
-            beamRef.pulse.setAttributeNS(null, "cy", String(pulsePoint.y));
-            beamRef.pulse.setAttributeNS(null, "opacity", "1");
+            if (adjustedTime > 0) {
+              const pulsePoint = path.getPointAtLength(headDistance);
+              beamRef.pulse.setAttributeNS(null, "cx", String(pulsePoint.x));
+              beamRef.pulse.setAttributeNS(null, "cy", String(pulsePoint.y));
+              beamRef.pulse.setAttributeNS(null, "opacity", "1");
 
-            // Check if pulse is near target icon
-            const target = points.targets[pathIndex];
-            if (target && setIconActive) {
-              const distance = Math.hypot(pulsePoint.x - target.x, pulsePoint.y - target.y);
-              const currentTime = timestamp;
+              // Check if pulse is near target icon
+              const target = points.targets[pathIndex];
+              if (target && setIconActive) {
+                const distance = Math.hypot(pulsePoint.x - target.x, pulsePoint.y - target.y);
+                const currentTime = timestamp;
               
-              if (distance <= TOUCH_THRESHOLD) {
-                // Pulse reached icon - activate it
-                setIconActive(pathIndex, true);
-                iconActivationTimeRef.current.set(pathIndex, currentTime);
-              } else {
-                // Check if still within active duration
-                const lastActivation = iconActivationTimeRef.current.get(pathIndex);
-                if (lastActivation && currentTime - lastActivation < ACTIVE_DURATION) {
+                if (distance <= TOUCH_THRESHOLD) {
+                  // Pulse reached icon - activate it
                   setIconActive(pathIndex, true);
+                  iconActivationTimeRef.current.set(pathIndex, currentTime);
+
+                  // Dim outer glow slightly when hit (lighter glow)
+                  if (beamRef.circle) {
+                    // reduce outer glow opacity
+                    beamRef.circle.setAttributeNS(null, "opacity", "0.12");
+                  }
+                  // keep core more visible
+                  if (beamRef.core) {
+                    beamRef.core.setAttributeNS(null, "opacity", "1");
+                  }
                 } else {
-                  setIconActive(pathIndex, false);
-                  iconActivationTimeRef.current.delete(pathIndex);
+                  // Check if still within active duration
+                  const lastActivation = iconActivationTimeRef.current.get(pathIndex);
+                  if (lastActivation && currentTime - lastActivation < ACTIVE_DURATION) {
+                    setIconActive(pathIndex, true);
+                    // keep outer glow dim while active
+                    if (beamRef.circle) beamRef.circle.setAttributeNS(null, "opacity", "0.14");
+                  } else {
+                    setIconActive(pathIndex, false);
+                    iconActivationTimeRef.current.delete(pathIndex);
+                    // Restore outer glow to default subtle value when not active
+                    if (beamRef.circle) beamRef.circle.setAttributeNS(null, "opacity", "0.22");
+                  }
                 }
               }
+            } else {
+              // Hide pulse before initial delay
+              beamRef.pulse.setAttributeNS(null, "opacity", "0");
             }
           }
         } catch (e) {
+          // Swallow errors to avoid breaking raf loop
+          // eslint-disable-next-line no-console
           console.error("Error animating beam:", e);
         }
       });
@@ -117,9 +171,8 @@ export const useServicesAnimation = ({
     rafId = requestAnimationFrame(step);
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
-      clearTimeout(timeoutId);
+      timeoutIds.forEach(id => clearTimeout(id));
       lastTimestampRef.current = null;
     };
   }, [points, pathRefs, beamRefs, progressRefs, setIconActive]);
 };
-

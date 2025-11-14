@@ -137,8 +137,8 @@ export const Solvyn: React.FC = () => {
   const ICON_POSITIONS = isMobile || isTablet ? ICON_POSITIONS_MOBILE : ICON_POSITIONS_DESKTOP;
 
   const pathRefs = useRef<SVGPathElement[]>([]);
-  const beamRefs = useRef<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>(
-    Array.from({ length: 12 }, () => ({ circle: null, core: null }))
+  const beamRefs = useRef<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>(
+    Array.from({ length: 12 }, () => ({ circle: null, core: null, pulse: null }))
   );
   const progressRefs = useRef<number[]>([
     0, 0.091, 0.182, 0.273, 0.364, 0.455, 0.545, 0.636, 0.727, 0.818, 0.909, 1.0,
@@ -204,19 +204,19 @@ export const Solvyn: React.FC = () => {
   return (
     <section id="solvyn"
       ref={sectionRef}
-      className="relative w-full min-h-screen py-8 sm:py-12 md:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
+      className="relative w-full min-h-screen py-4 sm:py-8 md:py-12 lg:py-20 overflow-hidden bg-white dark:bg-black transition-colors duration-700"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-10">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           {/* SOLVYN Title */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="mb-4 sm:mb-6 md:mb-8"
+            className="mb-2 sm:mb-4 md:mb-6 lg:mb-8"
           >
-            <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 md:mb-8 font-sans">
+            <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-4 md:mb-6 lg:mb-8 font-sans">
               Solvyn
             </p>
           </motion.div>

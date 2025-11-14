@@ -59,7 +59,7 @@ export const Services = () => {
   const beamRefs = useRef<{ circle: SVGPathElement | null; core: SVGPathElement | null; pulse: SVGCircleElement | null }[]>(
     Array.from({ length: 4 }, () => ({ circle: null, core: null, pulse: null }))
   );
-  const progressRefs = useRef<number[]>([0, 0.25, 0.5, 0.75]); // Staggered starts for 4 beams
+  const progressRefs = useRef<number[]>([0, 0, 0, 0]); // All start from origin (sgrids logo)
 
   // Handler to set icon active state
   const handleIconActive = useCallback((index: number, active: boolean) => {
@@ -85,28 +85,20 @@ export const Services = () => {
     };
 
     const targets: { x: number; y: number }[] = [];
+    // Refs in the order we expect: bess, solar, wind, hydrogen
     const refs = [bessRef, solarRef, windRef, hydrogenRef];
 
     for (const ref of refs) {
       const el = ref.current;
       if (!el) continue;
-      const r = el.getBoundingClientRect();
-      // Find the icon container div inside the motion.div
-      const iconContainer = el.querySelector('div[class*="rounded-xl"]') as HTMLElement;
-      if (iconContainer) {
-        const iconRect = iconContainer.getBoundingClientRect();
-        // Target the center of the top border of the icon container
-        targets.push({
-          x: iconRect.left + iconRect.width / 2 - containerRect.left,
-          y: iconRect.top - containerRect.top,
-        });
-      } else {
-        // Fallback to motion.div top if icon container not found
-        targets.push({
-          x: r.left + r.width / 2 - containerRect.left,
-          y: r.top - containerRect.top,
-        });
-      }
+      // We added a stable target element inside each icon container with data-beam-target.
+      const targetEl = el.querySelector("[data-beam-target]") as HTMLElement | null;
+      const sourceRect = (targetEl || el).getBoundingClientRect();
+      // We need the top border center of the icon container: so target x=center, y=top
+      targets.push({
+        x: sourceRect.left + sourceRect.width / 2 - containerRect.left,
+        y: sourceRect.top - containerRect.top, // top border center
+      });
     }
 
     if (targets.length === 4) {
@@ -122,14 +114,28 @@ export const Services = () => {
   }, []);
 
   useEffect(() => {
+    // Multiple measurements to ensure paths are positioned correctly
     measure();
     window.addEventListener("resize", measure);
-    const id = setTimeout(measure, 300);
+    
+    // Staggered measurements to catch elements at different render stages
+    const timers = [
+      setTimeout(measure, 100),
+      setTimeout(measure, 300),
+      setTimeout(measure, 500),
+      setTimeout(measure, 800),
+      setTimeout(measure, 1200),
+    ];
+    
+    // Also measure after animations complete (framer-motion animations)
+    const animationTimer = setTimeout(measure, 2000);
+    
     return () => {
       window.removeEventListener("resize", measure);
-      clearTimeout(id);
+      timers.forEach(timer => clearTimeout(timer));
+      clearTimeout(animationTimer);
     };
-  }, [measure, isMobile, isTablet]);
+  }, [measure, isMobile, isTablet, mounted]);
 
   // Animation hook
   useServicesAnimation({
@@ -203,18 +209,18 @@ export const Services = () => {
   return (
     <section
       id="services"
-      className="relative w-full px-4 sm:px-6 pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-4 sm:px-6 pt-8 sm:pt-12 md:pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       {/* ====== TITLE ====== */}
-      <div className="max-w-7xl mx-auto mb-8 sm:mb-12">
+      <div className="max-w-7xl mx-auto mb-6 sm:mb-8 md:mb-12">
       <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-8 sm:mb-12 lg:mb-16"
+          className="mb-4 sm:mb-6 md:mb-8 lg:mb-16"
         >
-          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 lg:mb-8 font-sans">
+          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-4 md:mb-6 lg:mb-8 font-sans">
             Services
           </p>
         </motion.div>
@@ -289,19 +295,39 @@ export const Services = () => {
                 >
                   <div className={`relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl p-[2px] shadow-md transition-all duration-500 group-hover:scale-110 ${
                     iconActive[index]
-                      ? "bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.4),0_0_20px_rgba(168,85,247,0.4)] dark:shadow-[0_0_30px_rgba(249,115,22,0.6),0_0_20px_rgba(168,85,247,0.6)] scale-110"
+                      ? "bg-gradient-to-br from-orange-500 via-purple-600 to-orange-500 scale-110"
                       : "bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-800 hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] dark:hover:shadow-[0_0_25px_rgba(249,115,22,0.5)]"
-                  }`}>
-                    <div className={`w-full h-full rounded-xl sm:rounded-2xl flex items-center justify-center p-2 sm:p-2.5 md:p-3 backdrop-blur-sm transition-all duration-500 ${
-                      iconActive[index]
-                        ? "bg-gradient-to-br from-orange-50 via-purple-50 to-orange-50 dark:from-orange-950/30 dark:via-purple-950/30 dark:to-orange-950/30"
-                        : "bg-white dark:bg-gray-950"
-                    }`}>
+                  }`}
+                  style={iconActive[index] ? {
+                    boxShadow: `
+                      0 0 8px rgba(249, 115, 22, 0.3),
+                      0 0 15px rgba(249, 115, 22, 0.2),
+                      0 0 25px rgba(168, 85, 247, 0.25),
+                      0 0 35px rgba(168, 85, 247, 0.15)
+                    `
+                  } : {}}
+                  >
+                    {/* NOTICE: this inner div is the explicit target for beams.
+                        We add data-beam-target so measure() can find the top border center.
+                        We also call measure() when the Image completes loading to avoid race conditions. */}
+                    <div
+                      data-beam-target
+                      className={`w-full h-full rounded-xl sm:rounded-2xl flex items-center justify-center p-2 sm:p-2.5 md:p-3 backdrop-blur-sm transition-all duration-500 ${
+                        iconActive[index]
+                          ? "bg-gradient-to-br from-orange-50 via-purple-50 to-orange-50 dark:from-orange-950/30 dark:via-purple-950/30 dark:to-orange-950/30"
+                          : "bg-white dark:bg-gray-950"
+                      }`}
+                    >
                       <Image
                         src={service.icon}
                         alt={service.title}
                         width={60}
                         height={60}
+                        onLoadingComplete={() => {
+                          // When the icon image loads, re-measure positions (avoids need to refresh)
+                          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                          Promise.resolve().then(() => measure());
+                        }}
                         className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert transition-all duration-500"
                       />
                     </div>
@@ -338,15 +364,15 @@ export const Services = () => {
         className="overflow-x-hidden mt-8 sm:mt-12 md:mt-16 py-8 sm:py-12 md:py-16 px-4 sm:px-6 flex flex-col items-center justify-center transition-colors duration-700"
       >
         {/* Title - matching the Services title style */}
-        <div className="max-w-7xl mx-auto mb-6 sm:mb-8">
+        <div className="max-w-7xl mx-auto mb-4 sm:mb-6 md:mb-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-8 sm:mb-12 lg:mb-16"
+          className="mb-4 sm:mb-6 md:mb-8 lg:mb-16"
         >
-          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-4 sm:mb-6 lg:mb-8 font-sans">
+          <p className="text-center text-gray-500 dark:text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2 sm:mb-4 md:mb-6 lg:mb-8 font-sans">
             Why Smart Grid Analytics?
           </p>
         </motion.div>

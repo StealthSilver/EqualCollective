@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Points } from "../../types/solvynTypes";
 import { createLinearPath } from "../../lib/solvynUtils";
 
@@ -22,9 +22,9 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
   const [dimensions, setDimensions] = useState({ width: 700, height: 700 });
   
   // Responsive stroke widths
-  const baseStrokeWidth = isMobile ? 1.5 : isTablet ? 2 : 2.5;
+  const baseStrokeWidth = isMobile ? 1.2 : isTablet ? 1.8 : 2.2;
   const beamStrokeWidth = isMobile ? "2" : isTablet ? "3" : "4";
-  const coreStrokeWidth = isMobile ? "1" : isTablet ? "1.5" : "2";
+  const coreStrokeWidth = isMobile ? "1" : isTablet ? "1.4" : "1.8";
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -39,12 +39,17 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     
-    // Update when points change (icons might have moved)
-    const timeoutId = setTimeout(updateDimensions, 100);
+    // Update when points change (icons might have moved) - multiple delays to catch different render stages
+    const timers = [
+      setTimeout(updateDimensions, 50),
+      setTimeout(updateDimensions, 150),
+      setTimeout(updateDimensions, 300),
+      setTimeout(updateDimensions, 600),
+    ];
     
     return () => {
       window.removeEventListener("resize", updateDimensions);
-      clearTimeout(timeoutId);
+      timers.forEach(timer => clearTimeout(timer));
     };
   }, [containerRef, points]);
 
@@ -57,10 +62,20 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
       preserveAspectRatio="none"
     >
       <defs>
-        <filter id="servicesSoftGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+        {/* Soft glow filter but toned down */}
+        <filter id="servicesSoftGlow" x="-200%" y="-200%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="6" result="coloredBlur" />
           <feMerge>
             <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
+        {/* Small gaussian for subtle outer glow after hit */}
+        <filter id="softSmall" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="g1" />
+          <feMerge>
+            <feMergeNode in="g1" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
@@ -72,7 +87,7 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
           const pathD = createLinearPath(points.origin.x, points.origin.y, target.x, target.y);
           return (
             <g key={`line-${i}`}>
-              {/* Base line - gray */}
+              {/* Base faint line (background) */}
               <path
                 d={pathD}
                 stroke="currentColor"
@@ -80,11 +95,11 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="text-gray-300 dark:text-gray-700"
-                opacity={0.6}
+                opacity={0.45}
                 fill="none"
               />
 
-              {/* Path for measuring length */}
+              {/* Invisible path for measuring */}
               <path
                 ref={(el) => {
                   if (!el) return;
@@ -99,46 +114,51 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
                 opacity={0}
               />
 
-              {/* Continuous animated beam - outer glow (always fully lit) */}
+              {/* Outer glow stroke (gray) */}
               <path
                 ref={(el) => {
                   if (!el) return;
                   beamRefs.current[i].circle = el;
                 }}
                 d={pathD}
-                stroke="rgba(251, 146, 60, 0.35)"
+                // Gray outer stroke (kept subtle)
+                stroke="rgba(156, 163, 175, 0.35)"
                 strokeWidth={beamStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
                 filter="url(#servicesSoftGlow)"
+                style={{ transition: "opacity 220ms linear" }}
               />
 
-              {/* Continuous animated beam - inner core (always fully lit) */}
+              {/* Inner core stroke (gray) */}
               <path
                 ref={(el) => {
                   if (!el) return;
                   beamRefs.current[i].core = el;
                 }}
                 d={pathD}
-                stroke="rgba(251, 146, 60, 0.65)"
+                stroke="rgba(156, 163, 175, 0.65)"
                 strokeWidth={coreStrokeWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
+                style={{ transition: "opacity 220ms linear" }}
               />
 
-              {/* Purple pulse circle that travels along the path */}
+              {/* Small pulse circle that travels along the path */}
               <circle
                 ref={(el) => {
                   if (!el) return;
                   beamRefs.current[i].pulse = el;
                 }}
-                r={isMobile ? 4 : isTablet ? 5 : 6}
-                fill="#a855f7"
+                r={isMobile ? 3.5 : isTablet ? 4.5 : 5.5}
+                // give it a light orange center and soft orange shadow
+                fill="#fb923c"
                 opacity={0}
                 style={{
-                  filter: "drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))",
+                  filter: "drop-shadow(0 0 6px rgba(251, 146, 60, 0.55))",
+                  transition: "opacity 160ms linear, transform 160ms linear",
                 }}
               />
             </g>
@@ -148,3 +168,4 @@ export const ServicesBeams: React.FC<ServicesBeamsProps> = ({
   );
 };
 
+export default ServicesBeams;
