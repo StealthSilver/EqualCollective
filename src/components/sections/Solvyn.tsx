@@ -7,7 +7,6 @@ import {
   TaxIcon,
   ClimateIcon,
   TreasuryIcon,
-  AtlasIcon,
   ElementsIcon,
   PaymentsIcon,
   WindmillIcon,
@@ -24,50 +23,47 @@ import { useSolvynAnimation } from "../ui/useSolvynAnimation";
 
 const ICON_CONFIG = [
   { id: "tax" as const, label: "Merchant Services", component: TaxIcon },
-  { id: "climate" as const, label: "EMS", component: ClimateIcon },
+  { id: "climate" as const, label: "Energy Portfolio Management", component: ClimateIcon },
   { id: "treasury" as const, label: "Ancillary Services", component: TreasuryIcon },
-  { id: "atlas" as const, label: "EPM", component: AtlasIcon },
   { id: "elements" as const, label: "Work Order Management", component: ElementsIcon },
   { id: "payments" as const, label: "Grid Code Adherence", component: PaymentsIcon },
   { id: "windmill" as const, label: "Wind", component: WindmillIcon },
   { id: "solar" as const, label: "Solar", component: SolarPanelIcon },
   { id: "battery" as const, label: "BESS", component: BatteryIcon },
-  { id: "forecasting" as const, label: "Forecasting", component: ForecastingSchedulingIcon },
-  { id: "trading" as const, label: "Trading", component: TradingDeckIcon },
-  { id: "reporting" as const, label: "Reporting", component: ReportingIcon },
+  { id: "forecasting" as const, label: "Forecasting and Scheduling", component: ForecastingSchedulingIcon },
+  { id: "trading" as const, label: "Trading Desk", component: TradingDeckIcon },
+  { id: "reporting" as const, label: "Smart Analytics & Reporting", component: ReportingIcon },
   { id: "bidopt" as const, label: "Bid Optimization", component: BidOptimizationIcon },
 ];
 
 // Better spaced positions: Left side groups, Right side equally spaced
-// Order: tax, climate, treasury, atlas, elements, payments, windmill, solar, battery, forecasting, trading, reporting, bidopt
+// Order: tax, climate, treasury, elements, payments, windmill, solar, battery, forecasting, trading, reporting, bidopt
 // Maximum vertical spacing between icons to prevent overlap and ensure labels are clearly visible
 const ICON_POSITIONS = [
   // LEFT SIDE UPPER GROUP - Merchant Services (tax)
-  { top: "0.5%", left: "0.5%", delay: 0.6, borderColor: "orange" as const },
-  // RIGHT SIDE - EMS (climate) - equally spaced #1
-  { top: "0.5%", right: "0.5%", delay: 0.7, borderColor: "orange" as const },
+  { top: "70%", left: "2%", delay: 0.6, borderColor: "orange" as const },
+  // RIGHT SIDE - Energy Portfolio Management (climate) - equally spaced #1
+  { top: "86%", right: "2%", delay: 0.7, borderColor: "orange" as const },
   // LEFT SIDE UPPER GROUP - Ancillary Services (treasury)
-  { top: "22%", left: "0.5%", delay: 0.8, borderColor: "purple" as const },
-  // RIGHT SIDE - EPM (atlas) - equally spaced #2
-  { top: "15%", right: "0.5%", delay: 0.9, borderColor: "orange" as const },
-  // RIGHT SIDE - Work Order Management (elements) - equally spaced #3
-  { top: "29.5%", right: "0.5%", delay: 1.0, borderColor: "purple" as const },
+  { top: "86%", left: "2%", delay: 0.8, borderColor: "purple" as const },
+  // RIGHT SIDE - Work Order Management (elements) - equally spaced #2
+  { top: "54%", right: "2%", delay: 1.0, borderColor: "purple" as const },
   // LEFT SIDE UPPER GROUP - Grid Code Adherence (payments)
-  { top: "30.5%", left: "4.5%", delay: 1.1, borderColor: "orange" as const },
+  { top: "54%", left: "2%", delay: 1.1, borderColor: "orange" as const },
   // LEFT SIDE LOWER GROUP - Wind (windmill)
-  { bottom: "40%", left: "0.5%", delay: 1.2, borderColor: "purple" as const },
+  { top: "16%", left: "4%", delay: 1.2, borderColor: "purple" as const },
   // LEFT SIDE LOWER GROUP - Solar
-  { bottom: "26%", left: "0.5%", delay: 1.3, borderColor: "orange" as const },
+  { top: "2%", left: "4%", delay: 1.3, borderColor: "orange" as const },
   // LEFT SIDE LOWER GROUP - BESS (battery)
-  { bottom: "12%", left: "0.5%", delay: 1.4, borderColor: "purple" as const },
-  // RIGHT SIDE - Forecasting - equally spaced #4
-  { top: "44%", right: "0.5%", delay: 1.5, borderColor: "orange" as const },
-  // RIGHT SIDE - Trading - equally spaced #5
-  { top: "57%", right: "0.5%", delay: 1.6, borderColor: "purple" as const },
-  // RIGHT SIDE - Reporting - equally spaced #6
-  { top: "70%", right: "0.5%", delay: 1.7, borderColor: "orange" as const },
-  // RIGHT SIDE - Bid Optimization - equally spaced #7
-  { top: "83%", right: "0.5%", delay: 1.8, borderColor: "purple" as const },
+  { top:"30%", left: "4%", delay: 1.4, borderColor: "purple" as const },
+  // RIGHT SIDE - Forecasting and Scheduling - equally spaced #3
+  { top: "2%", right: "2%", delay: 1.5, borderColor: "orange" as const },
+  // RIGHT SIDE - Trading Desk - equally spaced #4
+  { top: "34%", right: "3%", delay: 1.6, borderColor: "purple" as const },
+  // RIGHT SIDE - Smart Analytics & Reporting - equally spaced #5
+  { top: "70%", right: "2%", delay: 1.7, borderColor: "orange" as const },
+  // RIGHT SIDE - Bid Optimization - equally spaced #6
+  { top: "18%", right: "2%", delay: 1.8, borderColor: "purple" as const },
 ];
 
 export const Solvyn: React.FC = () => {
@@ -94,10 +90,10 @@ export const Solvyn: React.FC = () => {
 
   const pathRefs = useRef<SVGPathElement[]>([]);
   const beamRefs = useRef<{ circle: SVGCircleElement | null; core: SVGCircleElement | null }[]>(
-    Array.from({ length: 13 }, () => ({ circle: null, core: null }))
+    Array.from({ length: 12 }, () => ({ circle: null, core: null }))
   );
   const progressRefs = useRef<number[]>([
-    0, 0.077, 0.154, 0.231, 0.308, 0.385, 0.462, 0.539, 0.616, 0.693, 0.770, 0.847, 0.924,
+    0, 0.091, 0.182, 0.273, 0.364, 0.455, 0.545, 0.636, 0.727, 0.818, 0.909, 1.0,
   ]);
 
   // Measure positions - use useCallback to prevent recreation
@@ -126,7 +122,7 @@ export const Solvyn: React.FC = () => {
         });
       }
 
-    if (targets.length === 13) {
+    if (targets.length === 12) {
       setPoints((prevPoints) => {
         // Only update if points actually changed
         const prevStr = JSON.stringify(prevPoints);

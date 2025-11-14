@@ -72,7 +72,7 @@ export const useSolvynAnimation = ({
   }, [setIcons]);
 
   useEffect(() => {
-    if (!points || points.targets.length < 13) return;
+    if (!points || points.targets.length < 12) return;
 
     let rafId = 0;
 
