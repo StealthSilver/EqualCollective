@@ -76,7 +76,10 @@ export const Services = () => {
     const centerEl = centerRef.current;
     if (!container || !centerEl) return;
 
+    // Ensure container has dimensions before measuring
     const containerRect = container.getBoundingClientRect();
+    if (containerRect.width === 0 || containerRect.height === 0) return;
+
     const centerRect = centerEl.getBoundingClientRect();
 
     // Ensure center element is visible and has dimensions
@@ -95,6 +98,9 @@ export const Services = () => {
       if (!el) continue;
       const targetEl = el.querySelector("[data-beam-target]") as HTMLElement | null;
       const sourceRect = (targetEl || el).getBoundingClientRect();
+      
+      // Ensure target element has dimensions
+      if (sourceRect.width === 0 && sourceRect.height === 0) continue;
       
       const x = sourceRect.left + sourceRect.width / 2 - containerRect.left;
       const y = sourceRect.top - containerRect.top;
@@ -135,7 +141,9 @@ export const Services = () => {
     if (!mounted) return;
 
     const resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(measure);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(measure);
+      });
     });
 
     const observeElements = () => {
@@ -160,23 +168,32 @@ export const Services = () => {
       setTimeout(() => observeElements(), 600),
     ];
 
-    requestAnimationFrame(measure);
+    // Measure immediately and multiple times to ensure we get valid measurements
+    requestAnimationFrame(() => {
+      requestAnimationFrame(measure);
+    });
 
     const handleResize = () => {
-      requestAnimationFrame(measure);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(measure);
+      });
     };
     window.addEventListener("resize", handleResize);
     
+    // Multiple measurement attempts with increasing delays
     const timers = [
-      setTimeout(() => requestAnimationFrame(measure), 50),
-      setTimeout(() => requestAnimationFrame(measure), 150),
-      setTimeout(() => requestAnimationFrame(measure), 300),
-      setTimeout(() => requestAnimationFrame(measure), 500),
-      setTimeout(() => requestAnimationFrame(measure), 800),
-      setTimeout(() => requestAnimationFrame(measure), 1200),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 0),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 50),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 150),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 300),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 500),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 800),
+      setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(measure)), 1200),
     ];
     
-    const animationTimer = setTimeout(() => requestAnimationFrame(measure), 2000);
+    const animationTimer = setTimeout(() => {
+      requestAnimationFrame(() => requestAnimationFrame(measure));
+    }, 2000);
     
     return () => {
       observeTimers.forEach(timer => clearTimeout(timer));
@@ -373,9 +390,11 @@ export const Services = () => {
                         height={60}
                         onLoadingComplete={() => {
                           requestAnimationFrame(() => {
-                            setTimeout(() => measure(), 50);
-                            setTimeout(() => measure(), 200);
-                            setTimeout(() => measure(), 500);
+                            requestAnimationFrame(() => {
+                              setTimeout(() => measure(), 50);
+                              setTimeout(() => measure(), 200);
+                              setTimeout(() => measure(), 500);
+                            });
                           });
                         }}
                         className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert transition-all duration-500"
@@ -403,10 +422,13 @@ export const Services = () => {
               isMobile={isMobile}
               isTablet={isTablet}
               onPathsReady={() => {
+                // Use multiple RAF to ensure browser has painted before marking as ready
                 requestAnimationFrame(() => {
-                  setTimeout(() => {
-                    setPathsReady(true);
-                  }, 100);
+                  requestAnimationFrame(() => {
+                    setTimeout(() => {
+                      setPathsReady(true);
+                    }, 100);
+                  });
                 });
               }}
             />
