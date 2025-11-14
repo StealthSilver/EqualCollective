@@ -74,25 +74,25 @@ const ICON_POSITIONS_MOBILE = [
   // Row 1 - right side
   { top: "5%", right: "2%", delay: 0.7, borderColor: "orange" as const },
   // Row 2 - left side
-  { top: "18%", left: "2%", delay: 0.8, borderColor: "purple" as const },
+  { top: "20%", left: "2%", delay: 0.8, borderColor: "purple" as const },
   // Row 2 - right side
-  { top: "18%", right: "2%", delay: 1.0, borderColor: "purple" as const },
+  { top: "20%", right: "2%", delay: 1.0, borderColor: "purple" as const },
   // Row 3 - left side
-  { top: "31%", left: "2%", delay: 1.1, borderColor: "orange" as const },
+  { top: "35%", left: "0%", delay: 1.1, borderColor: "orange" as const },
   // Row 3 - right side
-  { top: "31%", right: "2%", delay: 1.2, borderColor: "purple" as const },
+  { top: "35%", right: "13%", delay: 1.2, borderColor: "purple" as const },
   // Row 4 - left side
-  { top: "44%", left: "2%", delay: 1.3, borderColor: "orange" as const },
+  { top: "50%", left: "9%", delay: 1.3, borderColor: "orange" as const },
   // Row 4 - right side
-  { top: "44%", right: "2%", delay: 1.4, borderColor: "purple" as const },
+  { top: "50%", right: "13%", delay: 1.4, borderColor: "purple" as const },
   // Row 5 - left side
-  { top: "57%", left: "2%", delay: 1.5, borderColor: "orange" as const },
+  { top: "65%", left: "-2%", delay: 1.5, borderColor: "orange" as const },
   // Row 5 - right side
-  { top: "57%", right: "2%", delay: 1.6, borderColor: "purple" as const },
+  { top: "65%", right: "9%", delay: 1.6, borderColor: "purple" as const },
   // Row 6 - left side
-  { top: "70%", left: "2%", delay: 1.7, borderColor: "orange" as const },
+  { top: "80%", left: "-2%", delay: 1.7, borderColor: "orange" as const },
   // Row 6 - right side
-  { top: "70%", right: "2%", delay: 1.8, borderColor: "purple" as const },
+  { top: "80%", right: "7%", delay: 1.8, borderColor: "purple" as const },
 ];
 
 export const Solvyn: React.FC = () => {

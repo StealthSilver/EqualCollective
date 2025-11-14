@@ -79,13 +79,15 @@ export const Services = () => {
     const containerRect = container.getBoundingClientRect();
     const centerRect = centerEl.getBoundingClientRect();
 
+    // Ensure center element is visible and has dimensions
+    if (centerRect.width === 0 || centerRect.height === 0) return;
+
     const origin = {
       x: centerRect.left + centerRect.width / 2 - containerRect.left,
       y: centerRect.top + centerRect.height / 2 - containerRect.top,
     };
 
     const targets: { x: number; y: number }[] = [];
-    // Refs in the order we expect: bess, solar, wind, hydrogen
     const refs = [bessRef, solarRef, windRef, hydrogenRef];
 
     for (const ref of refs) {
@@ -94,13 +96,20 @@ export const Services = () => {
       // We added a stable target element inside each icon container with data-beam-target.
       const targetEl = el.querySelector("[data-beam-target]") as HTMLElement | null;
       const sourceRect = (targetEl || el).getBoundingClientRect();
+      
+      // Use the element's position even if dimensions are small/zero initially
+      // The position is what matters for the beam path
+      const x = sourceRect.left + sourceRect.width / 2 - containerRect.left;
+      const y = sourceRect.top - containerRect.top;
+      
+      // Only skip if position is invalid (NaN or Infinity)
+      if (isNaN(x) || isNaN(y) || !isFinite(x) || !isFinite(y)) continue;
+      
       // We need the top border center of the icon container: so target x=center, y=top
-      targets.push({
-        x: sourceRect.left + sourceRect.width / 2 - containerRect.left,
-        y: sourceRect.top - containerRect.top, // top border center
-      });
+      targets.push({ x, y });
     }
 
+    // Update points only if we have all 4 targets (required for beams to render)
     if (targets.length === 4) {
       setPoints((prevPoints) => {
         // Only update if points actually changed
@@ -114,24 +123,64 @@ export const Services = () => {
   }, []);
 
   useEffect(() => {
-    // Multiple measurements to ensure paths are positioned correctly
-    measure();
-    window.addEventListener("resize", measure);
+    if (!mounted) return;
+
+    // Use ResizeObserver to detect when elements actually resize
+    const resizeObserver = new ResizeObserver(() => {
+      // Use requestAnimationFrame for ResizeObserver callbacks to batch updates
+      requestAnimationFrame(measure);
+    });
+
+    // Function to observe all elements
+    const observeElements = () => {
+      if (containerRef.current) {
+        resizeObserver.observe(containerRef.current);
+      }
+      if (centerRef.current) {
+        resizeObserver.observe(centerRef.current);
+      }
+      [bessRef, solarRef, windRef, hydrogenRef].forEach(ref => {
+        if (ref.current) {
+          resizeObserver.observe(ref.current);
+        }
+      });
+    };
+
+    // Initial observation
+    observeElements();
+
+    // Also try observing after delays in case elements aren't ready yet
+    const observeTimers = [
+      setTimeout(() => observeElements(), 100),
+      setTimeout(() => observeElements(), 300),
+      setTimeout(() => observeElements(), 600),
+    ];
+
+    // Initial measurements with requestAnimationFrame to ensure layout is ready
+    requestAnimationFrame(measure);
+
+    const handleResize = () => {
+      requestAnimationFrame(measure);
+    };
+    window.addEventListener("resize", handleResize);
     
     // Staggered measurements to catch elements at different render stages
     const timers = [
-      setTimeout(measure, 100),
-      setTimeout(measure, 300),
-      setTimeout(measure, 500),
-      setTimeout(measure, 800),
-      setTimeout(measure, 1200),
+      setTimeout(() => requestAnimationFrame(measure), 50),
+      setTimeout(() => requestAnimationFrame(measure), 150),
+      setTimeout(() => requestAnimationFrame(measure), 300),
+      setTimeout(() => requestAnimationFrame(measure), 500),
+      setTimeout(() => requestAnimationFrame(measure), 800),
+      setTimeout(() => requestAnimationFrame(measure), 1200),
     ];
     
     // Also measure after animations complete (framer-motion animations)
-    const animationTimer = setTimeout(measure, 2000);
+    const animationTimer = setTimeout(() => requestAnimationFrame(measure), 2000);
     
     return () => {
-      window.removeEventListener("resize", measure);
+      observeTimers.forEach(timer => clearTimeout(timer));
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
       timers.forEach(timer => clearTimeout(timer));
       clearTimeout(animationTimer);
     };
@@ -209,7 +258,7 @@ export const Services = () => {
   return (
     <section
       id="services"
-      className="relative w-full px-4 sm:px-6 pt-2 sm:pt-12 md:pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-4 sm:px-6 pt-2 sm:pt-12 md:pt-20 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-x-hidden"
     >
       {/* ====== TITLE ====== */}
       <div className="max-w-7xl mx-auto mb-2 sm:mb-8 md:mb-12">
@@ -325,8 +374,12 @@ export const Services = () => {
                         height={60}
                         onLoadingComplete={() => {
                           // When the icon image loads, re-measure positions (avoids need to refresh)
-                          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                          Promise.resolve().then(() => measure());
+                          // Use multiple delays to ensure layout has settled
+                          requestAnimationFrame(() => {
+                            setTimeout(() => measure(), 50);
+                            setTimeout(() => measure(), 200);
+                            setTimeout(() => measure(), 500);
+                          });
                         }}
                         className="w-full h-full object-contain brightness-0 dark:brightness-0 dark:invert transition-all duration-500"
                       />
@@ -361,10 +414,10 @@ export const Services = () => {
       {/* ====== NEW FEATURES SECTION BELOW ====== */}
       <section
         id="features"
-        className="overflow-x-hidden -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-12 md:py-16 px-4 sm:px-6 flex flex-col items-center justify-center transition-colors duration-700"
+        className="w-full overflow-x-hidden -mt-4 sm:mt-12 md:mt-16 py-2 sm:py-12 md:py-16 px-2 sm:px-4 md:px-6 flex flex-col items-center justify-center transition-colors duration-700"
       >
         {/* Title - matching the Services title style */}
-        <div className="max-w-7xl mx-auto mb-2 sm:mb-6 md:mb-8">
+        <div className="max-w-7xl mx-auto mb-2 sm:mb-6 md:mb-8 w-full px-2 sm:px-4">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -383,7 +436,7 @@ export const Services = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto mb-6 sm:mb-8"
+            className="max-w-4xl mx-auto mb-6 sm:mb-8 w-full"
           >
             <p className="text-center text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4 px-2">
               Founded by control engineers and energy futurists, we built <span className="font-semibold text-orange-600 dark:text-orange-400">Solvyn</span> — the only platform unifying SCADA, EMS, PPC, EPM, Intelligent Bidding, Digital Twin, and AI analytics into one seamless system.
@@ -395,8 +448,8 @@ export const Services = () => {
         </div>
 
         {/* Cards - 2x3 Grid on mobile/tablet, 3x2 on desktop */}
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div className="max-w-7xl mx-auto w-full px-2 sm:px-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
             {featureData.map((card, index) => (
               <motion.div
                 key={index}
@@ -404,7 +457,7 @@ export const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative min-h-[240px] sm:h-[260px] md:h-[280px] p-4 sm:p-6 md:p-8 overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
+                className="group relative min-h-[240px] sm:h-[260px] md:h-[280px] p-3 sm:p-4 md:p-6 lg:p-8 overflow-hidden rounded-xl sm:rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 hover:border-orange-500 dark:hover:border-orange-500 transition-all duration-500 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] dark:hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:scale-[1.02]"
               >
                 {/* Hover background gradient */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-0 bg-gradient-to-br from-orange-50 via-purple-50 to-white dark:from-orange-950/20 dark:via-purple-950/20 dark:to-gray-950" />
