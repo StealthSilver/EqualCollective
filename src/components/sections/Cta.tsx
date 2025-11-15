@@ -291,7 +291,7 @@ export const Cta = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center text-green-600 dark:text-green-400 text-xs sm:text-sm font-semibold font-sans"
                 >
-                  ✅ Thank you! We'll get back to you soon.
+                  Thank you! We'll get back to you soon.
                 </motion.div>
               )}
 
@@ -301,7 +301,7 @@ export const Cta = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center text-red-600 dark:text-red-400 text-xs sm:text-sm font-semibold font-sans"
                 >
-                  ❌ Failed to send message. Please try again or email us directly.
+                  Failed to send message. Please try again or email us directly.
                 </motion.div>
               )}
             </form>

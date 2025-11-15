@@ -35,7 +35,6 @@ export const Services = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [points, setPoints] = useState<Points | null>(null);
-  const [pathsReady, setPathsReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -115,7 +114,7 @@ export const Services = () => {
     if (targets.length === 4 && 
         isFinite(origin.x) && isFinite(origin.y) && 
         !isNaN(origin.x) && !isNaN(origin.y)) {
-      setPoints((prevPoints) => {
+        setPoints((prevPoints) => {
         const tolerance = 1;
         if (prevPoints) {
           const originChanged = Math.abs(prevPoints.origin.x - origin.x) > tolerance ||
@@ -131,7 +130,6 @@ export const Services = () => {
           }
         }
         
-        setPathsReady(false);
         return { origin, targets };
       });
     }
@@ -204,14 +202,13 @@ export const Services = () => {
     };
   }, [measure, isMobile, isTablet, mounted]);
 
-  // Animation hook - only start when paths are ready
+  // Animation hook
   useServicesAnimation({
     points,
     pathRefs,
     beamRefs,
     progressRefs,
     setIconActive: handleIconActive,
-    pathsReady,
   });
 
   const energyServices = [
@@ -421,16 +418,6 @@ export const Services = () => {
               beamRefs={beamRefs}
               isMobile={isMobile}
               isTablet={isTablet}
-              onPathsReady={() => {
-                // Use multiple RAF to ensure browser has painted before marking as ready
-                requestAnimationFrame(() => {
-                  requestAnimationFrame(() => {
-                    setTimeout(() => {
-                      setPathsReady(true);
-                    }, 100);
-                  });
-                });
-              }}
             />
           )}
         </div>

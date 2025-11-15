@@ -24,99 +24,171 @@ export async function POST(request: Request) {
         <!DOCTYPE html>
         <html>
           <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
               body {
-                font-family: 'Arial', sans-serif;
+                font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
                 line-height: 1.6;
-                color: #333;
+                color: #111827;
+                background-color: #f9fafb;
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+              }
+              .email-container {
                 max-width: 600px;
                 margin: 0 auto;
-                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
               }
               .header {
-                background: linear-gradient(135deg, #ff7a18 0%, #ffb74d 100%);
-                color: white;
-                padding: 30px;
-                border-radius: 10px 10px 0 0;
+                background: linear-gradient(135deg, #f97316 0%,rgb(253, 176, 82) 50%, #f97316 100%);
+                background-size: 200% 200%;
+                color: #ffffff;
+                padding: 32px 24px;
                 text-align: center;
               }
               .header h1 {
                 margin: 0;
                 font-size: 24px;
+                font-weight: 600;
+                letter-spacing: -0.025em;
               }
               .content {
-                background: #f9f9f9;
-                padding: 30px;
-                border-radius: 0 0 10px 10px;
+                background: #ffffff;
+                padding: 32px 24px;
               }
               .field {
                 margin-bottom: 20px;
-                padding: 15px;
-                background: white;
+                padding: 16px;
+                background: #ffffff;
                 border-radius: 8px;
-                border-left: 4px solid #ff7a18;
+                border: 1px solid #e5e7eb;
+                border-left: 4px solid #f97316;
+                transition: all 0.3s ease;
               }
               .field-label {
-                font-weight: bold;
-                color: #ff7a18;
-                font-size: 12px;
+                font-weight: 600;
+                color: #f97316;
+                font-size: 11px;
                 text-transform: uppercase;
-                margin-bottom: 5px;
+                letter-spacing: 0.05em;
+                margin-bottom: 8px;
+                display: block;
               }
               .field-value {
-                color: #333;
-                font-size: 16px;
+                color: #111827;
+                font-size: 15px;
+                line-height: 1.5;
+              }
+              .field-value a {
+                color: #f97316;
+                text-decoration: none;
+                font-weight: 500;
+              }
+              .field-value a:hover {
+                color: #ea580c;
+                text-decoration: underline;
+              }
+              .message-section {
+                margin-top: 24px;
+                margin-bottom: 20px;
+              }
+              .message-label {
+                font-weight: 600;
+                color: #f97316;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 12px;
+                display: block;
               }
               .message-box {
-                background: white;
+                background: #ffffff;
                 padding: 20px;
                 border-radius: 8px;
-                border-left: 4px solid #ff7a18;
+                border: 1px solid #e5e7eb;
+                border-left: 4px solid #f97316;
                 white-space: pre-wrap;
                 word-wrap: break-word;
+                color: #374151;
+                font-size: 15px;
+                line-height: 1.6;
               }
               .footer {
-                margin-top: 30px;
+                margin-top: 32px;
+                padding-top: 24px;
+                border-top: 1px solid #e5e7eb;
                 text-align: center;
-                color: #666;
+                color: #6b7280;
                 font-size: 12px;
+                line-height: 1.5;
+              }
+              .footer p {
+                margin: 4px 0;
+              }
+              .brand-name {
+                color: #f97316;
+                font-weight: 600;
+              }
+              @media only screen and (max-width: 600px) {
+                .email-container {
+                  border-radius: 0;
+                }
+                .content {
+                  padding: 24px 16px;
+                }
+                .header {
+                  padding: 24px 16px;
+                }
+                .header h1 {
+                  font-size: 20px;
+                }
               }
             </style>
           </head>
           <body>
-            <div class="header">
-              <h1>📬 New Contact Form Submission</h1>
-            </div>
-            <div class="content">
-              <div class="field">
-                <div class="field-label">Name</div>
-                <div class="field-value">${name}</div>
-              </div>
-              
-              <div class="field">
-                <div class="field-label">Email</div>
-                <div class="field-value"><a href="mailto:${email}">${email}</a></div>
-              </div>
-              
-              ${company ? `
-              <div class="field">
-                <div class="field-label">Company</div>
-                <div class="field-value">${company}</div>
-              </div>
-              ` : ''}
-              
-              <div class="field-label" style="margin-top: 20px; margin-bottom: 10px;">Message</div>
-              <div class="message-box">
-                ${message}
-              </div>
-              
-              <div class="footer">
-                <p>This email was sent from the Solvyn contact form on your website.</p>
-                <p>Received on ${new Date().toLocaleString('en-US', { 
-                  dateStyle: 'full', 
-                  timeStyle: 'short',
-                  timeZone: 'Asia/Kolkata'
-                })} IST</p>
+            <div style="padding: 20px;">
+              <div class="email-container">
+                <div class="header">
+                  <h1>New Contact Form Submission</h1>
+                </div>
+                <div class="content">
+                  <div class="field">
+                    <span class="field-label">Name</span>
+                    <div class="field-value">${name}</div>
+                  </div>
+                  
+                  <div class="field">
+                    <span class="field-label">Email</span>
+                    <div class="field-value"><a href="mailto:${email}">${email}</a></div>
+                  </div>
+                  
+                  ${company ? `
+                  <div class="field">
+                    <span class="field-label">Company</span>
+                    <div class="field-value">${company}</div>
+                  </div>
+                  ` : ''}
+                  
+                  <div class="message-section">
+                    <span class="message-label">Message</span>
+                    <div class="message-box">${message}</div>
+                  </div>
+                  
+                  <div class="footer">
+                    <p>This email was sent from the <span class="brand-name">Solvyn</span> contact form on your website.</p>
+                    <p>Received on ${new Date().toLocaleString('en-US', { 
+                      dateStyle: 'full', 
+                      timeStyle: 'short',
+                      timeZone: 'Asia/Kolkata'
+                    })} IST</p>
+                  </div>
+                </div>
               </div>
             </div>
           </body>
