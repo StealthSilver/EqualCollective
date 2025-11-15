@@ -72,35 +72,15 @@ export default function Loader() {
           </div>
         </div>
 
-        {/* Loading dots with bounce animation */}
-        <div className="mt-8 flex items-center gap-2">
-          <div
-            className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${
-              isDark ? "bg-blue-400" : "bg-blue-600"
+        {/* Loading text */}
+        <div className="mt-8">
+          <p
+            className={`text-sm md:text-base font-medium transition-colors duration-500 ${
+              isDark ? "text-gray-400" : "text-gray-600"
             }`}
-            style={{
-              animation: "loader-bounce 1.4s ease-in-out infinite",
-              animationDelay: "0s",
-            }}
-          />
-          <div
-            className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${
-              isDark ? "bg-blue-400" : "bg-blue-600"
-            }`}
-            style={{
-              animation: "loader-bounce 1.4s ease-in-out infinite",
-              animationDelay: "0.2s",
-            }}
-          />
-          <div
-            className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${
-              isDark ? "bg-blue-400" : "bg-blue-600"
-            }`}
-            style={{
-              animation: "loader-bounce 1.4s ease-in-out infinite",
-              animationDelay: "0.4s",
-            }}
-          />
+          >
+            Loading ...
+          </p>
         </div>
       </div>
     </div>
