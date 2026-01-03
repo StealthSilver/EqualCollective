@@ -11,7 +11,7 @@ export const Services = () => {
   return (
     <section
       id="services"
-      className="relative w-full px-3 sm:px-4 md:px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-24 pb-8 sm:pb-12 md:pb-16 lg:pb-24 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-3 sm:px-4 md:px-6 pt-2 sm:pt-8 md:pt-12 lg:pt-24 pb-8 sm:pb-12 md:pb-16 lg:pb-24 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-0">
         {/* Title Section */}
