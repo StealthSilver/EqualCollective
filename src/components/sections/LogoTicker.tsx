@@ -18,7 +18,7 @@ export const LogoTicker = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="py-4 sm:py-5 lg:py-6 mt-6 sm:mt-8 lg:mt-12 mb-6 sm:mb-8 lg:mb-12 bg-transparent relative z-10">
+    <div className="py-4 sm:py-5 lg:py-6 mt-6 sm:mt-8 lg:mt-12 mb-2 sm:mb-4 md:mb-8 lg:mb-12 bg-transparent relative z-10">
       <div className="container mx-auto px-4">
         <div
           className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)] justify-center pointer-events-auto"

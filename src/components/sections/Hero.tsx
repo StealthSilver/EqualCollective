@@ -21,7 +21,7 @@ export default function Hero() {
     <section
       className="
         relative min-h-[calc(100vh-80px)] lg:min-h-screen h-full px-3 sm:px-4 md:px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32 
-        overflow-hidden flex flex-col justify-between mx-auto pb-6 sm:pb-10 md:pb-16
+        overflow-hidden flex flex-col lg:justify-between mx-auto pb-6 sm:pb-10 md:pb-16
       "
     >
       <div className="max-w-7xl w-full mx-auto px-3 sm:px-4 md:px-6 flex flex-col items-center text-center space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 relative z-10">
@@ -75,11 +75,11 @@ export default function Hero() {
             CONNECT NOW
           </ShimmerButton>
         </motion.div>
-      </div>
 
-      {/* Logo Ticker Section */}
-      <div className="max-w-7xl w-full mx-auto px-3 sm:px-4 md:px-6 mt-0 sm:mt-2 md:mt-4 lg:mt-6 relative z-40">
-        <LogoTicker />
+        {/* Logo Ticker Section - Moved inside main content div */}
+        <div className="max-w-7xl w-full mx-auto px-0 mt-2 sm:mt-3 md:mt-4 lg:mt-6 relative z-40">
+          <LogoTicker />
+        </div>
       </div>
     </section>
   );
