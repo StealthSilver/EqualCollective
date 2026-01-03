@@ -103,9 +103,9 @@ export const Cta = () => {
   return (
     <section
       id="footer"
-      className="relative w-full px-4 sm:px-6 py-16 sm:py-24 lg:py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-3 sm:px-4 md:px-6 py-12 sm:py-16 md:py-20 lg:py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-0">
         {/* Main CTA Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -117,7 +117,7 @@ export const Cta = () => {
           {/* Animated Glow Background */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div
-              className="w-[300px] sm:w-[400px] lg:w-[600px] h-[140px] sm:h-[180px] lg:h-[240px] bg-gradient-to-r from-blue-500/15 via-blue-400/20 to-blue-500/15 dark:from-blue-500/25 dark:via-blue-400/35 dark:to-blue-500/25 rounded-full blur-3xl"
+              className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[600px] h-[120px] sm:h-[150px] md:h-[180px] lg:h-[240px] bg-gradient-to-r from-blue-500/15 via-blue-400/20 to-blue-500/15 dark:from-blue-500/25 dark:via-blue-400/35 dark:to-blue-500/25 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.05, 1],
                 opacity: [0.25, 0.4, 0.25],
@@ -130,8 +130,8 @@ export const Cta = () => {
             />
           </div>
 
-          <div className="relative z-10 py-8 sm:py-10 lg:py-16">
-            <h2 className="font-ibm-plex-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 sm:mb-6 lg:mb-10 tracking-tight text-gray-900 dark:text-gray-100">
+          <div className="relative z-10 py-6 sm:py-8 md:py-10 lg:py-16">
+            <h2 className="font-ibm-plex-sans text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold mb-3 sm:mb-4 md:mb-6 lg:mb-10 tracking-tight text-gray-900 dark:text-gray-100">
               Ready to Scale with
               <br />
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 dark:from-blue-400 dark:via-blue-300 dark:to-blue-400 bg-clip-text text-transparent inline-block animate-gradient pb-1">
@@ -139,7 +139,7 @@ export const Cta = () => {
               </span>
             </h2>
 
-            <p className="text-center text-gray-600 dark:text-gray-400 text-sm sm:text-base lg:text-lg max-w-3xl mx-auto font-sans leading-relaxed px-2 mb-8 sm:mb-10 lg:mb-12">
+            <p className="text-center text-gray-600 dark:text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg max-w-3xl mx-auto font-sans leading-relaxed px-2 mb-6 sm:mb-8 md:mb-10 lg:mb-12">
               Join Amazon sellers, agencies, and SaaS companies transforming
               their operations with our AI team. Start automating critical tasks
               and scale without headcount.
@@ -160,7 +160,7 @@ export const Cta = () => {
                     "_blank"
                   );
                 }}
-                className="font-sans px-6 py-2.5 sm:px-7 sm:py-3 text-sm font-bold text-white"
+                className="font-sans px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-2.5 lg:px-7 lg:py-3 text-xs sm:text-sm md:text-base font-bold text-white"
                 background="#3B82F6"
                 shimmerColor="#ffffff"
               >

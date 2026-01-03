@@ -11,26 +11,26 @@ export const Services = () => {
   return (
     <section
       id="services"
-      className="relative w-full px-4 sm:px-6 pt-12 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-24 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative w-full px-3 sm:px-4 md:px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-24 pb-8 sm:pb-12 md:pb-16 lg:pb-24 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-0">
         {/* Title Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-8 sm:mb-12 lg:mb-16"
+          className="mb-6 sm:mb-8 md:mb-12 lg:mb-16"
         >
           <div className="text-center">
             <div className="inline-block relative">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 AI Employees
               </h2>
               <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
             </div>
           </div>
-          <p className="text-center text-gray-600 dark:text-gray-400 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto mt-6">
+          <p className="text-center text-gray-600 dark:text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto mt-3 sm:mt-4 md:mt-6 px-2">
             Hire AI employees at a fraction of the cost of humans—delivering 10x
             efficiency to scale your Amazon business effortlessly.
           </p>
@@ -38,7 +38,7 @@ export const Services = () => {
 
         {/* Jeff and Penny Cards - Single Row */}
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-12 sm:mt-16 lg:mt-20 mb-16 sm:mb-20 lg:mb-28 max-w-4xl w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-16 lg:mt-20 mb-10 sm:mb-14 md:mb-20 lg:mb-28 max-w-4xl w-full px-2 sm:px-0">
             {/* Jeff Card */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -51,9 +51,9 @@ export const Services = () => {
               <div className="absolute inset-0 rounded-2xl border border-gray-200 dark:border-gray-700 group-hover:border-gray-300 dark:group-hover:border-gray-600 transition-colors duration-300"></div>
 
               {/* Card Content */}
-              <div className="relative rounded-2xl p-5 sm:p-6 bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 flex flex-col h-full">
+              <div className="relative rounded-2xl p-4 sm:p-5 md:p-6 bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 flex flex-col h-full">
                 {/* Image */}
-                <div className="w-full h-72 sm:h-80 lg:h-96 rounded-xl overflow-hidden mb-4 sm:mb-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+                <div className="w-full h-56 sm:h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden mb-3 sm:mb-4 md:mb-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
                   <Image
                     src={jeffImage}
                     alt="Jeff"
@@ -62,19 +62,19 @@ export const Services = () => {
                 </div>
 
                 {/* Name and Title */}
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-1">
                   Jeff
                 </h3>
-                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-4">
+                <p className="text-xs sm:text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
                   Sales Agent
                 </p>
 
                 {/* Badges */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 mb-3">
                   {["For Agencies", "For SaaS", "For Coaches"].map((badge) => (
                     <span
                       key={badge}
-                      className="inline-block px-2.5 sm:px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700"
+                      className="inline-block px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700"
                     >
                       {badge}
                     </span>
@@ -82,7 +82,7 @@ export const Services = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow mb-4">
+                <p className="text-[11px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow mb-3">
                   Jeff Sends 3x more emails, books 5x more meetings and costs
                   0.5x than your average sales representative, on autopilot!
                 </p>
@@ -91,7 +91,7 @@ export const Services = () => {
                 <motion.button
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
-                  className="w-full px-4 py-2 text-xs sm:text-sm font-medium text-blue-900 dark:text-blue-100 bg-blue-200/30 dark:bg-blue-900/20 hover:bg-blue-200/50 dark:hover:bg-blue-900/30 rounded-lg transition-colors duration-300"
+                  className="w-full px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs md:text-sm font-medium text-blue-900 dark:text-blue-100 bg-blue-200/30 dark:bg-blue-900/20 hover:bg-blue-200/50 dark:hover:bg-blue-900/30 rounded-lg transition-colors duration-300"
                 >
                   Learn More
                 </motion.button>
@@ -120,9 +120,9 @@ export const Services = () => {
               <div className="absolute inset-0 rounded-2xl border border-gray-200 dark:border-gray-700 group-hover:border-gray-300 dark:group-hover:border-gray-600 transition-colors duration-300"></div>
 
               {/* Card Content */}
-              <div className="relative rounded-2xl p-5 sm:p-6 bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 flex flex-col h-full">
+              <div className="relative rounded-2xl p-4 sm:p-5 md:p-6 bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 flex flex-col h-full">
                 {/* Image */}
-                <div className="w-full h-72 sm:h-80 lg:h-96 rounded-xl overflow-hidden mb-4 sm:mb-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+                <div className="w-full h-56 sm:h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden mb-3 sm:mb-4 md:mb-5 flex items-center justify-center bg-gray-50 dark:bg-gray-900">
                   <Image
                     src={pennyImage}
                     alt="Penny"
@@ -131,19 +131,19 @@ export const Services = () => {
                 </div>
 
                 {/* Name and Title */}
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-1">
                   Penny
                 </h3>
-                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-4">
+                <p className="text-xs sm:text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
                   Seller Growth Agent
                 </p>
 
                 {/* Badges */}
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
+                <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 mb-3">
                   {["For Agencies", "For Brands"].map((badge) => (
                     <span
                       key={badge}
-                      className="inline-block px-2.5 sm:px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700"
+                      className="inline-block px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700"
                     >
                       {badge}
                     </span>
@@ -151,7 +151,7 @@ export const Services = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow mb-4">
+                <p className="text-[11px] sm:text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed flex-grow mb-3">
                   Penny understands your business goals, connects to all your
                   data sources, monitors revenue opportunities 24/7 and
                   dynamically optimizes strategies across all your channels to
@@ -162,7 +162,7 @@ export const Services = () => {
                 <motion.button
                   whileHover={{ y: -2 }}
                   whileTap={{ y: 0 }}
-                  className="w-full px-4 py-2 text-xs sm:text-sm font-medium text-blue-900 dark:text-blue-100 bg-blue-200/30 dark:bg-blue-900/20 hover:bg-blue-200/50 dark:hover:bg-blue-900/30 rounded-lg transition-colors duration-300"
+                  className="w-full px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs md:text-sm font-medium text-blue-900 dark:text-blue-100 bg-blue-200/30 dark:bg-blue-900/20 hover:bg-blue-200/50 dark:hover:bg-blue-900/30 rounded-lg transition-colors duration-300"
                 >
                   Learn More
                 </motion.button>
@@ -189,19 +189,19 @@ export const Services = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="mt-16 sm:mt-20 lg:mt-28"
         >
-          <div className="text-center mb-12 sm:mb-14 lg:mb-16">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
             <div className="inline-block relative">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 Why Teams Choose Us
               </h3>
               <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
             </div>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-6">
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-3 sm:mt-4 md:mt-6 px-2">
               Join hundreds of companies scaling with AI
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-0">
             {[
               {
                 title: "10x Efficiency",
@@ -241,7 +241,7 @@ export const Services = () => {
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Icon background */}
-                  <div className="mb-4 inline-flex p-3 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:scale-110 transition-transform duration-300">
+                  <div className="mb-3 inline-flex p-2 sm:p-3 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg border border-gray-300 dark:border-gray-600 group-hover:scale-110 transition-transform duration-300">
                     <div className="w-6 h-6 text-blue-600 dark:text-blue-400">
                       <svg fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -254,12 +254,12 @@ export const Services = () => {
                   </div>
 
                   {/* Title */}
-                  <h4 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <h4 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                     {benefit.title}
                   </h4>
 
                   {/* Description */}
-                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
+                  <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
                     {benefit.description}
                   </p>
 

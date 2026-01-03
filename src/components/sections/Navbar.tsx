@@ -53,14 +53,14 @@ export default function Navbar() {
         transition-colors duration-300
       "
     >
-      <div className="flex items-center justify-center w-full px-4 sm:px-6 py-3 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between w-full px-2 sm:px-4 md:px-6 py-3 max-w-7xl mx-auto">
         {/* Left: logo */}
-        <div className="absolute left-0 px-40">
+        <div className="flex-shrink-0">
           <Link href="/" className="flex items-center cursor-pointer z-10">
             <motion.img
               src={logo.src}
               alt="EqualCollective logo"
-              className="w-24 h-auto sm:w-28 md:w-32 lg:w-36"
+              className="w-20 h-auto sm:w-24 md:w-28 lg:w-32 xl:w-36"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -130,7 +130,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Right Section */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6 font-mono z-10 absolute right-0 px-[120px]">
+        <div className="hidden lg:flex items-center gap-3 xl:gap-6 font-mono z-10 flex-shrink-0">
           <ThemeToggle />
 
           <ShimmerButton
@@ -146,8 +146,8 @@ export default function Navbar() {
         </div>
 
         {/* Tablet/Mobile Menu Button */}
-        <div className="lg:hidden flex items-center gap-2 sm:gap-3">
-          <div className="scale-90 cursor-pointer">
+        <div className="lg:hidden flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <div className="scale-75 sm:scale-90 cursor-pointer">
             <ThemeToggle />
           </div>
 

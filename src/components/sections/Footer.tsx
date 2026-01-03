@@ -36,8 +36,8 @@ export const Footer = () => {
       className="relative w-full overflow-hidden bg-white/70 dark:bg-black/70 backdrop-blur-md border-t border-gray-200 dark:border-gray-800"
     >
       {/* Top Section - Logo and Social Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5 lg:py-6">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 lg:py-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 md:gap-6">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -51,7 +51,7 @@ export const Footer = () => {
                 <motion.img
                   src={logo.src}
                   alt="EqualCollective logo"
-                  className="w-28 h-auto sm:w-32 md:w-36"
+                  className="w-20 h-auto sm:w-24 md:w-28 lg:w-32"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
@@ -66,7 +66,7 @@ export const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 sm:gap-3"
+            className="flex items-center gap-2 sm:gap-3 md:gap-4"
           >
             {socialLinks.map((social) => (
               <motion.a
@@ -87,14 +87,14 @@ export const Footer = () => {
       </div>
 
       {/* Bottom Section - Copyright Text */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm font-sans text-center">
+          <p className="text-gray-600 dark:text-gray-400 text-[10px] sm:text-xs md:text-sm font-sans text-center">
             © Branchon Info Solutions Private Limited 2026
           </p>
         </motion.div>

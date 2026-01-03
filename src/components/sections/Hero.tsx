@@ -20,19 +20,19 @@ export default function Hero() {
   return (
     <section
       className="
-        relative lg:min-h-screen h-full px-4 sm:px-6 pt-12 sm:pt-16 md:pt-20 lg:pt-32 
-        overflow-hidden flex flex-col justify-between mx-auto pb-8 sm:pb-12 md:pb-16
+        relative min-h-[calc(100vh-80px)] lg:min-h-screen h-full px-3 sm:px-4 md:px-6 pt-8 sm:pt-12 md:pt-16 lg:pt-32 
+        overflow-hidden flex flex-col justify-between mx-auto pb-6 sm:pb-10 md:pb-16
       "
     >
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 flex flex-col items-center text-center space-y-4 sm:space-y-6 md:space-y-8 relative z-10">
+      <div className="max-w-7xl w-full mx-auto px-3 sm:px-4 md:px-6 flex flex-col items-center text-center space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="
-            text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-tight sm:leading-snug md:leading-normal lg:leading-18
+            text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight sm:leading-snug md:leading-normal lg:leading-snug
             text-gray-900 dark:text-gray-100
-            max-w-full sm:max-w-3xl md:max-w-4xl
+            max-w-full
           "
         >
           <span className="text-blue-500 text-color-pulse">AI Employees</span>
@@ -45,13 +45,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           className="
-            max-w-full sm:max-w-3xl md:max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl font-sans leading-relaxed
+            max-w-3xl text-xs sm:text-sm md:text-base lg:text-lg font-sans leading-relaxed
             text-gray-600 dark:text-gray-400
           "
         >
           Our AI + Human-in-the-loop system handles critical tasks like Sales,
-          review management, SEO, PPC & Pricing. Enabling growth & profitability
-          without growing headcount.
+          review management, SEO, PPC & Pricing.
+          <br className="hidden sm:block" />
+          Enabling growth & profitability without growing headcount.
         </motion.p>
 
         <motion.div
@@ -59,7 +60,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           className="
-            flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-8 mt-4 sm:mt-6
+            flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 mt-3 sm:mt-4 md:mt-6
             w-auto justify-center
           "
         >
@@ -67,7 +68,7 @@ export default function Hero() {
             onClick={() => {
               window.open("https://cal.com/aryan-sethi-zafoth/30min", "_blank");
             }}
-            className="font-sans px-2.5 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-8 lg:py-3 font-bold text-white text-[10px] sm:text-xs md:text-sm lg:text-base w-auto"
+            className="font-sans px-3 py-2 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-8 lg:py-3 font-bold text-white text-xs sm:text-xs md:text-sm lg:text-base w-auto"
             background="#3B82F6"
             shimmerColor="#ffffff"
           >
@@ -77,7 +78,7 @@ export default function Hero() {
       </div>
 
       {/* Logo Ticker Section */}
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 mt-3 sm:mt-4 md:mt-5 lg:mt-6 relative z-40">
+      <div className="max-w-7xl w-full mx-auto px-3 sm:px-4 md:px-6 mt-0 sm:mt-2 md:mt-4 lg:mt-6 relative z-40">
         <LogoTicker />
       </div>
     </section>
