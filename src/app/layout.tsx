@@ -22,7 +22,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `Smart Grids`,
+    default: `Equal Collective`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     images: [SITE.ogImage],
   },
   icons: {
-    icon: "/icon.svg",
+    icon: "/icon.png",
     apple: "/icon.svg",
   },
 };

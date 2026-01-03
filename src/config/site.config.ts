@@ -1,7 +1,7 @@
 export const SITE = {
-  name: "Smart Grids",
-  description: "Smart Grids - The all in one renewables solution",
-  url: "https://sgrids.com",
+  name: "Equal Collective",
+  description: "AI Employees for Amazon agencies | Equal Collective",
+  url: "https://equalcollective.com",
   ogImage: "/og-img.png",
-  twitterHandle: "https://twitter.com/sgrids",
+  twitterHandle: "https://twitter.com/equalcollective",
 };

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { ShimmerButton } from "../ui/ShimmerButton";
+import logo from "@/assets/Equal Collective/logo.webp";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,126 +39,109 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen((v) => !v);
 
   const navItems = [
-    { name: "About-Us", href: "/#about", external: false },
-    { name: "Solvyn", href: "/#solvyn", external: false },
+    { name: "About Us", href: "/#about", external: false },
     { name: "Services", href: "/#services", external: false },
-    { name: "Case-Studies", href: "/case-studies" },
-
-    {
-      name: "White-Papers",
-      href: "/white-papers",
-    },
-    {
-      name: "Blogs",
-      href: "/blogs",
-    },
+    { name: "Contact Us", href: "/#footer", external: false },
   ];
 
   return (
     <nav
       className="
-        relative w-full sticky top-0 z-50 px-4 sm:px-6 py-3
+        relative w-full sticky top-0 z-50
         border-b border-gray-200 dark:border-gray-800
         bg-white/50 dark:bg-black/50 backdrop-blur-sm
         transition-colors duration-300
       "
     >
-      <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
-        {/* Left: logo + nav items grouped */}
-        <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
-          <Link href="/" className="flex items-center cursor-pointer">
+      <div className="flex items-center justify-center w-full px-4 sm:px-6 py-3 max-w-7xl mx-auto">
+        {/* Left: logo */}
+        <div className="absolute left-0 px-40">
+          <Link href="/" className="flex items-center cursor-pointer z-10">
             <motion.img
-              key={mounted ? currentTheme : "default"}
-              src={
-                !mounted
-                  ? "/logo_light.svg"
-                  : currentTheme === "dark"
-                  ? "/logo_dark.svg"
-                  : "/logo_light.svg"
-              }
-              alt="Silver logo"
+              src={logo.src}
+              alt="EqualCollective logo"
               className="w-24 h-auto sm:w-28 md:w-32 lg:w-36"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             />
           </Link>
+        </div>
 
-          <div
-            className="hidden lg:flex items-center px-4 xl:px-8 font-mono relative gap-2 xl:gap-4"
-            onMouseLeave={() => setHovered(null)}
-          >
-            {navItems.map((item) => (
-              <div
-                key={item.name}
-                className="relative px-3 py-1 select-none font-sans font-semibold"
-              >
-                {hovered === item.name && (
-                  <motion.span
-                    layoutId="hoverBg"
-                    className="
+        {/* Center: nav items */}
+        <div
+          className="hidden lg:flex items-center px-4 xl:px-8 font-mono relative gap-2 xl:gap-4"
+          onMouseLeave={() => setHovered(null)}
+        >
+          {navItems.map((item) => (
+            <div
+              key={item.name}
+              className="relative px-3 py-1 select-none font-sans font-semibold"
+            >
+              {hovered === item.name && (
+                <motion.span
+                  layoutId="hoverBg"
+                  className="
                       absolute inset-0 rounded-full backdrop-blur-sm
                       bg-gray-200/70 border border-gray-300
                       dark:bg-gray-700/70 dark:border-gray-600
                     "
-                    transition={{
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 40,
-                      mass: 0.6,
-                    }}
-                    initial={false}
-                  />
-                )}
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 40,
+                    mass: 0.6,
+                  }}
+                  initial={false}
+                />
+              )}
 
-                {item.external ? (
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => setHovered(item.name)}
-                    onFocus={() => setHovered(item.name)}
-                    className="
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setHovered(item.name)}
+                  onFocus={() => setHovered(item.name)}
+                  className="
                       relative z-10 transition-colors text-sm
                       text-gray-700 hover:text-black
                       dark:text-gray-300 dark:hover:text-white
                     "
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    href={item.href}
-                    onMouseEnter={() => setHovered(item.name)}
-                    onFocus={() => setHovered(item.name)}
-                    className="
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  href={item.href}
+                  onMouseEnter={() => setHovered(item.name)}
+                  onFocus={() => setHovered(item.name)}
+                  className="
                       relative z-10 transition-colors text-sm
                       text-gray-700 hover:text-black
                       dark:text-gray-300 dark:hover:text-white
                     "
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
+                >
+                  {item.name}
+                </Link>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Desktop Right Section */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-6 font-mono">
+        <div className="hidden lg:flex items-center gap-4 xl:gap-6 font-mono z-10 absolute right-0 px-[120px]">
           <ThemeToggle />
 
           <ShimmerButton
             onClick={() => {
-              const footer = document.getElementById("footer");
-              footer?.scrollIntoView({ behavior: "smooth" });
+              window.open("https://cal.com/aryan-sethi-zafoth/30min", "_blank");
             }}
             className="font-sans font-bold text-white text-xs xl:text-sm px-4 xl:px-6"
-            background="#ff7a18"
+            background="#3B82F6"
             shimmerColor="#ffffff"
           >
-            CONNECT NOW
+            BOOK A CALL
           </ShimmerButton>
         </div>
 
@@ -207,14 +191,16 @@ export default function Navbar() {
             <ShimmerButton
               onClick={() => {
                 setIsOpen(false);
-                const footer = document.getElementById("footer");
-                footer?.scrollIntoView({ behavior: "smooth" });
+                window.open(
+                  "https://cal.com/aryan-sethi-zafoth/30min",
+                  "_blank"
+                );
               }}
               className="font-sans font-bold text-white text-sm px-6 py-2.5 mt-2"
-              background="#FF7217"
+              background="#3B82F6"
               shimmerColor="#ffffff"
             >
-              CONNECT NOW
+              BOOK A CALL
             </ShimmerButton>
           </div>
         </div>

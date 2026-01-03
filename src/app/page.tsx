@@ -1,7 +1,6 @@
 import Navbar from "../components/sections/Navbar";
 import Hero from "../components/sections/Hero";
 import { About } from "../components/sections/About";
-import { Solvyn } from "../components/sections/Solvyn";
 import { Services } from "../components/sections/Services";
 import { Cta } from "../components/sections/Cta";
 import { Footer } from "../components/sections/Footer";
@@ -9,36 +8,33 @@ import type { Metadata } from "next";
 import { SITE } from "../config/site.config";
 
 export const metadata: Metadata = {
-  title: "Smart Grid Analytics - Renewable Energy Intelligence Platform | Solvyn",
-  description: "Transform your renewable energy operations with Solvyn - the only platform you need for renewable intelligence. Optimize assets, ensure compliance, and streamline grid access. Trusted by industry leaders handling 85+ GW of power across 400+ projects.",
+  title: "AI Employees for Amazon Sellers & Agencies | Equal Collective",
+  description:
+    "Meet Jeff & Penny - AI Employees that automate tasks for Amazon sellers, agencies, and SaaS companies. Book 5x more meetings, optimize revenue 24/7. Join 100+ companies scaling with Equal Collective.",
   keywords: [
-    "renewable energy",
-    "smart grid analytics",
-    "Solvyn",
-    "energy management system",
-    "SCADA",
-    "EMS",
-    "PPC",
-    "EPM",
-    "intelligent bidding",
-    "solar energy",
-    "wind energy",
-    "energy storage",
-    "grid compliance",
-    "renewable energy platform",
-    "clean energy",
+    "AI employees",
+    "AI automation",
+    "Amazon seller tools",
+    "revenue optimization",
+    "sales automation",
+    "AI agents",
+    "business automation",
+    "meeting booking AI",
+    "revenue management",
+    "equal collective",
   ],
   openGraph: {
-    title: "Smart Grid Analytics - Renewable Energy Intelligence Platform",
-    description: "The only platform you need for renewable intelligence. Optimize renewable assets, ensure compliance, and streamline grid access with Solvyn.",
+    title: "AI Employees for Amazon Sellers & Agencies | Equal Collective",
+    description:
+      "Meet Jeff & Penny - AI Employees that automate tasks for Amazon sellers, agencies, and SaaS companies. Book 5x more meetings, optimize revenue 24/7.",
     url: SITE.url,
-    siteName: "Smart Grid Analytics",
+    siteName: "Equal Collective",
     images: [
       {
         url: SITE.ogImage,
         width: 1200,
         height: 630,
-        alt: "Smart Grid Analytics - Solvyn Platform",
+        alt: "Equal Collective - AI Employees Platform",
       },
     ],
     type: "website",
@@ -46,8 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Grid Analytics - Renewable Energy Intelligence Platform",
-    description: "The only platform you need for renewable intelligence. Optimize renewable assets, ensure compliance, and streamline grid access.",
+    title: "AI Employees for Amazon Sellers & Agencies | Equal Collective",
+    description:
+      "Meet Jeff & Penny - AI Employees that automate tasks for Amazon sellers, agencies, and SaaS companies. Book 5x more meetings, optimize revenue 24/7.",
     creator: SITE.twitterHandle,
     images: [SITE.ogImage],
   },
@@ -71,37 +68,28 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Smart Grid Analytics",
+    name: "Equal Collective",
     url: SITE.url,
     logo: `${SITE.url}/logo_light.svg`,
-    description: "Smart Grid Analytics provides Solvyn - an AI-powered platform for renewable energy operations, combining SCADA, EMS, PPC, EPM, and Intelligent Bidding.",
+    description:
+      "AI Employees platform providing Jeff & Penny - intelligent AI agents that automate tasks for Amazon sellers, agencies, and SaaS companies.",
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+91-95133-79911",
+      telephone: "+1-XXX-XXX-XXXX",
       contactType: "Customer Service",
-      email: "info@sgrids.io",
+      email: "hello@equalcollective.com",
       areaServed: "Worldwide",
       availableLanguage: "English",
     },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "2nd Floor, MSM Plaza, Service Road, Outer Ring Rd, Banaswadi",
-      addressLocality: "Bengaluru",
-      addressRegion: "Karnataka",
-      postalCode: "560113",
-      addressCountry: "IN",
-    },
-    sameAs: [
-      SITE.twitterHandle,
-    ],
   };
 
   const websiteStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Smart Grid Analytics",
+    name: "Equal Collective",
     url: SITE.url,
-    description: "The only platform you need for renewable intelligence. Optimize renewable assets, ensure compliance, and streamline grid access.",
+    description:
+      "AI Employees platform for Amazon sellers, agencies, and SaaS companies. Automate tasks and scale with Jeff & Penny.",
     potentialAction: {
       "@type": "SearchAction",
       target: {
@@ -115,19 +103,21 @@ export default function Home() {
   const webPageStructuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Smart Grid Analytics - Renewable Energy Intelligence Platform",
-    description: "Transform your renewable energy operations with Solvyn - the only platform you need for renewable intelligence.",
+    name: "AI Employees for Amazon Sellers & Agencies | Equal Collective",
+    description:
+      "Meet Jeff & Penny - AI Employees that automate tasks and help scale your business.",
     url: SITE.url,
     inLanguage: "en-US",
     isPartOf: {
       "@type": "WebSite",
-      name: "Smart Grid Analytics",
+      name: "Equal Collective",
       url: SITE.url,
     },
     about: {
       "@type": "Thing",
-      name: "Renewable Energy Management",
-      description: "AI-powered platform for optimizing renewable energy assets, ensuring compliance, and streamlining grid access.",
+      name: "AI Employees",
+      description:
+        "Intelligent AI agents (Jeff & Penny) that automate sales, revenue optimization, and business tasks for companies.",
     },
   };
 
@@ -139,21 +129,24 @@ export default function Home() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteStructuredData),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageStructuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageStructuredData),
+        }}
       />
-    <main>
-      <Navbar />
-      <Hero />
-      <About />
-      <Solvyn />
-      <Services />
-      <Cta />
-      <Footer />
-    </main>
+      <main>
+        <Navbar />
+        <Hero />
+        <Services />
+        <About />
+        <Cta />
+        <Footer />
+      </main>
     </>
   );
 }

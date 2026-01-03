@@ -1,59 +1,18 @@
 "use client";
 
-import relience from "@/assets/logo/reliance_logo.png";
-import fimer from "@/assets/logo/fimer_logo.png";
-import abb from "@/assets/logo/abb_logo.png";
-import kec from "@/assets/logo/kec_logo.png";
-import refex from "@/assets/logo/refex_logo.png";
-import adani from "@/assets/logo/adani_logo.png";
-import blupine from "@/assets/logo/blupine_logo.png";
-import etap from "@/assets/logo/etap_logo.png";
-import ampex from "@/assets/logo/ampex_logo.png";
-import renew from "@/assets/logo/renew_logo.png";
-import spring from "@/assets/logo/spring_logo.png";
-import o2 from "@/assets/logo/o2_logo.png";
-import inox from "@/assets/logo/inox_logo.png";
-import jackson from "@/assets/logo/jackson_logo.png";
-import cleantech from "@/assets/logo/cleantech_logo.png";
-import jsw from "@/assets/logo/jsw_logo.jpeg";
-import alfanar from "@/assets/logo/alfanar_logo.avif";
-import avaada from "@/assets/logo/avaada_logo.jpg";
-import azure from "@/assets/logo/azure_logo.png";
-import ayana from "@/assets/logo/ayana_logo.png";
-import essens from "@/assets/logo/essens_logo.png";
-import sw from "@/assets/logo/sw_logo.png";
-import vena from "@/assets/logo/vena_logo.png";
-import waree from "@/assets/logo/waree_logo.png";
-import kalpatru from "@/assets/logo/kalpatru_logo.webp";
+import logo7 from "@/assets/Equal Collective/7.png";
+import logo8 from "@/assets/Equal Collective/8.png";
+import logo9 from "@/assets/Equal Collective/9.png";
+import logo10 from "@/assets/Equal Collective/10.png";
+import logo11 from "@/assets/Equal Collective/11.png";
+import logo12 from "@/assets/Equal Collective/12.png";
+import brandBuddy from "@/assets/Equal Collective/brandbuddy.png";
+import titan from "@/assets/Equal Collective/titan.png";
 import Image from "next/image";
-import { motion, useAnimationControls } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
-const logos = [
-  ampex,
-  renew,
-  spring,
-  o2,
-  inox,
-  abb,
-  adani,
-  etap,
-  blupine,
-  fimer,
-  cleantech,
-  jsw,
-  alfanar,
-  avaada,
-  azure,
-  ayana,
-  sw,
-  kalpatru,
-  vena,
-  kec,
-  refex,
-  waree,
-  essens,
-];
+const logos = [logo7, logo8, logo9, logo10, logo11, logo12, brandBuddy, titan];
 
 export const LogoTicker = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -61,7 +20,7 @@ export const LogoTicker = () => {
   return (
     <div className="py-4 sm:py-5 lg:py-6 mt-6 sm:mt-8 lg:mt-12 mb-6 sm:mb-8 lg:mb-12 bg-transparent relative z-10">
       <div className="container mx-auto px-4">
-        <div 
+        <div
           className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black,transparent)] justify-center pointer-events-auto"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -72,24 +31,27 @@ export const LogoTicker = () => {
               translateX: "-50%",
             }}
             transition={{
-              duration: 40,
+              duration: 25,
               repeat: Infinity,
               ease: "linear",
               repeatType: "loop",
               ...(isHovered && { duration: 0 }),
             }}
           >
-            {logos.concat(logos).map((logo, index) => (
-              <Image
-                key={index}
-                src={logo}
-                alt={`Logo ${index + 1}`}
-                className="logo-ticker-image h-10 sm:h-12 lg:h-16 cursor-pointer"
-                width={180}
-                height={40}
-                style={{ objectFit: "contain" }}
-              />
-            ))}
+            {logos
+              .concat(logos)
+              .concat(logos)
+              .map((logo, index) => (
+                <Image
+                  key={index}
+                  src={logo}
+                  alt={`Logo ${index + 1}`}
+                  className="logo-ticker-image h-10 sm:h-12 lg:h-16 cursor-pointer flex-shrink-0"
+                  width={180}
+                  height={40}
+                  style={{ objectFit: "contain" }}
+                />
+              ))}
           </motion.div>
         </div>
       </div>
